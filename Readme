@@ -1,6 +1,19 @@
-This is a mockup of a simple BAMRU app.
+This is a mockup of a simple BAMRU Website app.
+-----------------------------------------------
 
-To edit the app:
+Live Demo
+---------
+
+To see a running version of the app, visit
+http://btest.alt55.com
+
+Most of the demo is static html.  But two pages
+are using a common layout and menu generation.
+- http://btest.alt55.com/donate.test
+- http://btest.alt55.com/contact.test
+
+Editing the App
+---------------
 
 1) Fork/Clone the repo.
 
