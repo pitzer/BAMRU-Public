@@ -7,6 +7,8 @@ set :deploy_to,   "/home/aleak/a/btest"
 load 'deploy' if respond_to?(:namespace)
 Dir['/vendor/plugins/*/recipes/*.rb'].each { |p| load p }
 
+set :use_sudo, false
+
 set :scm, :git
 
 role :web, SERVER
