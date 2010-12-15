@@ -1,1 +1,11 @@
 This is a mockup of a simple BAMRU app.
+
+To edit the app:
+
+1) Fork/Clone the repo.
+
+2) Run 'bundle install' to install the support software.
+
+2) Run 'rake -T' to see a list of test / edit commands.
+
+2) Run 'cap -T' to see a list of deployment commands.
