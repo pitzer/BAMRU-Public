@@ -17,13 +17,13 @@ class BamruApp < Sinatra::Base
     redirect "/index.html"
   end
 
-  get '/contact' do
+  get '/contact.test' do
     @hdr_img = "images/HawthornLZ.jpg"
     @side_title = "CONTACT"
     erb :contact
   end
 
-  get '/donate' do
+  get '/donate.test' do
     @hdr_img = "images/glacier.jpg"
     @side_title = "Donate to BAMRU"
     erb :donate
