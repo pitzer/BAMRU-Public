@@ -6,7 +6,7 @@ class BamruApp < Sinatra::Base
     end
 
     def menu_link(target, label)
-      cls = current_page == target ? "nav1" : "nav4"
+      cls = current_page == target ? "nav4" : "nav1"
       <<-HTML
       <a href='#{target}' class='#{cls}' onfocus='blur();'>#{label}</a><br/>
       HTML
