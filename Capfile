@@ -1,8 +1,8 @@
-SERVER       = "r210x.com"
+SERVER       = "alt55.com"
 
 set :application, "BAMRU TEST APP"
-set :repository,  "http://github.com"
-set :deploy_to,   "/home/aleak/papps/vtapp"
+set :repository,  "git@github.com:andyl/BAMRU-Test.git"
+set :deploy_to,   "/home/aleak/a/btest"
 
 load 'deploy' if respond_to?(:namespace)
 Dir['/vendor/plugins/*/recipes/*.rb'].each { |p| load p }
