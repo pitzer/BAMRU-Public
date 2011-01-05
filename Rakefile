@@ -17,6 +17,7 @@ task :msg do
   puts "Use 'rake -T' to see rake options."
 end
 
+desc "Run the development server."
 task :run do
   system "shotgun config.ru -o 0.0.0.0"
 end
