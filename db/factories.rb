@@ -7,9 +7,9 @@ def randE() "2011-#{randM}-#{randD}"; end
 
 Factory.define :event do |u|
   u.kind        "event" 
-  u.title       { "U#{rand4}" } 
+  u.title       { "T#{rand4}" }
   u.location    { "L#{rand4}" } 
-  u.leaders     { "Joe#{rand4}" }
+  u.leaders     { "Leader#{rand4}" }
   u.start       { randE }
   u.end
   u.description { "Big Hello #{rand4}" }
