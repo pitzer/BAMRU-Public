@@ -122,4 +122,8 @@ class BamruApp < Sinatra::Base
     erb :contact
   end
 
+  get '/admin' do
+    erb :admin
+  end
+
 end
