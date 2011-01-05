@@ -1,2 +1,36 @@
-This is the admin page!
+<div class="center">
+  <h2>BAMRU Event Administration</h2>
+  <a href="/admin_new">add new event</a> |
+  <a href="/admin_load_csv">load events from a csv file</a> |
+  <a href="/admin_export_csv">export events to csv</a>
+</div>
+
+<h3>Meetings</h3>
+<table>
+<% @meetings.each do |m|  %>
+  <tr><td><%=m.title%><%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
+<% end %>
+</table>
+
+<h3>Trainings</h3>
+<table>
+<% @trainings.each do |m|  %>
+  <tr><td><%=m.title%><%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
+<% end %>
+</table>
+
+<h3>Events</h3>
+<table>
+<% @events.each do |m|  %>
+  <tr><td><%=m.title%><%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
+<% end %>
+</table>
+
+<h3>Non-County Meetings</h3>
+<table>
+<% @non_county.each do |m|  %>
+  <tr><td><%=m.title%><%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
+<% end %>
+</table>
+
 
