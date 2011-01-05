@@ -7,4 +7,3 @@ require 'sinatra'
 require 'app'
 
 run BamruApp
-
