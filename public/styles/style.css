@@ -39,7 +39,7 @@ a.summary:hover    {color: #000;}
 .capswhite      {font-family: Verdana, Arial, Geneva, SunSans-Regular; font-size: 10px; color: #FFF; font-weight: bold;} 
 
 .quote          {font-size: 13px; color: #36C; line-height: 16px; text-decoration: none;}
-.quote_box      {white-space: normal; width: 125px;}
+.quote_box      {top-margin: 10px; white-space: normal; width: 125px;}
 
 .text           {color: #333; line-height: 14px;} 
 a.text:link     {color: #36C;} 
