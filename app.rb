@@ -58,7 +58,7 @@ class BamruApp < Sinatra::Base
     redirect "/index-2.html"
   end
   
-  get '/calendar' do
+  get '/calendar.test' do
     @title     = "BAMRU Calendar"
     @hdr_img   = "images/mtn.jpg"
     @right_nav = right_nav(:calendar)
@@ -67,7 +67,7 @@ class BamruApp < Sinatra::Base
     erb :calendar
   end
 
-  get '/bamruinfo' do
+  get '/bamruinfo.test' do
     @title     = "Information about BAMRU"
     @hdr_img   = "images/approach.jpg"
     @right_nav = right_nav(:bamruinfo)
@@ -75,7 +75,7 @@ class BamruApp < Sinatra::Base
     erb :bamruinfo
   end
 
-  get '/join' do
+  get '/join.test' do
     @title     = "Joining BAMRU"
     @hdr_img   = "images/helo.jpg"
     @right_nav = right_nav(:join)
@@ -83,14 +83,14 @@ class BamruApp < Sinatra::Base
     erb :join
   end
 
-  get '/sgallery' do
+  get '/sgallery.test' do
     @title     = "BAMRU Photo Gallery"
     @hdr_img   = "images/hills.jpg"
     @right_nav = right_nav(:sgallery)
     erb :sgallery
   end
 
-  get '/meeting_locations' do
+  get '/meeting_locations.test' do
     @title     = "BAMRU Meeting Location"
     @hdr_img   = "images/mtn_2.jpg"
     @right_nav = right_nav(:meeting_locations)
@@ -98,7 +98,7 @@ class BamruApp < Sinatra::Base
     erb :meeting_locations
   end
 
-  get '/sarlinks' do
+  get '/sarlinks.test' do
     @title     = "Links to SAR-related sites"
     @hdr_img   = "images/glacier.jpg"
     @right_nav = right_nav(:sarlinks)
@@ -106,7 +106,7 @@ class BamruApp < Sinatra::Base
     erb :sarlinks
   end
 
-  get '/donate' do
+  get '/donate.test' do
     @title     = "Donate to BAMRU"
     @hdr_img   = "images/glacier.jpg"
     @right_nav = right_nav(:donate)
@@ -114,7 +114,7 @@ class BamruApp < Sinatra::Base
     erb :donate
   end
 
-  get '/contact' do
+  get '/contact.test' do
     @title     = "BAMRU Contacts"
     @hdr_img   = "images/HawthornLZ.jpg"
     @right_nav = right_nav(:contact)
