@@ -123,7 +123,7 @@ class BamruApp < Sinatra::Base
   end
 
   get '/admin' do
-    erb :admin
+    erb :admin, :layout => :admin_layout
   end
 
 end
