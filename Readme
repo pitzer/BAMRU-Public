@@ -19,13 +19,17 @@ Installing & Running the App
 This is going to work best on Linux or Mac.
 Windows hasn't been tested.
 
-Installation Steps:
-1) sudo apt-get install ruby git
-2) gem install bundler
-3) git clone https://github.com/andyl/BAMRU-Public
-4) cd BAMRU-Public
-5) bundle install
-6) rake run_server
+Installing the Server:
+1) install ruby, git, rubygems
+2) > gem install bundler
+3) > git clone https://github.com/andyl/BAMRU-Public
+4) > cd BAMRU-Public
+5) > bundle install
+6) > rake run_server
+
+Running the App:
+1) start your browser
+2) visit http://localhost:9393
 
 Editing/Updating the App
 ------------------------
@@ -36,3 +40,13 @@ Deploying the App
 -----------------
 All of the deployment scripts are in the Capfile.
 Run 'cap -T' to see a list of deployment commands.
+
+Administration and Security
+---------------------------
+The admin page allows approved users to update calendar
+events on the website.  The admin page is password 
+protected.  The password is set at install time, 
+and is not stored in the source code repository.
+The password can be updated by running the task
+'cap password'.
+
