@@ -16,3 +16,36 @@ body {
 .center {
     text-align: center;
 }
+
+table.basic {
+  background-color: lightblue;
+  width: 100%;
+}
+
+table.basic td {
+  border: 1px solid black;
+  padding: 2px;
+}
+
+table.basic th {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+td.al {
+  text-align: left;
+}
+
+td.ar {
+  text-align: right;
+}
+
+td.ac {
+  text-align: center;
+}
+
+td.btn {
+  border: blue;
+  /*background-color: green;*/
+  text-align: center;
+}
