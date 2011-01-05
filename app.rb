@@ -1,8 +1,28 @@
+require 'rubygems'
+require 'bundler/setup'
+require 'yaml'
+require 'ruby-debug'
+
 class BamruApp < Sinatra::Base
+
+  configure do
+    BASE_DIR = File.dirname(File.expand_path(__FILE__))
+    QUOTES   = YAML.load_file(BASE_DIR + "/quotes.yaml")
+  end
 
   helpers do
     def current_page
       request.path_info
+    end
+
+    def quote
+      idx = rand(QUOTES.length)
+      <<-HTML
+        <div class='quote_box'>
+          <div class='quote'>"#{QUOTES[idx][:text]}"</div>
+          <div class='caps'>- #{QUOTES[idx][:auth]}</div>
+        </div>
+      HTML
     end
 
     def blog_url
