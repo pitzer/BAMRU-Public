@@ -22,3 +22,34 @@ task :run_server do
   system "shotgun config.ru -o 0.0.0.0"
 end
 task :run => :run_server
+
+desc "Run console with live environment"
+task :console do
+  require 'irb'
+  require 'irb/completion'
+  require 'config/environment'
+  ARGV.clear
+  IRB.start
+end
+
+namespace :db do
+
+  task :environment do
+    require 'config/environment'
+  end
+
+  desc "Run database migration"
+  task :migrate => :environment do
+    system "rm -f db/*.sqlite3"
+    ActiveRecord::Migration.verbose = true
+    ActiveRecord::Migrator.migrate("db/migrate")
+  end
+
+  desc "Load seed data"
+  task :seed => :environment do
+    puts "Loading Seed Data"
+    require 'db/seed'
+  end
+
+end
+
