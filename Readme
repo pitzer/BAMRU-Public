@@ -3,12 +3,11 @@ This is a mockup of a simple BAMRU Website app.
 
 Live Demo
 ---------
-
-To see a running version of the app, visit
+To see a live demo, visit
 http://btest.alt55.com/calendar.test
 
-All of the demo is now using dynamically generated
-pages and a shared layout.  This means the site is
+All of the demo uses dynamically generated pages
+and a shared layout.  This means the site is
 easier to maintain.
 
 If you want to compare the dynamically generated
