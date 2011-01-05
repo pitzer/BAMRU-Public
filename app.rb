@@ -7,9 +7,9 @@ class BamruApp < Sinatra::Base
 
   configure do
     BASE_DIR  = File.dirname(File.expand_path(__FILE__))
-    QUOTES    = YAML.load_file(BASE_DIR + "/quotes.yaml")
-    RIGHT_NAV = YAML.load_file(BASE_DIR + "/right_nav.yaml")
-    GUEST_POLICY = File.read(BASE_DIR + "/guest_policy.html")
+    QUOTES    = YAML.load_file(BASE_DIR + "/data/quotes.yaml")
+    RIGHT_NAV = YAML.load_file(BASE_DIR + "/data/right_nav.yaml")
+    GUEST_POLICY   = File.read(BASE_DIR + "/data/guest_policy.html")
   end
 
   helpers do
