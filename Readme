@@ -7,10 +7,13 @@ Live Demo
 To see a running version of the app, visit
 http://btest.alt55.com
 
-Most of the demo is static html.  But two pages
-are using a common layout and menu generation.
-- http://btest.alt55.com/donate.test
-- http://btest.alt55.com/contact.test
+All of the demo is now using dynamically generated
+pages and a shared layout.  This means the site is
+considerably easier to maintain.
+
+If you want to compare the dynamically generated
+page to the original static page, just type '.html'
+at the end of the page url in your browser.
 
 Editing the App
 ---------------
