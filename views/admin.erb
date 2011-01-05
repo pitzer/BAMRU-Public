@@ -6,30 +6,30 @@
 </div>
 
 <h3>Meetings</h3>
-<table>
+<table class="basic">
 <% @meetings.each do |m|  %>
-  <tr><td><%=m.title%><%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
+  <tr><td><%=m.title%> / <%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
 <% end %>
 </table>
 
 <h3>Trainings</h3>
-<table>
+<table class="basic">
 <% @trainings.each do |m|  %>
-  <tr><td><%=m.title%><%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
+  <tr><td><%=m.title%> / <%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
 <% end %>
 </table>
 
 <h3>Events</h3>
-<table>
+<table class="basic">
 <% @events.each do |m|  %>
-  <tr><td><%=m.title%><%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
+  <tr><td><%=m.title%> / <%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
 <% end %>
 </table>
 
 <h3>Non-County Meetings</h3>
-<table>
+<table class="basic">
 <% @non_county.each do |m|  %>
-  <tr><td><%=m.title%><%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
+  <tr><td><%=m.title%> / <%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
 <% end %>
 </table>
 
