@@ -15,7 +15,7 @@ role :web, SERVER
 role :app, SERVER
 role :db,  SERVER, :primary => true
 
-desc "Deploy #{Application}"
+desc "Deploy #{application}"
 deploy.task :restart do
   run "touch #{current_path}/tmp/restart.txt"
 end
