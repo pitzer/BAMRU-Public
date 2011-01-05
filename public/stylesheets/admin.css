@@ -12,3 +12,7 @@ body {
   border: solid 1px red;
   margin-top: 20px;
 }
+
+.center {
+    text-align: center;
+}
