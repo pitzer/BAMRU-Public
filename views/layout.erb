@@ -13,30 +13,27 @@
         <img src="assets/graydot.gif" height="1" width="758" border="0"></td>
     </tr>
     <tr>
-      <td width="172" valign=top rowspan="3"><a id="home" name="home"></a>
+      <td width="172" valign=top rowspan="3"><a id="home"></a>
         <table cellpadding="6">
           <tr>
             <td align="right" NOWRAP>
               <p><font class="capsred">SERVING THE GREATER<br>
                 &nbsp;&nbsp;SAN FRANCISCO BAY AREA<br>
               </font>
-                <img src="assets/dots.gif" width="134" height="10" border="0"><br>
-                <a href="calendar.html" class="nav1" onfocus="blur();">CALENDAR</a><br>
-                <a href="http://bamru.blogspot.com/" class="nav1" onfocus="blur();">BLOG</a><br>
-                <img src="assets/dots.gif" width="134" height="10" border="0"><br>
-                <a href="index-2.html" class="nav1" onfocus="blur();">HOME</a><br>
-                <a href="bamruinfo.html" class="nav1" onfocus="blur();">WHO WE ARE</a><br>
-                <a href="join.html" class="nav1" onfocus="blur();">JOINING BAMRU</a><br>
-                <a href="sgallery.html" class="nav1" onfocus="blur();">PHOTO GALLERY</a><br>
-                <!--<a href="duty_sched.html" class="nav1" onfocus="blur();">DUTY OFFICERS</a><br> -->
-                <a href="meeting_locations.html" class="nav1" onfocus="blur();">MEETING LOCATIONS</a><br>
-                <a href="sarlinks.html" class="nav1" onfocus="blur();">LINKS TO SAR SITES</a><br>
-                <img src="assets/dots.gif" width="134" height="10" border="0"><br>
-                <!--<a href="sitemap.cfm" class="nav3" onfocus="blur();">SITE MAP</a><br> -->
-                <%= menu_link "/donate.test", "DONATE"      %>
-                <%= menu_link "/contact.test", "CONTACT US" %>
-                <!--<a href="search.cfm" class="nav3" onfocus="blur();">SEARCH</a><br> -->
-                <img src="assets/dots.gif" width="134" height="10" border="0"><br>
+                <%= dot_hr %>
+                <%= menu_link "/calendar",          "CALENDAR"           %>
+                <%= menu_link blog_url,             "BLOG"               %>
+                <%= dot_hr %>
+                <%= menu_link "/index-2.html",      "HOME"               %>
+                <%= menu_link "/bamruinfo",         "WHO WE ARE"         %>
+                <%= menu_link "/join",              "JOINING BAMRU"      %>
+                <%= menu_link "/sgallery",          "PHOTO GALLERY"      %>
+                <%= menu_link "/meeting_locations", "MEETING LOCATIONS"  %>
+                <%= menu_link "/sarlinks",          "LINKS TO SAR SITES" %>
+                <%= dot_hr %>
+                <%= menu_link "/donate",            "DONATE"             %>
+                <%= menu_link "/contact",           "CONTACT US"         %>
+                <%= dot_hr %>
                 <br>
                 <br>
                 <br>
@@ -48,7 +45,7 @@
         </table>
       </td>
       <td valign="top" rowspan="3"><img src="assets/graydot.gif" height="310" width="1" border="0"></td>
-      <td valign="top"><img src=<%= @hdr_img %> width="423" height="136" border="0"></td>
+      <td valign="top"><img src="<%= @hdr_img %>" width="423" height="136" border="0"></td>
       <td valign="top" rowspan="3"><img src="assets/graydot.gif" height="310" width="1" border="0"></td>
       <td width="172" valign=top rowspan="3">
         <table cellpadding="6">
