@@ -1,11 +1,14 @@
+base_dir = File.dirname(File.expand_path(__FILE__))
 require 'rubygems'
 # require 'bundler/setup'
 require 'yaml'
 require 'ruby-debug'
+require base_dir + '/config/environment'
 
 class BamruApp < Sinatra::Base
 
   configure do
+    set :erb, :trim => '-'
     BASE_DIR  = File.dirname(File.expand_path(__FILE__))
     QUOTES    = YAML.load_file(BASE_DIR + "/data/quotes.yaml")
     RIGHT_NAV = YAML.load_file(BASE_DIR + "/data/right_nav.yaml")
@@ -123,7 +126,29 @@ class BamruApp < Sinatra::Base
   end
 
   get '/admin' do
+    @meetings = Event.where(:kind => "meeting").all
+    @trainings = Event.where(:kind => "training").all
+    @events = Event.where(:kind => "event").all
+    @non_county = Event.where(:kind => "non_county")
     erb :admin, :layout => :admin_layout
+  end
+
+  get '/admin_new' do
+    erb :admin_new, :layout => :admin_layout
+  end
+
+  get '/admin_edit' do
+    erb :admin_edit, :layout => :admin_layout
+  end
+
+  get '/admin_export_csv' do
+    response["Content-Type"] = "text/plain"
+    @events = Event.all
+    erb :admin_export_csv, :layout => false
+  end
+
+  get '/admin_load_csv' do
+    erb :admin_load_csv, :layout => :admin_layout
   end
 
 end
