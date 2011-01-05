@@ -22,55 +22,63 @@ class BamruApp < Sinatra::Base
   end
 
   get '/' do
-    redirect "/index.html"
+    redirect "/index-2.html"
   end
-
-  get '/contact' do
-    @hdr_img = "images/HawthornLZ.jpg"
-    @side_title = "CONTACTS"
-    erb :contact
-  end
-
-  get '/donate' do
-    @hdr_img = "images/glacier.jpg"
-    @side_title = "Donate to BAMRU"
-    erb :donate
-  end
-
-  get '/sarlinks' do
-    @hdr_img = "images/glacier.jpg"
-    @side_title = "SEARCH & RESCUE LINKS"
-    erb :sarlinks
-  end
-
-  get '/meeting_locations' do
-    @hdr_img = "images/mtn_2.jpg"
-    @side_title = "TBD"
-    erb :sarlinks
-  end
-
-  get '/sgallery' do
-    @hdr_img = "images/hills.jpg"
-    @side_title = "TBD"
-    erb :sgallery
-  end
-
-  get '/join' do
-    @hdr_img = "images/helo.jpg"
-    @side_title = "TBD"
-    erb :join
+  
+  get '/calendar' do
+    @title    = "BAMRU Calendar"
+    @hdr_img  = "images/mtn.jpg"
+    @side_txt = "TBD"
+    erb :calendar
   end
 
   get '/bamruinfo' do
-    @hdr_img = "images/approach.jpg"
-    @side_title = "TBD"
+    @title    = "Information about BAMRU"
+    @hdr_img  = "images/approach.jpg"
+    @side_txt = "TBD"
     erb :bamruinfo
   end
 
-  get '/calendar' do
-    @hdr_img = "images/mtn.jpg"
-    @side_title = "TBD"
-    erb :calendar
+  get '/join' do
+    @title    = "Joining BAMRU"
+    @hdr_img  = "images/helo.jpg"
+    @side_txt = "TBD"
+    erb :join
+  end
+
+  get '/sgallery' do
+    @title    = "BAMRU Photo Gallery"
+    @hdr_img  = "images/hills.jpg"
+    @side_txt = "TBD"
+    erb :sgallery
+  end
+
+  get '/meeting_locations' do
+    @title    = "BAMRU Meeting Location"
+    @hdr_img  = "images/mtn_2.jpg"
+    @side_txt = "TBD"
+    erb :meeting_locations
+  end
+
+  get '/sarlinks' do
+    @title    = "Links to SAR-related sites"
+    @hdr_img  = "images/glacier.jpg"
+    @side_txt = "SEARCH & RESCUE LINKS"
+    erb :sarlinks
+  end
+
+  get '/donate' do
+    @title    = "Donate to BAMRU"
+    @hdr_img  = "images/glacier.jpg"
+    @side_txt = @title
+    erb :donate
+  end
+
+  get '/contact' do
+    @title    = "BAMRU Contacts"
+    @hdr_img  = "images/HawthornLZ.jpg"
+    @side_txt = "CONTACTS"
+    erb :contact
   end
 
 end
