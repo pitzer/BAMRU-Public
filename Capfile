@@ -1,7 +1,7 @@
 SERVER       = "alt55.com"
 
 set :application, "BAMRU TEST APP"
-set :repository,  "https://github.com/andyl/BAMRU-Test.git"
+set :repository,  "https://github.com/andyl/BAMRU-Public.git"
 set :deploy_to,   "/home/aleak/a/btest"
 
 load 'deploy' if respond_to?(:namespace)
