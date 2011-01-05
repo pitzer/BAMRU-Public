@@ -18,7 +18,7 @@ task :msg do
 end
 
 desc "Run the development server."
-task :run do
+task :run_server do
   system "shotgun config.ru -o 0.0.0.0"
 end
-
+task :run => :run_server

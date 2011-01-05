@@ -15,13 +15,25 @@ If you want to compare the dynamically generated
 page to the original static page, just change the
 url from '.test' to '.html' in your browser.
 
-Editing the App
----------------
+Installing & Running the App
+----------------------------
+This is going to work best on Linux or Mac.
+Windows hasn't been tested.
 
-1) Fork/Clone the repo.
+Installation Steps:
+1) sudo apt-get install ruby git
+2) gem install bundler
+3) git clone https://github.com/andyl/BAMRU-Public
+4) cd BAMRU-Public
+5) bundle install
+6) rake run_server
 
-2) Run 'bundle install' to install the support software.
+Editing/Updating the App
+------------------------
+Please include tests with any update you make.
+Run 'rake -T' to see a list of test/edit commands.
 
-2) Run 'rake -T' to see a list of test / edit commands.
-
-2) Run 'cap -T' to see a list of deployment commands.
+Deploying the App
+-----------------
+All of the deployment scripts are in the Capfile.
+Run 'cap -T' to see a list of deployment commands.
