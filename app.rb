@@ -226,4 +226,11 @@ class BamruApp < Sinatra::Base
     erb :admin_load_csv, :layout => :admin_layout
   end
 
+  not_found do
+    @right_nav = quote
+    @hdr_img   = "images/mtn.jpg"
+    erb :not_found
+  end
+
+
 end
