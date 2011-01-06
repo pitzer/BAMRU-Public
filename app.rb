@@ -3,11 +3,14 @@ require 'rubygems'
 # require 'bundler/setup'
 require 'yaml'
 require 'ruby-debug'
+require 'rack-flash'
 require base_dir + '/config/environment'
 
 class BamruApp < Sinatra::Base
 
   configure do
+    enable :sessions
+    use Rack::Flash
     set :erb, :trim => '-'
     BASE_DIR  = File.dirname(File.expand_path(__FILE__))
     QUOTES    = YAML.load_file(BASE_DIR + "/data/quotes.yaml")
@@ -30,6 +33,26 @@ class BamruApp < Sinatra::Base
           <div class='caps'>- #{QUOTES[index][:auth]}</div>
         </div>
       HTML
+    end
+
+    def set_flash_notice(msg)
+      flash[:notice] = msg
+    end
+
+    def get_flash_notice
+      var = flash[:notice]
+#      flash.delete(:notice) unless flash[:notice].nil?
+      var
+    end
+
+    def set_flash_error(msg)
+      flash[:error] = msg
+    end
+
+    def get_flash_error
+      var = flash[:error]
+#      flash.delete(:error) unless flash[:error].nil?
+      var
     end
 
     def event_edit_link(eventid)
@@ -59,13 +82,18 @@ class BamruApp < Sinatra::Base
     end
 
     def admin_nav
-      opt = [
-              ['/admin',     'admin home'],
-              ['/admin_new', 'add new event'],
-              ['/admin_load_csv', 'load csv file'],
-              ['/admin_export_csv', 'export csv data']
-            ]
-      opt.map {|i| admin_link(i.first, i.last)}.join(' | ')
+      opt1 = [
+              ['/admin',     'Admin Home'],
+              ['/admin_new', 'Create Event'],
+              ['/admin_load_csv', 'Upload CSV']
+             ]
+      opt2 = [
+              ['/calendar.test', 'Public Calendar'],
+              ['/admin_export_csv', 'Export CSV']
+             ]
+      r1 = opt1.map {|i| admin_link(i.first, i.last)}.join(' | ')
+      r2 = opt2.map {|i| admin_link(i.first, i.last)}.join(' | ')
+      "#{r1} // #{r2}<p/><hr>"
     end
 
     def right_link(target, label)
@@ -174,7 +202,10 @@ class BamruApp < Sinatra::Base
   end
 
   get  '/admin_delete/:id' do
-    erb :admin, :layout => :admin_layout
+    event = Event.find_by_id(params[:id])
+    set_flash_notice "Deleted #{event.title}"
+    event.destroy
+    redirect "/admin"
   end
 
   get '/admin_export_csv' do

@@ -5,8 +5,14 @@
   <link rel='stylesheet' type='text/css' href='stylesheets/admin.css'>
 </head>
 <body>
-  <div id='container'>
-    <%= yield %>
+<div id='container'>
+  <div class="center">
+    <h2>BAMRU Event Administration</h2>
+    <%= admin_nav %>
+    <div class="notice"><%= get_flash_notice %></div>
+    <div class="error"><%= get_flash_error %></div>
   </div>
+  <%= yield %>
+</div>
 </body>
 </html>

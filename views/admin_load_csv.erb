@@ -1,47 +1,41 @@
-<div class="center">
-  <h2>BAMRU Event Administration</h2>
-  <%= admin_nav %>
-</div>
-
 <form method="post" action="/admin_update">
   <input type=hidden name="id" value="288">
   <table cellpadding=1 cellspacing=0 bgcolor="#FFFFFF">
     <tr><td width=85></td><td width=100></td><td width=180></td><td></td></tr>
-  <tr><td>&nbsp;Kind:</td>
-    <td colspan=2><select name="kind">
+    <tr><td>&nbsp;Kind:</td>
+      <td colspan=2><select name="kind">
+        <option value="Meeting"  >Meeting
+        <option value="Training"  >Traininging
+        <option value="Event" selected >Event
+        <option value="Non-County Meeting"  >Non-County Meeting
+      </select></td></tr>
+    <tr><td>&nbsp;Title:</td>
+      <td colspan=2><input type="Text" size=35 maxlength=128 name="title" value="Holiday Party"></td>
+      <td><i>e.g.,</i> "Snow Search and Rescue"</td></tr>
+    <tr><td>&nbsp;Location:</td>
 
-                        <option value="Meeting"  >Meeting
-                        <option value="Training"  >Traininging
-                        <option value="Event" selected >Event
-                        <option value="Non-County Meeting"  >Non-County Meeting
-                  </select></td></tr>
-                  <tr><td>&nbsp;Title:</td>
-                    <td colspan=2><input type="Text" size=35 maxlength=128 name="title" value="Holiday Party"></td>
-                    <td><i>e.g.,</i> "Snow Search and Rescue"</td></tr>
-                  <tr><td>&nbsp;Location:</td>
+      <td colspanan=2><input type="Text" size=35 maxlength=128 name="location" value="TBD"></td>
+      <td>use "Location TBA" if unknown</td></tr>
+    <tr><td>&nbsp;Leaders:</td>
+      <td colspan=2><input type="Text" size=35 maxlength=128 nameme="leaders" value="TBD"></td>
+      <td><i>e.g.,</i> "Joe Climber, Stacy      Skier", or "TBA" if unknown</td></tr>
+    <tr><td>&nbsp;Start:</td>
 
-                    <td colspanan=2><input type="Text" size=35 maxlength=128 name="location" value="TBD"></td>
-                    <td>use "Location TBA" if unknown</td></tr>
-                  <tr><td>&nbsp;Leaders:</td>
-                    <td colspan=2><input type="Text" size=35 maxlength=128 nameme="leaders" value="TBD"></td>
-                    <td><i>e.g.,</i> "Joe Climber, Stacy      Skier", or "TBA" if unknown</td></tr>
-                  <tr><td>&nbsp;Start:</td>
+      <td><input type="Text" size=10 maxlength=10 name="start" value="2011-12-17"></td>
+      <td colspan=2>YYYY-MM-DD&nbsp;&nbsp; <i>e.g.,</i> "2006-01-nbsp31".&nbsp;&nbsp;&nbsp;<i><b>Hint:</b></i> "00" as the day will display as "TBA"</tr>
+    <tr><td>&nbsp;End:</td>
+      <td><input type="Text" size=10 maxlength=10 nameme="end" value="0000-00-00"></td>
 
-                    <td><input type="Text" size=10 maxlength=10 name="start" value="2011-12-17"></td>
-                  <td colspan=2>YYYY-MM-DD&nbsp;&nbsp; <i>e.g.,</i> "2006-01-nbsp31".&nbsp;&nbsp;&nbsp;<i><b>Hint:</b></i> "00" as the day will display as "TBA"</tr>
-                  <tr><td>&nbsp;End:</td>
-                    <td><input type="Text" size=10 maxlength=10 nameme="end" value="0000-00-00"></td>
+      <td colspan=2>Optional, use only for multi-day events.</td></tr>
+    <tr><td>&nbsp;Description:</td>
+      <td           colspan=3><textarea cols=72 rows=8 name="description">BAMRU Annual Holiday Party. </textarea></td></tr>
+    <tr><td></td><td colspan=3>&nbsp;&nbsp;Description may contain any html.&nbsp; Use html equivalents when
+      entering special characters.</td></tr>
+    <tr><td></td><td colspan=3>&nbsp;&nbsp;<b>USE FULL SENTENCES, correct punctuation, grammar and spelling.
+      &nbsp;Proofread.</b></td></tr>
 
-                    <td colspan=2>Optional, use only for multi-day events.</td></tr>
-                  <tr><td>&nbsp;Description:</td>
-                    <td           colspan=3><textarea cols=72 rows=8 name="description">BAMRU Annual Holiday Party. </textarea></td></tr>
-                  <tr><td></td><td colspan=3>&nbsp;&nbsp;Description may contain any html.&nbsp; Use html equivalents when
-                      entering special characters.</td></tr>
-                  <tr><td></td><td colspan=3>&nbsp;&nbsp;<b>USE FULL SENTENCES, correct punctuation, grammar and spelling.
-                        &nbsp;Proofread.</b></td></tr>
-
-                  <tr><td></td><td colspan=3>&nbsp;&nbsp;This posts to a public page and what you write here reflects on the unit.</td></tr>
-                    </table>
+    <tr><td></td><td colspan=3>&nbsp;&nbsp;This posts to a public page and what you write here reflects on the unit.</td></tr>
+  </table>
 
   <input type="submit" name="submit" value="Update Event">
   <input type="submit" name="cancel" value="Cancel">
