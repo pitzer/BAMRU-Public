@@ -1,36 +1,18 @@
 <div class="center">
   <h2>BAMRU Event Administration</h2>
-  <a href="/admin_new">add new event</a> |
-  <a href="/admin_load_csv">load events from a csv file</a> |
-  <a href="/admin_export_csv">export events to csv</a>
+  <%= admin_nav %>
 </div>
 
 <h3>Meetings</h3>
-<table class="basic">
-<% @meetings.each do |m|  %>
-  <tr><td><%=m.title%> / <%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
-<% end %>
-</table>
+<%= event_table @meetings %>
 
 <h3>Trainings</h3>
-<table class="basic">
-<% @trainings.each do |m|  %>
-  <tr><td><%=m.title%> / <%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
-<% end %>
-</table>
+<%= event_table @trainings %>
 
 <h3>Events</h3>
-<table class="basic">
-<% @events.each do |m|  %>
-  <tr><td><%=m.title%> / <%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
-<% end %>
-</table>
+<%= event_table @events %>
 
 <h3>Non-County Meetings</h3>
-<table class="basic">
-<% @non_county.each do |m|  %>
-  <tr><td><%=m.title%> / <%=m.location%></td><td><%=m.start%></td><td><%=m.leaders%></td><td>edit | delete</td></tr>
-<% end %>
-</table>
+<%= event_table @non_county %>
 
 

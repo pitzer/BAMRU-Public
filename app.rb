@@ -32,10 +32,42 @@ class BamruApp < Sinatra::Base
       HTML
     end
 
+    def event_edit_link(eventid)
+      "<a href='/admin_edit/#{eventid}'>edit</a>"
+    end
+
+    def event_delete_link(eventid)
+      "<a href='/admin_delete/#{eventid}'>delete</a>"
+    end
+    
+    def event_table(events)
+      output = "<table class='basic'>"
+      events.each do |m|
+        output << "<tr><td>#{m.title} / #{m.location}</td><td>#{m.start}</td><td>#{m.leaders}</td><td class='ac'>#{event_edit_link(m.id)} | #{event_delete_link(m.id)}</td></tr>"
+      end
+      output << "</table>"
+      output
+    end
+
     def blog_url
       "http://bamru.blogspot.com"
     end
-    
+
+    def admin_link(target, label)
+      link = "<a href='#{target}'>#{label}</a>"
+      target == current_page ? label : link
+    end
+
+    def admin_nav
+      opt = [
+              ['/admin',     'admin home'],
+              ['/admin_new', 'add new event'],
+              ['/admin_load_csv', 'load csv file'],
+              ['/admin_export_csv', 'export csv data']
+            ]
+      opt.map {|i| admin_link(i.first, i.last)}.join(' | ')
+    end
+
     def right_link(target, label)
       "<a href='#{target}' class='nav3' onfocus='blur();'>#{label}</a><br/>"
     end
@@ -137,8 +169,12 @@ class BamruApp < Sinatra::Base
     erb :admin_new, :layout => :admin_layout
   end
 
-  get '/admin_edit' do
+  get '/admin_edit/:id' do
     erb :admin_edit, :layout => :admin_layout
+  end
+
+  get  '/admin_delete/:id' do
+    erb :admin, :layout => :admin_layout
   end
 
   get '/admin_export_csv' do
