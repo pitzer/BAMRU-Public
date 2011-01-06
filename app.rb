@@ -88,13 +88,13 @@ class BamruApp < Sinatra::Base
               ['/admin_load_csv', 'Upload CSV']
              ]
       opt2 = [
-              ['/calendar.test', 'Public Calendar'],
-              ['/admin_export_ical', 'Export ICAL'],
-              ['/admin_export_csv', 'Export CSV']
+              ['/calendar.test', 'calendar.html'],
+              ['/calendar.ical', 'calendar.ical'],
+              ['/calendar.csv', 'calendar.csv']
              ]
       r1 = opt1.map {|i| admin_link(i.first, i.last)}.join(' | ')
       r2 = opt2.map {|i| admin_link(i.first, i.last)}.join(' | ')
-      "#{r1} // #{r2}<p/><hr>"
+      "#{r1} || #{r2}<p/><hr>"
     end
 
     def right_link(target, label)
@@ -210,13 +210,13 @@ class BamruApp < Sinatra::Base
     redirect "/admin"
   end
 
-  get '/admin_export_ical' do
+  get '/calendar.ical' do
     response["Content-Type"] = "text/plain"
     @events = Event.all
     erb :admin_export_ical, :layout => false
   end
 
-  get '/admin_export_csv' do
+  get '/calendar.csv' do
     response["Content-Type"] = "text/plain"
     @events = Event.all
     erb :admin_export_csv, :layout => false
