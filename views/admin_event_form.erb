@@ -19,7 +19,7 @@
     </tr>
     <tr>
       <td class="ar">Leaders:</td>
-      <td><input type="Text" size=35 maxlength=128 nameme="leaders" value="<%=@event.leaders%>"></td>
+      <td><input type="Text" size=35 maxlength=128 name="leaders" value="<%=@event.leaders%>"></td>
       <td>e.g. "Joe Climber, Stacy Skier", or "TBA" if unknown</td>
     </tr>
     <tr>
@@ -43,8 +43,13 @@
       <b>USE FULL SENTENCES, correct punctuation, grammar and spelling. Proofread!</b><br/>
       This posts to a public page and what you write here reflects on the unit.</td>
     </tr>
+    <tr>
+      <td></td>
+      <td>
+        <br/>
+        <input type="submit" name="submit" value="<%=@button_text%>">
+        <input type="submit" name="cancel" value="Cancel">
+      </td>
+    </tr>
   </table>
-
-  <input type="submit" name="submit" value="<%=@button_text%>">
-  <input type="submit" name="cancel" value="Cancel">
 </form>

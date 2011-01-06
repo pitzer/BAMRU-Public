@@ -100,7 +100,18 @@ class BamruApp < Sinatra::Base
   end
 
   post '/admin_create' do
-
+    params.delete "submit"
+    event = Event.new(params)
+    if event.save
+      set_flash_notice("Created new event (#{event.kind}/#{event.title})")
+      redirect '/admin_show'
+    else
+      @event = event
+      @action = "/admin_create"
+      @button_text = "Create Event"
+      set_flash_error("Invalid parameter - try again")
+      erb :admin_new, :layout => :admin_layout
+    end
   end
 
   get '/admin_edit/:id' do
@@ -111,6 +122,18 @@ class BamruApp < Sinatra::Base
   end
 
   post '/admin_update/:id' do
+    event = Event.find_by_id(params[:id])
+    params.delete "submit"
+    if event.update_attributes(params)
+      set_flash_notice("Updated Event (#{event.kind}/#{event.title})")
+      redirect '/admin_show'
+    else
+      @event = event
+      @action = "/admin_create"
+      @button_text = "Update Event"
+      set_flash_error("Invalid parameter - try again")
+      erb :admin_edit, :layout => :admin_layout
+    end
 
   end
 
@@ -118,7 +141,7 @@ class BamruApp < Sinatra::Base
     event = Event.find_by_id(params[:id])
     set_flash_notice "Deleted #{event.title}"
     event.destroy
-    redirect "/admin"
+    redirect "/admin_show"
   end
 
   get '/calendar.ical' do
@@ -146,6 +169,5 @@ class BamruApp < Sinatra::Base
     @hdr_img   = "images/mtn.jpg"
     erb :not_found
   end
-
 
 end
