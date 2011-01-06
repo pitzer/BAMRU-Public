@@ -44,6 +44,17 @@ module Sinatra
       var
     end
 
+    def select_helper(event)
+      vals = {"meeting"    => "Meeting",
+              "training"   => "Training",
+              "event"      => "Event",
+              "non_county" => "Non-County Meeting"}
+      vals.keys.map do |i|
+        opt = i == event.kind ? " selected" : ""
+        "<option value='#{i}'#{opt}>#{vals[i]}</option>"
+      end.join(' ')
+    end
+
     def event_edit_link(eventid)
       "<a href='/admin_edit/#{eventid}'>edit</a>"
     end

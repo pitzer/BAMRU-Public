@@ -1,17 +1,20 @@
 class Event < ActiveRecord::Base
 
   # ----- Validations -----
-  # validates_presence_of   :kind, :title, :location, :leaders, :start
+  validates_presence_of   :kind, :title, :location, :leaders, :start
   # validates_uniqueness_of :title
-  # validates_length_of     :title, :within => 3..20
 
   # Other Validations TBD
   # end must be after start
   # start, end must be valid dates
-  # kind can be one of %w(meeting training event non_county_meeting)
+  # kind can be one of %w(meeting training event non_county)
 
-  # default value of leader is TBA
+  # TODO: Calculate an event hash
+  # TODO: The event hash must be unique
 
   # empty start date should report as TBA
+
+  # ----- Local Methods -----
+  # display_date
 
 end
