@@ -89,6 +89,7 @@ class BamruApp < Sinatra::Base
              ]
       opt2 = [
               ['/calendar.test', 'Public Calendar'],
+              ['/admin_export_ical', 'Export ICAL'],
               ['/admin_export_csv', 'Export CSV']
              ]
       r1 = opt1.map {|i| admin_link(i.first, i.last)}.join(' | ')
@@ -198,14 +199,21 @@ class BamruApp < Sinatra::Base
   end
 
   get '/admin_edit/:id' do
+    @event = Event.find_by_id(params[:id])
     erb :admin_edit, :layout => :admin_layout
   end
 
-  get  '/admin_delete/:id' do
+  get '/admin_delete/:id' do
     event = Event.find_by_id(params[:id])
     set_flash_notice "Deleted #{event.title}"
     event.destroy
     redirect "/admin"
+  end
+
+  get '/admin_export_ical' do
+    response["Content-Type"] = "text/plain"
+    @events = Event.all
+    erb :admin_export_ical, :layout => false
   end
 
   get '/admin_export_csv' do
