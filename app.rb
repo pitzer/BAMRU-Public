@@ -84,12 +84,12 @@ class BamruApp < Sinatra::Base
     erb :contact
   end
 
-  get '/admin' do
+  get '/admin_show' do
     @meetings   = Event.where(:kind => "meeting").all
     @trainings  = Event.where(:kind => "training").all
     @events     = Event.where(:kind => "event").all
     @non_county = Event.where(:kind => "non_county").all
-    erb :admin, :layout => :admin_layout
+    erb :admin_show, :layout => :admin_layout
   end
 
   get '/admin_new' do
@@ -122,6 +122,10 @@ class BamruApp < Sinatra::Base
 
   get '/admin_load_csv' do
     erb :admin_load_csv, :layout => :admin_layout
+  end
+
+  get '/admin' do
+    erb :admin, :layout => :admin_layout
   end
 
   not_found do
