@@ -187,10 +187,10 @@ class BamruApp < Sinatra::Base
   end
 
   get '/admin' do
-    @meetings = Event.where(:kind => "meeting").all
-    @trainings = Event.where(:kind => "training").all
-    @events = Event.where(:kind => "event").all
-    @non_county = Event.where(:kind => "non_county")
+    @meetings   = Event.where(:kind => "meeting").all
+    @trainings  = Event.where(:kind => "training").all
+    @events     = Event.where(:kind => "event").all
+    @non_county = Event.where(:kind => "non_county").all
     erb :admin, :layout => :admin_layout
   end
 

@@ -1,0 +1,54 @@
+<form method="post" action="/admin_update">
+  <input type=hidden name="id" value="<%= @event.id %>">
+  <table cellpadding=1 cellspacing=0 bgcolor="#FFFFFF">
+    <tr>
+      <td class="ar">Kind:</td>
+      <td><select name="kind">
+        <option value="meeting">Meeting
+        <option value="training">Training
+        <option value="event" selected >Event
+        <option value="non_county">Non-County Meeting
+      </select></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="ar">Title:</td>
+      <td><input type="Text" size=35 maxlength=128 name="title" value="Holiday Party"></td>
+      <td><i>e.g.,</i> "Snow Search and Rescue"</td>
+    </tr>
+    <tr>
+      <td class="ar">Location:</td>
+      <td><input type="Text" size=35 maxlength=128 name="location" value="TBD"></td>
+      <td>use "Location TBA" if unknown</td>
+    </tr>
+    <tr>
+      <td class="ar">Leaders:</td>
+      <td><input type="Text" size=35 maxlength=128 nameme="leaders" value="TBD"></td>
+      <td><i>e.g.,</i> "Joe Climber, Stacy      Skier", or "TBA" if unknown</td>
+    </tr>
+    <tr>
+      <td class="ar">Start:</td>
+      <td><input type="Text" size=10 maxlength=10 name="start" value="2011-12-17"></td>
+      <td>YYYY-MM-DD <i>e.g.,</i> "2006-01-nbsp31". <i><b>Hint:</b></i> "00" as the day will display as "TBA"</td>
+    </tr>
+    <tr>
+      <td class="ar">End:</td>
+      <td><input type="Text" size=10 maxlength=10 nameme="end" value="0000-00-00"></td>
+      <td>Optional, use only for multi-day events.</td>
+    </tr>
+    <tr>
+      <td>Description:</td>
+      <td colspan=2><textarea cols=72 rows=8 name="description">BAMRU Annual Holiday Party. </textarea></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td colspan=2>Description may contain any html. Use html equivalents when
+      entering special characters.<br/>
+      <b>USE FULL SENTENCES, correct punctuation, grammar and spelling. Proofread!</b><br/>
+      This posts to a public page and what you write here reflects on the unit.</td>
+    </tr>
+  </table>
+
+  <input type="submit" name="submit" value="Update Event">
+  <input type="submit" name="cancel" value="Cancel">
+</form>
