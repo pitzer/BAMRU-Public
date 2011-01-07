@@ -69,7 +69,7 @@ module Sinatra
     def event_table(events)
       output = "<table class='basic'>"
       events.each do |m|
-        output << "<tr><td>#{m.title} / #{m.location}</td><td>#{m.start}</td><td>#{m.leaders}</td><td class='ac'>#{event_edit_link(m.id)} | #{event_delete_link(m.id)}</td></tr>"
+        output << "<tr><td>#{m.title} / #{m.location}</td><td>#{m.start}</td><td>#{m.leaders}</td><td class='ac'><nobr>#{event_edit_link(m.id)} | #{event_delete_link(m.id)}</nobr></td></tr>"
       end
       output << "</table>"
       output

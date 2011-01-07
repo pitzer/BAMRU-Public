@@ -1,9 +1,9 @@
 This is a mockup of a simple BAMRU Website app.
 -----------------------------------------------
 
-Live Demo
----------
-To see a live demo, visit
+Live Demo - Public Pages
+------------------------
+To see a live demo, visit:
 http://btest.alt55.com/calendar.test
 
 All of the demo uses dynamically generated pages
@@ -14,8 +14,17 @@ If you want to compare the dynamically generated
 page to the original static page, just change the
 url from '.test' to '.html' in your browser.
 
+Live Demo - Admin Pages
+-----------------------
+Admin pages are at:
+http://btest.alt55.com/admin
+
+The admin pages are a work in progress.
+There is no password protection yet!
+
 Installing & Running the App
 ----------------------------
+You can clone the app and run it on your system.
 This is going to work best on Linux or Mac.
 Windows hasn't been tested.
 
@@ -44,7 +53,7 @@ Run 'cap -T' to see a list of deployment commands.
 Administration and Security
 ---------------------------
 The admin page allows approved users to update calendar
-events on the website.  The admin page is password 
+events on the website.  The admin page will be password 
 protected.  The password is set at install time, 
 and is not stored in the source code repository.
 The password can be updated by running the task
