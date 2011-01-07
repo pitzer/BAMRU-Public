@@ -4,9 +4,12 @@ module Sinatra
   module AppHelpers
 
     BASE_DIR  = File.dirname(File.expand_path(__FILE__))
+    DATA_DIR  = BASE_DIR + "/data"
+    CSV_FILE  = DATA_DIR + "/data.csv"
     QUOTES    = YAML.load_file(BASE_DIR + "/data/quotes.yaml")
     RIGHT_NAV = YAML.load_file(BASE_DIR + "/data/right_nav.yaml")
     GUEST_POLICY   = File.read(BASE_DIR + "/data/guest_policy.html")
+
 
     def current_page
       request.path_info
@@ -118,10 +121,36 @@ module Sinatra
       '<img src="assets/dots.gif" width="134" height="10" border="0"><br>'
     end
 
+  require 'fastercsv'  
+
+  def read_csv
+    system "rm -f /tmp/bad.csv"
+    bad_csv = ""
+    output = File.read(CSV_FILE).reduce([]) do |a,v|
+      begin
+        a << v.parse_csv
+      rescue
+        puts "BAD RECORD FOUND!! >> #{v[0..30]}"
+        bad_csv << v
+      end
+      a
+    end
+    File.open('/tmp/bad.csv', 'w') {|f| f.puts bad_csv} unless bad_csv.empty?
+    output
+  end
+
+  def csv_to_hash(data)
+    headers = data.first
+    fields  = data[1..-1]
+    fields.reduce([]) do |a,v|
+      a << FasterCSV::Row.new(headers, v)
+      a
+    end
+  end
+        
   end
 
   helpers AppHelpers
 
 end
-
 

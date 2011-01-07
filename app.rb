@@ -83,6 +83,10 @@ class BamruApp < Sinatra::Base
     erb :contact
   end
 
+  get '/admin' do
+    erb :admin, :layout => :admin_layout
+  end
+
   get '/admin_show' do
     @meetings   = Event.where(:kind => "meeting").all
     @trainings  = Event.where(:kind => "training").all
@@ -159,8 +163,30 @@ class BamruApp < Sinatra::Base
     erb :admin_load_csv, :layout => :admin_layout
   end
 
-  get '/admin' do
-    erb :admin, :layout => :admin_layout
+  post('/admin_load_csv') do
+    start_count = Event.count
+    system "mkdir -p #{DATA_DIR}"
+    system "rm -f #{CSV_FILE}"
+    infile  = params[:file][:tempfile]
+    puts "IN POST" * 4
+    File.open(CSV_FILE, 'w') { |f| f.write infile.read }
+    csv_to_hash(read_csv).each do |r|
+      h = r.to_hash
+      h["kind"].downcase! unless h["kind"].nil?
+      Event.create(h)
+    end
+    finish_count = Event.count
+    if File.exist? '/tmp/bad.csv'
+      csv_link = "malformed CSV records. (<a href='/bad_csv'>view</a>)"
+      set_flash_error("Warning: #{`wc -l /tmp/bad.csv`.split(' ').first} #{csv_link}")
+    end
+    set_flash_notice("CSV File Upload created #{finish_count - start_count} new event records.")
+    redirect '/admin_show'
+  end
+
+  get '/bad_csv' do
+    response["Content-Type"] = "text/plain"
+    File.read('/tmp/bad.csv')
   end
 
   not_found do
