@@ -45,8 +45,14 @@ namespace :db do
     ActiveRecord::Migrator.migrate("db/migrate")
   end
 
+  desc "Remove all data from database."
+  task :reset => :environment do
+    puts "Removing all database records"
+    Event.all.each {|e| e.destroy}
+  end
+
   desc "Load seed data"
-  task :seed => :environment do
+  task :seed => [:environment, :reset] do
     puts "Loading Seed Data"
     require 'db/seed'
   end
