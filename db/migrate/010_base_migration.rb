@@ -6,7 +6,7 @@ class BaseMigration < ActiveRecord::Migration
       t.string :title
       t.string :location, :default => "TBA"
       t.string :leaders,  :default => "TBA"
-      t.date   :start
+      t.date   :start,    :default => Time.now
       t.date   :end
       t.text   :description
       t.timestamps

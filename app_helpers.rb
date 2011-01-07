@@ -86,15 +86,15 @@ module Sinatra
 
     def admin_nav
       opt1 = [
-              ['/admin',          'Admin Home'],
-              ['/admin_show',     'Edit Events'],
+              ['/admin',          'Admin Home'  ],
+              ['/admin_show',     'Events'      ],
               ['/admin_new',      'Create Event'],
-              ['/admin_load_csv', 'Upload CSV']
+              ['/admin_load_csv', 'Upload CSV'  ]
       ]
       opt2 = [
               ['/calendar.test', 'calendar.html'],
               ['/calendar.ical', 'calendar.ical'],
-              ['/calendar.csv', 'calendar.csv']
+              ['/calendar.csv',  'calendar.csv' ]
       ]
       r1 = opt1.map {|i| admin_link(i.first, i.last)}.join(' | ')
       r2 = opt2.map {|i| admin_link(i.first, i.last)}.join(' | ')
