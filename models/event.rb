@@ -16,7 +16,6 @@ class Event < ActiveRecord::Base
   # empty start date should report as TBA
 
   # ----- Local Methods -----
-  # display_date
 
   # Convert double quotes to single quotes.
   # This is done to support CSV output.
@@ -32,11 +31,13 @@ class Event < ActiveRecord::Base
     "#{self.title}/#{self.location}/#{self.leaders}/#{self.start}/#{self.end}"
   end
 
+  # The signature is a MD5 digest.
   def generate_signature
     Digest::MD5.hexdigest signature_fields
   end
 
-  # The signature must be unique.
+  # The digest field is checked to ensure it is unique.
+  # This eliminates the possibility of duplicate records.
   def save_signature_into_digest_field
     self.digest = generate_signature
   end

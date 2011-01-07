@@ -1,16 +1,55 @@
-<h2>About this System</h2>
+<h2>Overview</h2>
 
-Use these pages to create, update and delete BAMRU calendar events.
+Use these pages to edit BAMRU calendar events.
 Edit with care! Your changes go live onto the BAMRU website!<p/>
 
-The server address for this website is http://this/that.com.<br/>
-The most recent version of the website was deployed on Jan 5 at 2232.<br/>
-There are NN records in our event database. (55 trainings, 22 events, 33 meetings, 22 non-county).
+<table class="info_table">
+  <tr>
+    <td>
+      Website Home Page: <a href='<%=current_server%>'><%=current_server%></a>
+    </td>
+    <td>
+      Website Admin Page: <a href='<%=current_server%>/admin'><%=current_server%>/admin</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Last Website Change: <b><%=last_modification%></b>
+    </td>
+    <td>
+      Last Server Restart: <b><%=last_restart%></b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      There are <b><%=number_of%></b> records in our event database
+    </td>
+    <td>
+      (<%=number_of "meeting"%> meetings, <%=number_of "training"%> trainings, <%=number_of "event"%> events, <%=number_of "non_county"%> non-county)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Last DB Update: <%=last_update%>
+    </td>
+    <td>
+      Default Display Range: Jan 10 - Nov 22
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Oldest Record: <%=oldest_record%>
+    </td>
+    <td>
+      Newest Record: <%=newest_record%>
+    </td>
+  </tr>
+</table>
 
 <h2>Bugs and Change Requests</h2>
 
 If you spot bugs, or have  ideas for improving the website, please open an issue using our 
-tracker at http://github.com/blah.<p/>
+tracker at <%= link_url "https://github.com/andyl/BAMRU-Public/issues" %>.<p/>
 
 You can also contact the site maintainer, Andy Leak - andy@r210.com - 650-823-0836.
 
@@ -19,20 +58,18 @@ You can also contact the site maintainer, Andy Leak - andy@r210.com - 650-823-08
 You can load all of BAMRU's calendar data into your Google Calendar.  Here's how:
 
 <ol>
-  <li>Open your Google Calendar.
-  <li>Find the 'Add v' option on the bottom right corner.
+  <li>Open your Google Calendar
+  <li>Find the 'Add v' button on the bottom right corner
   <li>Select the option 'Add by URL'
-  <li>Enter http://this_system/calendar.ical
-  <li>That's it!
+  <li>Enter <code><%=current_server%>/calendar.ical</code>
 </ol>
 
-Once this is done, your Google Calendar will auto-sync with BAMRU's calendar, 
-and you can overlay the BAMRU events onto your other calendars.
+After that, the calendar data will sync, and you can overlay BAMRU events onto your Google calendars.
 
 <h2>Editing the Website</h2>
 
-The source code for this application is publicly accessible.  Anyone is welcome to 
+The source code for this application is publicly available.  Anyone is welcome to
 download the code, learn how it operates, and make enhancements.<p/>
-The code is accessible at http://github.com/andyl/BAMRU-Public.<p/>
-There is a wiki for site developers at http://github.com/andyl/BAMRU-Public/wiki.
+Get the code at <%= link_url "http://github.com/andyl/BAMRU-Public" %>.<p/>
+There is a wiki for site developers at <%= link_url "http://github.com/andyl/BAMRU-Public/wiki" %>.
 

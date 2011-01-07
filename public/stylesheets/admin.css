@@ -4,6 +4,14 @@ body {
   font-size: 14px;
 }
 
+table {
+    font-size: 12px;
+}
+
+table.info_table td {
+    padding-left: 60px;
+}
+
 #container {
   width: 960px;
   margin: 0 auto;

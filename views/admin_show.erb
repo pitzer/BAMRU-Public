@@ -1,14 +1,14 @@
 <h3>Meetings</h3>
-<%= event_table @meetings %>
+<%= event_table(event_select("meeting")) %>
 
 <h3>Trainings</h3>
-<%= event_table @trainings %>
+<%= event_table(event_select("training")) %>
 
 <h3>Events</h3>
-<%= event_table @events %>
+<%= event_table(event_select("event")) %>
 
 <h3>Non-County Meetings</h3>
-<%= event_table @non_county %>
+<%= event_table(event_select("non_county")) %>
 
 
 

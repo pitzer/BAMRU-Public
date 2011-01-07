@@ -19,6 +19,7 @@ end
 
 desc "Run the development server."
 task :run_server do
+  system "touch tmp/restart.txt"
   system "shotgun config.ru -o 0.0.0.0"
 end
 task :run => :run_server
@@ -31,6 +32,7 @@ task :console do
   ARGV.clear
   IRB.start
 end
+task :con => :console
 
 namespace :db do
 

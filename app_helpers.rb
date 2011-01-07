@@ -10,9 +10,51 @@ module Sinatra
     RIGHT_NAV = YAML.load_file(BASE_DIR + "/data/right_nav.yaml")
     GUEST_POLICY   = File.read(BASE_DIR + "/data/guest_policy.html")
 
+    def current_server
+      "http://#{request.env["HTTP_HOST"]}"
+    end
 
     def current_page
       request.path_info
+    end
+
+    def number_of(kind = "")
+      return Event.count if kind.blank?
+      Event.where(:kind => kind).count
+    end
+
+    def last_modification(file_spec = nil)
+      file_spec ||= %w(app* views/*)
+      Dir[*file_spec].map {|f| File.ctime(f)}.max.strftime("%a %b %d - %H:%M")
+    end
+
+    def event_select(type)
+      Event.where(:kind => type).order('start DESC').all
+    end
+
+    def last_restart
+      File.ctime(BASE_DIR + "/tmp/restart.txt").strftime("%a %b %d - %H:%M")
+    end
+
+    def record_display(event)
+      "<b>#{event.start}</b> (<a href='/admin_edit/#{event.id}'>#{event.title[0..15]}...</a>)"
+    end
+
+    def oldest_record
+      record_display Event.order('start').first
+    end
+
+    def newest_record
+      record_display Event.order('start').last
+    end
+
+    def last_update
+      rec = Event.order('updated_at').last
+      "<b>#{rec.updated_at.strftime("%a %b %d - %H:%M")}</b> (<a href='/admin_edit/#{rec.id}'>#{rec.title[0..15]}...</a>)"
+    end
+
+    def link_url(url)
+      "<a href='#{url}'>#{url}</a>"
     end
 
     def quote
