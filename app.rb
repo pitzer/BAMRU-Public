@@ -170,8 +170,11 @@ class BamruApp < Sinatra::Base
     start_count = Event.count
     system "mkdir -p #{DATA_DIR}"
     system "rm -f #{CSV_FILE}"
+    if params[:file].nil?
+      set_flash_error("Error - no CSV file was selected")
+      redirect '/admin_load_csv'
+    end
     infile  = params[:file][:tempfile]
-    puts "IN POST" * 4
     File.open(CSV_FILE, 'w') { |f| f.write infile.read }
     csv_to_hash(read_csv).each do |r|
       h = r.to_hash
