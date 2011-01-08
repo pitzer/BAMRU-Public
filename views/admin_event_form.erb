@@ -1,3 +1,32 @@
+<script type="text/javascript">
+        $(function() {
+            $("#start, #end").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "yy-mm-dd"
+            });
+        });
+        
+//    $(function() {
+//        var dates = $( "#start, #end" ).datepicker({
+//            changeMonth: true,
+//            changeYear: true,
+//            dateFormat: "yy-mm-dd",
+//            onSelect: function( selectedDate ) {
+//                var option   = this.id == "start" ? "minDate" : "maxDate",
+//                    instance = $( this ).data( "datepicker" );
+//                date = $.datepicker.parseDate(
+//                        instance.settings.dateFormat ||
+//                                $.datepicker._defaults.dateFormat,
+//                        selectedDate, instance.settings );
+//                dates.not( this ).datepicker( "option", option, date );
+//            }
+//        });
+//    });
+
+</script>
+
+
 <form method="post" action="<%=@action%>">
   <table cellpadding=1 cellspacing=1>
     <tr>
@@ -24,13 +53,11 @@
     </tr>
     <tr>
       <td class="ar">Start:</td>
-      <td><input type="Text" size=10 maxlength=10 name="start" value="<%=@event.start%>"></td>
-      <td>YYYY-MM-DD <i>e.g.,</i> "2006-01-22".</td>
-    </tr>
-    <tr>
-      <td class="ar">End:</td>
-      <td><input type="Text" size=10 maxlength=10 nameme="end" value="<%=@event.end%>"></td>
-      <td>Optional, use only for multi-day events.</td>
+      <td>
+        <input id="start" type="Text" size=10 maxlength=10 name="start" value="<%=@event.start%>">
+        <span style="margin-left: 30px;">End:</span> <input id="end" type="Text" size=10 maxlength=10 nameme="end" value="<%=@event.end%>">
+        </td>
+      <td>End is optional - only use it for multi-day events.</td>
     </tr>
     <tr>
       <td>Description:</td>

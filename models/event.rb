@@ -2,7 +2,7 @@ class Event < ActiveRecord::Base
 
   # ----- Callbacks -----
   before_validation :save_signature_into_digest_field
-  before_save       :remove_quotes
+  before_save       :remove_quotes, :tbd_to_tba
 
   # ----- Validations -----
   validates_presence_of   :kind, :title, :location, :leaders, :start
@@ -25,6 +25,12 @@ class Event < ActiveRecord::Base
     self.location.gsub!(%q["],%q['])
     self.leaders.gsub!(%q["],%q['])
     self.description.gsub!(%q["],%q['])
+  end
+
+  # Changes 'tba, TBD, tbd' to 'TBA'
+  def tbd_to_tba
+    self.location.gsub!(/[Tt][Bb][DdAa]/, "TBA")
+    self.leaders.gsub!(/[Tt][Bb][DdAa]/,  "TBA")
   end
 
   def signature_fields

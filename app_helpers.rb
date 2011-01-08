@@ -100,6 +100,10 @@ module Sinatra
       end.join(' ')
     end
 
+    def event_copy_link(eventid)
+      "<a href='/admin_copy/#{eventid}'>copy</a>"
+    end
+
     def event_edit_link(eventid)
       "<a href='/admin_edit/#{eventid}'>edit</a>"
     end
@@ -111,7 +115,7 @@ module Sinatra
     def event_table(events)
       output = "<table class='basic'>"
       events.each do |m|
-        output << "<tr><td>#{m.title} / #{m.location}</td><td>#{m.start}</td><td>#{m.leaders}</td><td class='ac'><nobr>#{event_edit_link(m.id)} | #{event_delete_link(m.id)}</nobr></td></tr>"
+        output << "<tr><td>#{m.title} / #{m.location}</td><td>#{m.start}</td><td>#{m.leaders}</td><td class='ac'><nobr>#{event_copy_link(m.id)} | #{event_edit_link(m.id)} | #{event_delete_link(m.id)}</nobr></td></tr>"
       end
       output << "</table>"
       output

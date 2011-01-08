@@ -98,6 +98,13 @@ class BamruApp < Sinatra::Base
     erb :admin_new, :layout => :admin_layout
   end
 
+  get '/admin_copy/:id' do
+    @event       = Event.find_by_id(params[:id])
+    @action      = "/admin_create"
+    @button_text = "Create Event"
+    erb :admin_new, :layout => :admin_layout
+  end
+
   post '/admin_create' do
     params.delete "submit"
     event = Event.new(params)
