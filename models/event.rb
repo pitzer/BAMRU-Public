@@ -1,19 +1,22 @@
 class Event < ActiveRecord::Base
 
   # ----- Callbacks -----
-  before_validation :save_signature_into_digest_field
-  before_save       :remove_quotes, :tbd_to_tba
+  before_validation :save_signature_into_digest_field, :tbd_to_tba
+  before_save       :remove_quotes
 
   # ----- Validations -----
   validates_presence_of   :kind, :title, :location, :leaders, :start
-  validates_uniqueness_of :digest     # no duplicate records allowed!
+  validates_uniqueness_of :digest, :message => "duplicate record - identical title, location, start"
 
-  # Other Validations TBD
-  # end must be after start
-  # start, end must be valid dates
-  # kind can be one of %w(meeting training event non_county)
+  validates_format_of :kind, :with => /^(meeting|training|event|non-county)$/
 
-  # empty start date should report as TBA
+  validate :check_dates
+
+  # start must happen before end
+  def check_dates
+    return if self.end.nil? || self.end.blank?
+    errors[:start] << "must happen before 'end'" if self.end < self.start
+  end
 
   # ----- Local Methods -----
 
@@ -28,9 +31,12 @@ class Event < ActiveRecord::Base
   end
 
   # Changes 'tba, TBD, tbd' to 'TBA'
+  # Changes nil or blank value to 'TBA'
   def tbd_to_tba
     self.location.gsub!(/[Tt][Bb][DdAa]/, "TBA")
+    self.location = "TBA" if self.location.nil? || self.location.blank?
     self.leaders.gsub!(/[Tt][Bb][DdAa]/,  "TBA")
+    self.leaders = "TBA" if self.leaders.nil? || self.leaders.blank?
   end
 
   def signature_fields

@@ -12,8 +12,8 @@
   <div class="center">
     <h2>BAMRU Calendar Admin</h2>
     <%= admin_nav %>
-    <div class="notice"><%= get_flash_notice %></div>
-    <div class="error"><%= get_flash_error %></div>
+    <%= get_flash_notice %>
+    <%= get_flash_error %>
   </div>
   <%= yield %>
 </div>

@@ -37,6 +37,7 @@ module Sinatra
     end
 
     def record_display(event)
+      return if event.nil?
       "<b>#{event.start}</b> (<a href='/admin_edit/#{event.id}'>#{event.title[0..15]}...</a>)"
     end
 
@@ -50,6 +51,7 @@ module Sinatra
 
     def last_update
       rec = Event.order('updated_at').last
+      return if rec.nil?
       "<b>#{rec.updated_at.strftime("%a %b %d - %H:%M")}</b> (<a href='/admin_edit/#{rec.id}'>#{rec.title[0..15]}...</a>)"
     end
 
@@ -74,9 +76,8 @@ module Sinatra
     end
 
     def get_flash_notice
-      var = flash[:notice]
-#      flash.delete(:notice) unless flash[:notice].nil?
-      var
+      var = flash[:notice]; flash[:notice] = nil
+      "<div class='notice'>#{var}</div>" unless var.nil?
     end
 
     def set_flash_error(msg)
@@ -84,9 +85,12 @@ module Sinatra
     end
 
     def get_flash_error
-      var = flash[:error]
-#      flash.delete(:error) unless flash[:error].nil?
-      var
+      var = flash[:error]; flash[:error] = nil
+      "<div class='error'>#{var}</div>" unless var.nil?
+    end
+
+    def error_text(hash)
+      hash.map {|k,v| "<b>#{k}:</b> #{v}"}.join("<br/>")
     end
 
     def select_helper(event)

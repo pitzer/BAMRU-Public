@@ -57,3 +57,17 @@ td.btn {
   /*background-color: green;*/
   text-align: center;
 }
+
+.error {
+    padding: 5px;
+    margin: 10px;
+    background-color: pink;
+    border: 20px;
+}
+
+.notice {
+    padding: 5px;
+    margin: 10px;
+    background-color: #adff2f;
+    border: 20px;
+}

@@ -109,13 +109,13 @@ class BamruApp < Sinatra::Base
     params.delete "submit"
     event = Event.new(params)
     if event.save
-      set_flash_notice("Created new event (#{event.kind}/#{event.title})")
+      set_flash_notice("Created New Event (#{event.kind.capitalize} > #{event.title} > #{event.start})")
       redirect '/admin_show'
     else
+      set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(event.errors)}")
       @event = event
       @action = "/admin_create"
       @button_text = "Create Event"
-      set_flash_error("Invalid parameter - try again")
       erb :admin_new, :layout => :admin_layout
     end
   end
@@ -131,13 +131,13 @@ class BamruApp < Sinatra::Base
     event = Event.find_by_id(params[:id])
     params.delete "submit"
     if event.update_attributes(params)
-      set_flash_notice("Updated Event (#{event.kind}/#{event.title})")
+      set_flash_notice("Updated Event (#{event.kind.capitalize} > #{event.title} > #{event.start})")
       redirect '/admin_show'
     else
+      set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(event.errors)}")
       @event = event
       @action = "/admin_create"
       @button_text = "Update Event"
-      set_flash_error("Invalid parameter - try again")
       erb :admin_edit, :layout => :admin_layout
     end
 
@@ -145,7 +145,7 @@ class BamruApp < Sinatra::Base
 
   get '/admin_delete/:id' do
     event = Event.find_by_id(params[:id])
-    set_flash_notice "Deleted #{event.title}"
+    set_flash_notice("Deleted Event (#{event.kind.capitalize} > #{event.title} > #{event.start})")
     event.destroy
     redirect "/admin_show"
   end
