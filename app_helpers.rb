@@ -28,9 +28,7 @@ module Sinatra
       Dir[*file_spec].map {|f| File.ctime(f)}.max.strftime("%a %b %d - %H:%M")
     end
 
-    def event_select(type)
-      Event.where(:kind => type).order('start DESC').all
-    end
+    require 'time'
 
     def last_restart
       File.ctime(BASE_DIR + "/tmp/restart.txt").strftime("%a %b %d - %H:%M")
@@ -91,6 +89,22 @@ module Sinatra
 
     def error_text(hash)
       hash.map {|k,v| "<b>#{k}:</b> #{v}"}.join("<br/>")
+    end
+
+    def event_range_select(start, finish, direction)
+      if direction == "start"
+        opt  = start.to_label
+      else
+        opt  = finish.to_label
+      end
+      opts = Event.range_array(opt)
+      output = "<select name='#{direction}'>#{opt}"
+      output << opts.map do |x|
+        sel = x == opt ? " SELECTED" : ""
+        "<option value='#{x}'#{sel}>#{x}"
+      end.join
+      output << "</select>"
+      output
     end
 
     def select_helper(event)

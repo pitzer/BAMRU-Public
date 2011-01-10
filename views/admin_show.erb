@@ -1,15 +1,21 @@
-<h3>Meetings</h3>
-<%= event_table(event_select("meeting")) %>
+<div class="center">
+  <form action="/admin_show">
+    Showing events
+    from <%=event_range_select(@start,@finish,"start")%>
+    to <%=event_range_select(@start,@finish,"finish")%>
+    <input type="submit" value="Change"> 
+  </form>
+</div>
 
-<h3>Trainings</h3>
-<%= event_table(event_select("training")) %>
+<h3 style="margin: 0 0 2px 0;">Meetings (<%=Event.meetings.between(@start,@finish).count%>)</h3>
+<%= event_table(Event.meetings.between(@start,@finish)) %>
 
-<h3>Events</h3>
-<%= event_table(event_select("event")) %>
+<h3 style="margin: 12px 0 2px 0;">Trainings (<%=Event.trainings.between(@start,@finish).count%>)</h3>
+<%= event_table(Event.trainings.between(@start,@finish)) %>
 
-<h3>Non-County Meetings</h3>
-<%= event_table(event_select("non_county")) %>
+<h3 style="margin: 12px 0 2px 0;">Events (<%=Event.events.between(@start,@finish).count%>)</h3>
+<%= event_table(Event.events.between(@start,@finish)) %>
 
-
-
+<h3 style="margin: 12px 0 2px 0;">Non-County Meetings (<%=Event.non_county.between(@start,@finish).count%>)</h3>
+<%= event_table(Event.non_county.between(@start,@finish)) %>
 

@@ -1,3 +1,9 @@
+require 'time'
+
+class Time
+  def to_label() strftime "%b-%Y"; end
+end
+
 class Event < ActiveRecord::Base
 
   # ----- Callbacks -----
@@ -17,6 +23,30 @@ class Event < ActiveRecord::Base
     return if self.end.nil? || self.end.blank?
     errors[:start] << "must happen before 'end'" if self.end < self.start
   end
+
+  # ----- Dates & Scopes -----
+
+  def self.date_parse(date) date.class == String ? Time.parse(date) : date; end
+  def self.default_start()      2.months.ago; end
+  def self.default_end()        10.months.from_now; end
+  def self.first_event(); Event.order('start').first.start ; end
+  def self.last_event();  Event.order('start').last.start ;  end
+  def self.first_year();  Event.first_event.at_beginning_of_year; end
+  def self.last_year();   Event.last_event.at_end_of_year; end
+  def self.range_array(extra = nil)
+    xa = ((self.first_year + 10.days).to_date .. (self.last_year + 1.year).to_date).step(365).to_a.map{|x| x.to_time}
+    xa << Event.date_parse(extra) unless extra.nil?
+    xa.sort.map {|x| x.to_label }
+  end
+  
+  def self.after(date); where('start >= ?', self.date_parse(date)); end
+  def self.before(date); where('start <= ?', self.date_parse(date)); end
+  def self.between(start, finish) after(start).before(finish); end
+
+  scope :meetings,   where(:kind => "meeting").order('start')
+  scope :events,     where(:kind => "event").order('start')
+  scope :non_county, where(:kind => "non-county").order('start')
+  scope :trainings,  where(:kind => "training").order('start')
 
   # ----- Local Methods -----
 
