@@ -29,11 +29,12 @@ class Event < ActiveRecord::Base
   def self.date_parse(date) date.class == String ? Time.parse(date) : date; end
   def self.default_start()      2.months.ago; end
   def self.default_end()        10.months.from_now; end
-  def self.first_event(); Event.order('start').first.start ; end
-  def self.last_event();  Event.order('start').last.start ;  end
-  def self.first_year();  Event.first_event.at_beginning_of_year; end
-  def self.last_year();   Event.last_event.at_end_of_year; end
+  def self.first_event(); x = Event.order('start').first; x.start unless x.nil? ; end
+  def self.last_event();  x = Event.order('start').last;  x.start unless x.nil? ;  end
+  def self.first_year();  x = Event.first_event; x.at_beginning_of_year unless x.nil?; end
+  def self.last_year();   x = Event.last_event;  x.at_end_of_year unless x.nil?; end
   def self.range_array(extra = nil)
+    return nil if self.first_year.nil? || self.last_year.nil?
     xa = ((self.first_year + 10.days).to_date .. (self.last_year + 1.year).to_date).step(365).to_a.map{|x| x.to_time}
     xa << Event.date_parse(extra) unless extra.nil?
     xa.sort.map {|x| x.to_label }
@@ -54,10 +55,10 @@ class Event < ActiveRecord::Base
   # This is done to support CSV output.
   # (CSV output fields are wrapped in double quotes.)
   def remove_quotes
-    self.title.gsub!(%q["],%q['])
-    self.location.gsub!(%q["],%q['])
-    self.leaders.gsub!(%q["],%q['])
-    self.description.gsub!(%q["],%q['])
+    self.title.gsub!(%q["],%q[']) unless self.title.nil?
+    self.location.gsub!(%q["],%q[']) unless self.location.nil?
+    self.leaders.gsub!(%q["],%q[']) unless self.leaders.nil?
+    self.description.gsub!(%q["],%q[']) unless self.description.nil?
   end
 
   # Changes 'tba, TBD, tbd' to 'TBA'

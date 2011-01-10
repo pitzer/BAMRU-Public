@@ -102,7 +102,7 @@ module Sinatra
       output << opts.map do |x|
         sel = x == opt ? " SELECTED" : ""
         "<option value='#{x}'#{sel}>#{x}"
-      end.join
+      end.join unless opts.nil?
       output << "</select>"
       output
     end
@@ -188,7 +188,7 @@ module Sinatra
   require 'fastercsv'  
 
   def read_csv
-    system "rm -f /tmp/bad.csv"
+    system "rm -f /tmp/malformed.csv"
     bad_csv = ""
     output = File.read(CSV_FILE).reduce([]) do |a,v|
       begin
@@ -199,7 +199,7 @@ module Sinatra
       end
       a
     end
-    File.open('/tmp/bad.csv', 'w') {|f| f.puts bad_csv} unless bad_csv.empty?
+    File.open('/tmp/malformed.csv', 'w') {|f| f.puts bad_csv} unless bad_csv.empty?
     output
   end
 
