@@ -25,7 +25,7 @@ Edit with care! Your changes go live onto the BAMRU website!<p/>
       There are <b><%=number_of%></b> records in our event database
     </td>
     <td>
-      (<%=number_of "meeting"%> meetings, <%=number_of "training"%> trainings, <%=number_of "event"%> events, <%=number_of "non_county"%> non-county)
+      (<%=number_of "meeting"%> meetings, <%=number_of "training"%> trainings, <%=number_of "event"%> events, <%=number_of "non-county"%> non-county)
     </td>
   </tr>
   <tr>
@@ -33,7 +33,7 @@ Edit with care! Your changes go live onto the BAMRU website!<p/>
       Last DB Update: <%=last_update%>
     </td>
     <td>
-      Default Display Range: <b>Jan-2010</b> - <b>Nov-2011</b>
+      Default Display Range: <b><%=Event.default_start.to_label%></b> - <b><%=Event.default_end.to_label%></b>
     </td>
   </tr>
   <tr>
