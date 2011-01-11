@@ -78,6 +78,50 @@ module Sinatra
       "<div class='notice'>#{var}</div>" unless var.nil?
     end
 
+    def calendar_table(events, link="")
+      alt = false
+      events.map do |e|
+        alt = ! alt
+        color = alt ? "#EEEEE" : "#FFFFF"
+        calendar_row(e, link, color)
+      end.join
+    end
+
+    def calendar_row(event, link = '', color='#EEEEEE')
+      link = event.id if link.empty?
+      <<-ERB
+      <tr bgcolor="#{color}">
+        <td valign="top" class=summary>&nbsp;
+             <a href="##{link}" class=summary>#{event.title}</a>
+             <span class=copy>#{event.location}</span>
+        </td>
+        <td valign="top" NOWRAP class=summary>
+          #{event.date_display}
+        </td>
+        <td valign="top" NOWRAP class=summary>
+          #{event.leaders}
+        </td>
+      </tr>
+      ERB
+    end
+
+    def detail_table(events)
+      events.map {|e| detail_row(e)}.join
+    end
+
+    def detail_row(event)
+      <<-ERB
+      <p/>
+      <span class="caps"><a id="#{event.id}"></a><span class="nav3">
+      #{event.title}</span></span><br/>
+      <span class="news10"> <font color="#888888">#{event.location}<br>
+      #{event.start}<br>      Leaders: #{event.leaders}<br><br></font></span>
+  #{event.description}<br>
+  <font class="caps"><img src="assets/dots.gif" width="134" height="10"></font></p>
+
+      ERB
+    end
+
     def set_flash_error(msg)
       flash[:error] ? flash[:error] << msg : flash[:error] = msg
     end

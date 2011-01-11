@@ -20,6 +20,12 @@ class BamruApp < Sinatra::Base
   end
   
   get '/calendar.test' do
+    @start  = Event.date_parse(params[:start]  || Event.default_start)
+    @finish = Event.date_parse(params[:finish] || Event.default_end)
+    if @finish < @start
+      set_flash_error("Warning: you set finish (#{params[:finish]}) before start (#{params[:start]})")
+      @finish = Event.last_year.to_time
+    end
     @title     = "BAMRU Calendar"
     @hdr_img   = "images/mtn.jpg"
     @right_nav = right_nav(:calendar)

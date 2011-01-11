@@ -91,4 +91,8 @@ class Event < ActiveRecord::Base
     self.digest = generate_signature
   end
 
+  def date_display
+    "#{start.strftime('%b')} #{start.day}, #{start.year}"
+  end
+
 end
