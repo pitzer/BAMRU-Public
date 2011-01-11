@@ -39,7 +39,7 @@ class Event < ActiveRecord::Base
     return nil if self.first_year.nil? || self.last_year.nil?
     xa = ((self.first_year + 10.days).to_date .. (self.last_year + 1.year).to_date).step(365).to_a.map{|x| x.to_time}
     xa << Event.date_parse(extra) unless extra.nil?
-    xa.sort.map {|x| x.to_label }
+    xa.sort.map {|x| x.to_label }.uniq
   end
   
   def self.after(date); where('start >= ?', self.date_parse(date)); end
