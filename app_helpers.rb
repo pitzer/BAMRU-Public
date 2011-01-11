@@ -8,7 +8,7 @@ module Sinatra
     CSV_FILE  = DATA_DIR + "/data.csv"
     QUOTES    = YAML.load_file(BASE_DIR + "/data/quotes.yaml")
     RIGHT_NAV = YAML.load_file(BASE_DIR + "/data/right_nav.yaml")
-    GUEST_POLICY   = File.read(BASE_DIR + "/data/guest_policy.html")
+    GUEST_POLICY   = File.read(BASE_DIR + "/data/guest_policy.erb")
 
     def current_server
       "http://#{request.env["HTTP_HOST"]}"

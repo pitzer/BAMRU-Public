@@ -40,6 +40,7 @@ a.summary:hover    {color: #000;}
 
 .quote          {font-size: 13px; color: #36C; line-height: 16px; text-decoration: none;}
 .quote_box      {top-margin: 10px; white-space: normal; width: 125px;}
+.guest_box      {top-margin: 10px; white-space: normal; width: 175px;}
 
 .text           {color: #333; line-height: 14px;} 
 a.text:link     {color: #36C;} 

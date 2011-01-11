@@ -26,7 +26,7 @@ class BamruApp < Sinatra::Base
     @title     = "BAMRU Calendar"
     @hdr_img   = "images/mtn.jpg"
     @right_nav = right_nav(:calendar)
-    @right_txt = GUEST_POLICY
+    @right_txt = erb GUEST_POLICY, :layout => false
     @left_txt  = quote
     erb :calendar
   end
