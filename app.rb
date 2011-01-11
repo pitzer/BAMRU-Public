@@ -186,19 +186,19 @@ class BamruApp < Sinatra::Base
     csv_to_hash(read_csv).each do |r|
       h = r.to_hash
       h["kind"].downcase! unless h["kind"].nil?
-      unless Event.create(h).valid?
-        puts r
-        File.open
+      record = Event.create(h)
+      unless record.valid?
+        File.open('/tmp/invalid.csv', 'a') {|f| f.puts r; f.puts record.errors.inspect}
       end
     end
     finish_count = Event.count
     if File.exist? '/tmp/malformed.csv'
       csv_link = "malformed CSV records. (<a href='/malformed_csv'>view</a>)"
-      set_flash_error("Warning: #{`wc -l /tmp/malformed.csv`.split(' ').first} #{csv_link}")
+      set_flash_error(" Warning: #{`wc -l /tmp/malformed.csv`.split(' ').first} #{csv_link}")
     end
     if File.exist? '/tmp/invalid.csv'
-      csv_link = "malformed CSV records. (<a href='/malformed_csv'>view</a>)"
-      set_flash_error("Warning: #{`wc -l /tmp/malformed.csv`.split(' ').first} #{csv_link}")
+      csv_link = "invalid CSV records. (<a href='/invalid_csv'>view</a>)"
+      set_flash_error(" Warning: #{`wc -l /tmp/invalid.csv`.split(' ').first} #{csv_link}")
     end
     set_flash_notice("CSV File Upload created #{finish_count - start_count} new event records.")
     redirect '/admin_show'
@@ -207,6 +207,11 @@ class BamruApp < Sinatra::Base
   get '/malformed_csv' do
     response["Content-Type"] = "text/plain"
     File.read('/tmp/malformed.csv')
+  end
+
+  get '/invalid_csv' do
+    response["Content-Type"] = "text/plain"
+    File.read('/tmp/invalid.csv')
   end
 
   not_found do

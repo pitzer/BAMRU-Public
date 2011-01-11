@@ -70,7 +70,7 @@ module Sinatra
     end
 
     def set_flash_notice(msg)
-      flash[:notice] = msg
+      flash[:notice] ? flash[:notice] << msg : flash[:notice] = msg
     end
 
     def get_flash_notice
@@ -79,7 +79,7 @@ module Sinatra
     end
 
     def set_flash_error(msg)
-      flash[:error] = msg
+      flash[:error] ? flash[:error] << msg : flash[:error] = msg
     end
 
     def get_flash_error

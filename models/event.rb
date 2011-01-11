@@ -7,7 +7,9 @@ end
 class Event < ActiveRecord::Base
 
   # ----- Callbacks -----
-  before_validation :save_signature_into_digest_field, :tbd_to_tba
+  before_validation :save_signature_into_digest_field
+  before_validation :tbd_to_tba
+  before_validation :cleanup_non_county
   before_save       :remove_quotes
 
   # ----- Validations -----
@@ -51,13 +53,17 @@ class Event < ActiveRecord::Base
 
   # ----- Local Methods -----
 
+  def cleanup_non_county
+    self.kind = 'non-county' if self.kind[0..5] == "non-co"
+  end
+
   # Convert double quotes to single quotes.
   # This is done to support CSV output.
   # (CSV output fields are wrapped in double quotes.)
   def remove_quotes
-    self.title.gsub!(%q["],%q[']) unless self.title.nil?
-    self.location.gsub!(%q["],%q[']) unless self.location.nil?
-    self.leaders.gsub!(%q["],%q[']) unless self.leaders.nil?
+    self.title.gsub!(%q["],%q['])       unless self.title.nil?
+    self.location.gsub!(%q["],%q['])    unless self.location.nil?
+    self.leaders.gsub!(%q["],%q['])     unless self.leaders.nil?
     self.description.gsub!(%q["],%q[']) unless self.description.nil?
   end
 
