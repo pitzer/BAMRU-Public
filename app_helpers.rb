@@ -99,10 +99,15 @@ module Sinatra
           #{event.date_display}
         </td>
         <td valign="top" NOWRAP class=summary>
-          #{event.leaders}
+          #{format_leaders(event)}
         </td>
       </tr>
       ERB
+    end
+
+    def format_leaders(event)
+      return event.leaders if event.kind == 'meeting'
+      event.leaders.split(',').first.split(' ').last.split('/').first
     end
 
     def detail_table(events)

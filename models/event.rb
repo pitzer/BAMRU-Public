@@ -13,7 +13,7 @@ class Event < ActiveRecord::Base
   before_save       :remove_quotes
 
   # ----- Validations -----
-  validates_presence_of   :kind, :title, :location, :leaders, :start
+  validates_presence_of   :kind, :title, :location, :start
   validates_uniqueness_of :digest, :message => "duplicate record - identical title, location, start"
 
   validates_format_of :kind, :with => /^(meeting|training|event|non-county)$/
@@ -72,8 +72,10 @@ class Event < ActiveRecord::Base
   def tbd_to_tba
     self.location.gsub!(/[Tt][Bb][DdAa]/, "TBA")
     self.location = "TBA" if self.location.nil? || self.location.blank?
-    self.leaders.gsub!(/[Tt][Bb][DdAa]/,  "TBA")
-    self.leaders = "TBA" if self.leaders.nil? || self.leaders.blank?
+    unless self.kind == 'meeting'
+      self.leaders.gsub!(/[Tt][Bb][DdAa]/,  "TBA")
+      self.leaders = "TBA" if self.leaders.nil? || self.leaders.blank?
+    end
   end
 
   def signature_fields

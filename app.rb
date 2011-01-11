@@ -22,10 +22,7 @@ class BamruApp < Sinatra::Base
   get '/calendar.test' do
     @start  = Event.date_parse(params[:start]  || Event.default_start)
     @finish = Event.date_parse(params[:finish] || Event.default_end)
-    if @finish < @start
-      set_flash_error("Warning: you set finish (#{params[:finish]}) before start (#{params[:start]})")
-      @finish = Event.last_year.to_time
-    end
+    @start, @finish = @finish, @start if @finish < @start
     @title     = "BAMRU Calendar"
     @hdr_img   = "images/mtn.jpg"
     @right_nav = right_nav(:calendar)
@@ -96,10 +93,7 @@ class BamruApp < Sinatra::Base
   get '/admin_show' do
     @start  = Event.date_parse(params[:start]  || Event.default_start)
     @finish = Event.date_parse(params[:finish] || Event.default_end)
-    if @finish < @start
-      set_flash_error("Warning: you set finish (#{params[:finish]}) before start (#{params[:start]})")
-      @finish = Event.last_year.to_time
-    end
+    @start, @finish = @finish, @start if @finish < @start
     erb :admin_show, :layout => :admin_layout
   end
 
