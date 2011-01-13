@@ -63,7 +63,7 @@ end
   namespace :spec do
     desc "Run all specs in spec/models"
     task :models do
-      cmd = "rspec spec/models/**/*_spec.rb"
+      cmd = "rspec spec/models/*_spec.rb"
       puts "Running MODEL Specs"
       puts cmd
       system cmd
@@ -71,7 +71,7 @@ end
 
     desc "Run all specs in specs/integration"
     task :integration do
-      cmd = "rspec spec/integration/**/*_spec.rb"
+      cmd = "rspec spec/integration/*_spec.rb"
       puts "Running INTEGRATION Specs"
       puts cmd
       system cmd

@@ -6,7 +6,6 @@ describe "Home Page" do
 
   before(:each) do
     Capybara.app = VisiTeams::Application
-    Capybara.javascript_driver = :envjs
   end
 
   context "basic rendering tests" do
