@@ -11,6 +11,8 @@ class Event < ActiveRecord::Base
   before_validation :tbd_to_tba
   before_validation :cleanup_non_county
   before_save       :remove_quotes
+  after_destroy     :set_first_in_year
+  after_save        :set_first_in_year_after_save
 
   # ----- Validations -----
   validates_presence_of   :kind, :title, :location, :start
@@ -50,6 +52,11 @@ class Event < ActiveRecord::Base
   scope :events,     where(:kind => "event").order('start')
   scope :non_county, where(:kind => "non-county").order('start')
   scope :trainings,  where(:kind => "training").order('start')
+
+  def self.in_year(event)
+    date = event.start
+    between(date.at_beginning_of_year, date.at_end_of_year)
+  end
 
   # ----- Local Methods -----
 
@@ -93,8 +100,21 @@ class Event < ActiveRecord::Base
     self.digest = generate_signature
   end
 
-  def date_display
-    "#{start.strftime('%b')} #{start.day}, #{start.year}"
+  def date_display(show_year = false)
+    year_string = first_in_year || display_year ? ", #{start.year}" : ""
+    finish_string = finish ? "-#{finish.day}" : ""
+    "#{start.strftime('%b')} #{start.day}#{finish_string}#{year_string}"
+  end
+
+  def set_first_in_year
+    events = Event.in_year(self).order('start').all
+    events.first.update_attributes(:first_in_year => true)
+    events[1..-1].each {|x| x.update_attributes(:first_in_year => false)}
+  end
+
+  def set_first_in_year_after_save
+    return unless self.start_changed?
+    set_first_in_year
   end
 
 end
