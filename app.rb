@@ -20,9 +20,11 @@ class BamruApp < Sinatra::Base
   end
   
   get '/calendar.test' do
-    @start  = Event.date_parse(params[:start]  || Event.default_start)
-    @finish = Event.date_parse(params[:finish] || Event.default_end)
+    @start  = Event.date_parse(params[:start]  || session[:start] || Event.default_start)
+    @finish = Event.date_parse(params[:finish] || session[:finish] || Event.default_end)
     @start, @finish = @finish, @start if @finish < @start
+    session[:start] = @start
+    session[:finish] = @finish
     @title     = "BAMRU Calendar"
     @hdr_img   = "images/mtn.jpg"
     @right_nav = right_nav(:calendar)
@@ -91,9 +93,11 @@ class BamruApp < Sinatra::Base
   end
 
   get '/admin_show' do
-    @start  = Event.date_parse(params[:start]  || Event.default_start)
-    @finish = Event.date_parse(params[:finish] || Event.default_end)
+    @start  = Event.date_parse(params[:start]  || session[:start] ||  Event.default_start)
+    @finish = Event.date_parse(params[:finish] || session[:finish] || Event.default_end)
     @start, @finish = @finish, @start if @finish < @start
+    session[:start] = @start
+    session[:finish] = @finish
     erb :admin_show, :layout => :admin_layout
   end
 
