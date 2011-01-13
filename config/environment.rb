@@ -7,8 +7,8 @@ base_dir = File.dirname(File.expand_path(__FILE__))
 # initialize the database
 ActiveRecord::Base.establish_connection(
   :adapter => 'sqlite3',
-#  :database =>  base_dir + '/../db/database.sqlite3'
-  :database =>  '/tmp/database.sqlite3'
+  :database =>  base_dir + '/../data/database.sqlite3'
+#  :database =>  '/tmp/database.sqlite3'
 )
 
 # load all models

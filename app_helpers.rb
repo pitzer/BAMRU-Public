@@ -80,14 +80,17 @@ module Sinatra
 
     def calendar_table(events, link="")
       alt = false
+      first = true
       events.map do |e|
         alt = ! alt
         color = alt ? "#EEEEE" : "#FFFFF"
-        calendar_row(e, link, color)
+        val = calendar_row(e, link, color, first)
+        first = false
+        val
       end.join
     end
 
-    def calendar_row(event, link = '', color='#EEEEEE')
+    def calendar_row(event, link = '', color='#EEEEEE', first = false)
       link = event.id if link.empty?
       <<-ERB
       <tr bgcolor="#{color}">
@@ -96,7 +99,7 @@ module Sinatra
              <span class=copy>#{event.location}</span>
         </td>
         <td valign="top" NOWRAP class=summary>
-          #{event.date_display}
+          #{event.date_display(first)}
         </td>
         <td valign="top" NOWRAP class=summary>
           #{format_leaders(event)}
@@ -120,10 +123,47 @@ module Sinatra
       <span class="caps"><a id="#{event.id}"></a><span class="nav3">
       #{event.title}</span></span><br/>
       <span class="news10"> <font color="#888888">#{event.location}<br>
-      #{event.start}<br>      Leaders: #{event.leaders}<br><br></font></span>
+      #{event.date_display_long}<br>      Leaders: #{event.leaders}<br><br></font></span>
   #{event.description}<br>
   <font class="caps"><img src="assets/dots.gif" width="134" height="10"></font></p>
 
+      ERB
+    end
+
+    def event_table(events)
+      output = "<table width = 100%>"
+      alt   = true
+      first = true
+      events.each do |m|
+        color = alt ? "#EEEEEE" : "#FFFFFF"
+        outz = "<tr><td>#{m.title} / #{m.location}</td><td>#{m.date_display}</td><td>#{m.leaders}</td><td class='ac'><nobr>#{event_copy_link(m.id)} | #{event_edit_link(m.id)} | #{event_delete_link(m.id)}</nobr></td></tr>"
+        output << event_row(m, color, first)
+        first = false
+        alt = ! alt
+      end
+      output << "</table>"
+      output
+    end
+
+    def event_row(event, color='#EEEEEE', first = false)
+      <<-ERB
+      <tr bgcolor="#{color}">
+        <td valign="top" class=summary>&nbsp;
+             #{event.title}
+        </td>
+        <td>
+             <span class=copy>#{event.location}</span>
+        </td>
+        <td valign="top" NOWRAP class=summary>
+          #{event.date_display(first)}
+        </td>
+        <td valign="top" NOWRAP class=summary>
+          #{format_leaders(event)}
+        </td>
+        <td class=ac>
+          <nobr>#{event_copy_link(event.id)} | #{event_edit_link(event.id)} | #{event_delete_link(event.id)}</nobr>
+        </td>
+      </tr>
       ERB
     end
 
@@ -179,15 +219,6 @@ module Sinatra
       "<a href='/admin_delete/#{eventid}'>delete</a>"
     end
 
-    def event_table(events)
-      output = "<table class='basic'>"
-      events.each do |m|
-        output << "<tr><td>#{m.title} / #{m.location}</td><td>#{m.start}</td><td>#{m.leaders}</td><td class='ac'><nobr>#{event_copy_link(m.id)} | #{event_edit_link(m.id)} | #{event_delete_link(m.id)}</nobr></td></tr>"
-      end
-      output << "</table>"
-      output
-    end
-
     def blog_url
       "http://bamru.blogspot.com"
     end
@@ -214,13 +245,17 @@ module Sinatra
       "#{r1} || #{r2}<p/><hr>"
     end
 
-    def right_link(target, label)
-      "<a href='#{target}' class='nav3' onfocus='blur();'>#{label}</a><br/>"
+    def right_link(target, label, fmt="nav3")
+      "<a href='#{target}' class='#{fmt}' onfocus='blur();'>#{label}</a><br/>"
     end
 
     def right_nav(page)
-#      debugger
-      RIGHT_NAV[page].reduce("") {|a, v| a << right_link(v.last, v.first)} unless RIGHT_NAV[page].nil?
+      fmt = "nav4"
+      RIGHT_NAV[page].reduce("") do |a, v|
+        val = RIGHT_NAV[page].nil? ? "" : right_link(v.last, v.first, fmt)
+        fmt = "nav3"
+        a << val
+      end
     end
 
     def menu_link(target, label)

@@ -135,6 +135,7 @@ class BamruApp < Sinatra::Base
 
   post '/admin_update/:id' do
     event = Event.find_by_id(params[:id])
+    debugger
     params.delete "submit"
     if event.update_attributes(params)
       set_flash_notice("Updated Event (#{event.kind.capitalize} > #{event.title} > #{event.start})")

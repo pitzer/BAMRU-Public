@@ -10,8 +10,9 @@ class Event < ActiveRecord::Base
   before_validation :save_signature_into_digest_field
   before_validation :tbd_to_tba
   before_validation :cleanup_non_county
+  before_validation :check_for_identical_start_finish
   before_save       :remove_quotes
-  after_destroy     :set_first_in_year
+  after_destroy     :set_first_in_year_after_delete
   after_save        :set_first_in_year_after_save
 
   # ----- Validations -----
@@ -24,8 +25,8 @@ class Event < ActiveRecord::Base
 
   # start must happen before end
   def check_dates
-    return if self.end.nil? || self.end.blank?
-    errors[:start] << "must happen before 'end'" if self.end < self.start
+    return if self.finish.nil? || self.finish.blank?
+    errors[:start] << "must happen before 'end'" if self.finish < self.start
   end
 
   # ----- Dates & Scopes -----
@@ -53,9 +54,8 @@ class Event < ActiveRecord::Base
   scope :non_county, where(:kind => "non-county").order('start')
   scope :trainings,  where(:kind => "training").order('start')
 
-  def self.in_year(event)
-    date = event.start
-    between(date.at_beginning_of_year, date.at_end_of_year)
+  def self.in_year(date, kind)
+    between(date.at_beginning_of_year, date.at_end_of_year).where(:kind => kind)
   end
 
   # ----- Local Methods -----
@@ -85,8 +85,12 @@ class Event < ActiveRecord::Base
     end
   end
 
+  def check_for_identical_start_finish
+    self.finish = nil if self.start == self.finish
+  end
+
   def signature_fields
-    "#{self.title}/#{self.location}/#{self.leaders}/#{self.start}/#{self.end}"
+    "#{self.title}/#{self.location}/#{self.leaders}/#{self.start}/#{self.finish}"
   end
 
   # The signature is a MD5 digest.
@@ -101,15 +105,29 @@ class Event < ActiveRecord::Base
   end
 
   def date_display(show_year = false)
-    year_string = first_in_year || display_year ? ", #{start.year}" : ""
+    year_string = first_in_year || show_year ? ", #{start.year}&nbsp;" : ""
     finish_string = finish ? "-#{finish.day}" : ""
     "#{start.strftime('%b')} #{start.day}#{finish_string}#{year_string}"
   end
 
+  def format_long_date(date)
+    "#{date.strftime('%b')} #{date.day}, #{date.year}"
+  end
+
+  def date_display_long
+    finish_string = finish ? " - #{format_long_date(finish)}" : ""
+    "#{format_long_date(start)}#{finish_string}"
+  end
+
   def set_first_in_year
-    events = Event.in_year(self).order('start').all
-    events.first.update_attributes(:first_in_year => true)
-    events[1..-1].each {|x| x.update_attributes(:first_in_year => false)}
+    events = Event.in_year(start, kind).order('start').all
+    events.first.update_attributes(:first_in_year => true) unless events.first.nil?
+    events[1..-1].each {|x| x.update_attributes(:first_in_year => false)} unless events[1..-1].nil?
+  end
+
+  def set_first_in_year_after_delete
+    return unless self.first_in_year == true
+    set_first_in_year
   end
 
   def set_first_in_year_after_save

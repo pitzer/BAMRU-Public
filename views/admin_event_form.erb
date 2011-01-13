@@ -1,6 +1,6 @@
 <script type="text/javascript">
         $(function() {
-            $("#start, #end").datepicker({
+            $("#start, #finish").datepicker({
                 changeMonth: true,
                 changeYear: true,
                 dateFormat: "yy-mm-dd"
@@ -55,7 +55,7 @@
       <td class="ar">Start:</td>
       <td>
         <input id="start" type="Text" size=10 maxlength=10 name="start" value="<%=@event.start%>">
-        <span style="margin-left: 30px;">End:</span> <input id="finish" type="Text" size=10 maxlength=10 name="end" value="<%=@event.end%>">
+        <span style="margin-left: 30px;">End:</span> <input id="finish" type="Text" size=10 maxlength=10 name="finish" value="<%=@event.finish%>">
         </td>
       <td>End is optional - only use it for multi-day events.</td>
     </tr>
