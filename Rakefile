@@ -77,7 +77,7 @@ end
       system cmd
     end
 
-    desc "Run all specs in specs/helpers"
+    # desc "Run all specs in specs/helpers"
     task :helpers do
       cmd = "rspec spec/helper/**/*_spec.rb"
       puts "Running HELPER Specs"
@@ -86,7 +86,7 @@ end
     end
 
     desc "Run all specs"
-    task :all => [:models, :helpers, :integration]
+    task :all => [:models, :integration]
 
 end
 
