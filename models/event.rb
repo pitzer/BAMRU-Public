@@ -110,15 +110,6 @@ class Event < ActiveRecord::Base
     "#{start.strftime('%b')} #{start.day}#{finish_string}#{year_string}"
   end
 
-  def format_long_date(date)
-    "#{date.strftime('%b')} #{date.day}, #{date.year}"
-  end
-
-  def date_display_long
-    finish_string = finish ? " - #{format_long_date(finish)}" : ""
-    "#{format_long_date(start)}#{finish_string}"
-  end
-
   def set_first_in_year
     events = Event.in_year(start, kind).order('start').all
     events.first.update_attributes(:first_in_year => true) unless events.first.nil?
