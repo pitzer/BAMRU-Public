@@ -7,25 +7,24 @@ end
 class Event < ActiveRecord::Base
 
   # ----- Callbacks -----
+  before_validation :check_for_identical_start_finish
   before_validation :save_signature_into_digest_field
   before_validation :tbd_to_tba
   before_validation :cleanup_non_county
-  before_validation :check_for_identical_start_finish
   before_save       :remove_quotes
   after_destroy     :set_first_in_year_after_delete
   after_save        :set_first_in_year_after_save
 
   # ----- Validations -----
-  validates_presence_of   :kind, :title, :location, :start
   validates_uniqueness_of :digest, :message => "duplicate record - identical title, location, start"
-
-  validates_format_of :kind, :with => /^(meeting|training|event|non-county)$/
+  validates_presence_of   :kind, :title, :location, :start
+  validates_format_of     :kind, :with => /^(meeting|training|event|non-county)$/
 
   validate :check_dates
 
-  # start must happen before end
+  # start must happen before finish
   def check_dates
-    return if self.finish.nil? || self.finish.blank?
+    return if self.finish.nil? || self.finish.empty?
     errors[:start] << "must happen before 'end'" if self.finish < self.start
   end
 
@@ -90,7 +89,7 @@ class Event < ActiveRecord::Base
   end
 
   def signature_fields
-    "#{self.title}/#{self.location}/#{self.leaders}/#{self.start}/#{self.finish}"
+    "#{self.title}/#{self.location}/#{self.start}"
   end
 
   # The signature is a MD5 digest.

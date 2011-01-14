@@ -9,74 +9,45 @@ describe Event do
     end
   end
 
-#  context "simple team creation" do
-#    it "should create a team" do
-#      t = Team.create(:name => "dddd")
-#      t.should_not be_nil
-#    end
-#  end
-#
-#  context "when trying to create invalid teams" do
-#    it "should not allow duplicate team names" do
-#      x = Team.create(:name => "xxx")
-#      x.should be_valid
-#      y = Team.create(:name => "xxx")
-#      y.should_not be_valid
-#    end
-#    it "does not allow invalid formats" do
-#      x = Team.create(:name => "&xxx")
-#      x.should_not be_valid
-#    end
-#    it "does not allow invalid formats" do
-#      y = Team.create(:name => "-xxx")
-#      y.should_not be_valid
-#    end
-#
-#  end
-#
-#  describe "#set_url" do
-#    it "should generate a valid url from a simple name" do
-#      t = Team.create(:name => "zzz")
-#      t.url.should == "zzz"
-#    end
-#    it "should generate a valid url from a complex name" do
-#      t = Team.create(:name => "Zing Zang")
-#      t.url.should == "zing_zang"
-#    end
-#    it "should handle underscores and dashes" do
-#      t = Team.create(:name => "Zi-ng Za_ng")
-#      t.url.should == "zi-ng_za_ng"
-#    end
-#  end
-#
-#  describe "#set_long_url" do
-#    it "should generate a long_url from a simple name" do
-#      t = Team.create(:name => "zzz")
-#      t.long_url.should == "/zzz"
-#    end
-#    it "should generate a long_url from a complex name" do
-#      t = Team.create(:name => "Zing Zang")
-#      t.long_url.should == "/zing_zang"
-#    end
-#  end
-#
-#  describe "owner methods" do
-#    before(:each) do
-#      @u = Factory(:normal_user)
-#      @t = @u.teams.create(:name => "eee")
-#    end
-#    describe "#owner?" do
-#      it "has a valid user" do
-#        @u.should be_valid
-#      end
-#      it "returns true after initially created" do
-#        @t.owner?(@u).should be_true
-#      end
-#      it "returns true after being set" do
-#        @t.set_owner(@u)
-#        @t.owner?(@u).should be_true
-#      end
-#    end
-#  end
+  describe ":kind validity checks" do
+    context "when using valid :kind field" do
+      specify { Factory.build(:event).should be_valid }
+      specify { Factory.build(:event, :kind => 'meeting').should be_valid }
+      specify { Factory.build(:event, :kind => 'training').should be_valid }
+      specify { Factory.build(:event, :kind => 'event').should be_valid }
+      specify { Factory.build(:event, :kind => 'non-county').should be_valid }
+    end
+    context "when using invalid :kind field" do
+      specify { Factory.build(:event, :kind => 'invalid').should_not be_valid }
+    end
+  end
+
+  describe ":check_dates validity checks" do
+    context "when using valid date fields" do
+      valid_dates = {:start => "2007-01-01", :finish => "2009-02-02" }
+      specify { Factory.build(:event, valid_dates).should be_valid }
+      valid_dates = {:start => "2007-01-01", :finish => "2007-01-01" }
+      specify { Factory.build(:event, valid_dates).should be_valid }
+    end
+    context "when finish is earlier than start" do
+      invalid_dates = {:start => "2007-01-01", :finish => "2006-02-02" }
+      specify { Factory.build(:event, invalid_dates).should_not be_valid }
+    end
+    context "when start and finish are the same" do
+      it "should set finish to nil" do
+        identical_dates = {:start => "2007-01-01", :finish => "2007-01-01" }
+        x = Factory(:event, identical_dates)
+        x.finish.should be_nil
+      end
+    end
+  end
+
+  describe "digest/signature validity checks" do
+    it "should not allow creation of duplicate events" do
+      event_hash = {:title => "xx", :start => "2007-01-01", :location => "yy"}
+      Factory(:event, event_hash)
+      Factory.build(:event, event_hash).should_not be_valid
+    end
+  end
 
 end

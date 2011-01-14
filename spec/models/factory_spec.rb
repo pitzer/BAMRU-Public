@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe "Factory" do
 
-  describe "Event Factory" do
+  context "Using the Event Factory" do
     specify { Factory(:event).should_not be_nil }
+    specify { Factory(:event).should be_valid }
   end
 
   context "Database Cleaning" do
