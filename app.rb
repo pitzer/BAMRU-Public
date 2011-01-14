@@ -53,6 +53,8 @@ class BamruApp < Sinatra::Base
     @title     = "BAMRU Photo Gallery"
     @hdr_img   = "images/hills.jpg"
     @right_nav = right_nav(:sgallery)
+    @right_txt = PHOTO_RIGHT
+    @left_txt  = PHOTO_LEFT
     erb :sgallery
   end
 

@@ -9,6 +9,8 @@ module Sinatra
     QUOTES    = YAML.load_file(BASE_DIR + "/data/quotes.yaml")
     RIGHT_NAV = YAML.load_file(BASE_DIR + "/data/right_nav.yaml")
     GUEST_POLICY   = File.read(BASE_DIR + "/data/guest_policy.erb")
+    PHOTO_LEFT     = File.read(DATA_DIR + "/photo_caption_left.html")
+    PHOTO_RIGHT    = File.read(DATA_DIR + "/photo_caption_right.html")
 
     def current_server
       "http://#{request.env["HTTP_HOST"]}"

@@ -24,7 +24,7 @@ class Event < ActiveRecord::Base
 
   # start must happen before finish
   def check_dates
-    return if self.finish.nil? || self.finish.empty?
+    return if self.finish.nil? || self.finish.blank?
     errors[:start] << "must happen before 'end'" if self.finish < self.start
   end
 
