@@ -11,5 +11,5 @@ require "capybara/dsl"
 RSpec.configure do |config|
   config.mock_with :rspec
   config.include Capybara
-  # config.use_transactional_fixtures = true
+  config.before(:each) { Event.delete_all_records }
 end

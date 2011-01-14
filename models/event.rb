@@ -126,4 +126,8 @@ class Event < ActiveRecord::Base
     set_first_in_year
   end
 
+  def self.delete_all_records
+    Event.all.each { |x| x.destroy }
+  end
+
 end

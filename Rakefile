@@ -41,8 +41,11 @@ namespace :db do
   end
 
   desc "Run database migration"
+  task :drop do
+    Dir["*/*.sqlite3"].each {|f| puts "Dropping #{f}"; File.delete(f)}
+  end
+
   task :migrate => :environment do
-    system "rm -f db/*.sqlite3"
     ActiveRecord::Migration.verbose = true
     ActiveRecord::Migrator.migrate("db/migrate")
   end
@@ -50,7 +53,7 @@ namespace :db do
   desc "Remove all data from database."
   task :reset => :environment do
     puts "Removing all database records"
-    Event.all.each {|e| e.destroy}
+    Event.delete_all_records
   end
 
   desc "Load seed data"
@@ -63,7 +66,7 @@ end
   namespace :spec do
     desc "Run all specs in spec/models"
     task :models do
-      cmd = "rspec spec/models/*_spec.rb"
+      cmd = "rspec -O spec/spec.opts spec/models/*_spec.rb"
       puts "Running MODEL Specs"
       puts cmd
       system cmd
@@ -71,7 +74,7 @@ end
 
     desc "Run all specs in specs/integration"
     task :integration do
-      cmd = "rspec spec/integration/*_spec.rb"
+      cmd = "rspec -O spec/spec.opts spec/integration/*_spec.rb"
       puts "Running INTEGRATION Specs"
       puts cmd
       system cmd
@@ -79,7 +82,7 @@ end
 
     # desc "Run all specs in specs/helpers"
     task :helpers do
-      cmd = "rspec spec/helper/**/*_spec.rb"
+      cmd = "rspec -O spec/spec.opts spec/helper/**/*_spec.rb"
       puts "Running HELPER Specs"
       puts cmd
       system cmd

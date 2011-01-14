@@ -11,7 +11,7 @@ Factory.define :event do |u|
   u.location    { "L#{rand4}" } 
   u.leaders     { "Leader#{rand4}" }
   u.start       { randE }
-  u.end
+  u.finish
   u.description { "Big Hello #{rand4}" }
 end
 
