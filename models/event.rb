@@ -1,12 +1,7 @@
-require 'time'
-
-class Time
-  def to_label() strftime "%b-%Y"; end
-end
-
 class Event < ActiveRecord::Base
 
   # ----- Callbacks -----
+
   before_validation :check_for_identical_start_finish
   before_validation :save_signature_into_digest_field
   before_validation :tbd_to_tba
@@ -16,49 +11,59 @@ class Event < ActiveRecord::Base
   after_save        :set_first_in_year_after_save
 
   # ----- Validations -----
+
   validates_uniqueness_of :digest, :message => "duplicate record - identical title, location, start"
   validates_presence_of   :kind, :title, :location, :start
   validates_format_of     :kind, :with => /^(meeting|training|event|non-county)$/
 
   validate :check_dates
 
-  # start must happen before finish
+  # confirms that start happens before finish
   def check_dates
     return if self.finish.nil? || self.finish.blank?
     errors[:start] << "must happen before 'end'" if self.finish < self.start
   end
 
-  # ----- Dates & Scopes -----
+  # ----- Date Methods -----
 
   def self.date_parse(date) date.class == String ? Time.parse(date) : date; end
-  def self.default_start()      2.months.ago; end
+  def self.default_start()      2.months.ago;       end
   def self.default_end()        10.months.from_now; end
   def self.first_event(); x = Event.order('start').first; x.start unless x.nil? ; end
   def self.last_event();  x = Event.order('start').last;  x.start unless x.nil? ;  end
   def self.first_year();  x = Event.first_event; x.at_beginning_of_year unless x.nil?; end
   def self.last_year();   x = Event.last_event;  x.at_end_of_year unless x.nil?; end
-  def self.range_array(extra = nil)
+
+  # Returns an array of dates that are used in select form on the calendar page.
+  # Dates are in the format of ["Jan-2001", "Jan-2002", "Jan-2003"]
+  # An 'extra_date' may be provided, which will be inserted into the range_array
+  # in the correct sort order.
+  def self.range_array(extra_date = nil)
     return nil if self.first_year.nil? || self.last_year.nil?
     xa = ((self.first_year + 10.days).to_date .. (self.last_year + 1.year).to_date).step(365).to_a.map{|x| x.to_time}
-    xa << Event.date_parse(extra) unless extra.nil?
+    xa << Event.date_parse(extra_date) unless extra_date.nil?
     xa.sort.map {|x| x.to_label }.uniq
   end
-  
-  def self.after(date); where('start >= ?', self.date_parse(date)); end
-  def self.before(date); where('start <= ?', self.date_parse(date)); end
-  def self.between(start, finish) after(start).before(finish); end
+
+  # ----- Scopes -----
 
   scope :meetings,   where(:kind => "meeting").order('start')
   scope :events,     where(:kind => "event").order('start')
   scope :non_county, where(:kind => "non-county").order('start')
   scope :trainings,  where(:kind => "training").order('start')
 
+  def self.after(date); where('start >= ?', self.date_parse(date)); end
+  def self.before(date); where('start <= ?', self.date_parse(date)); end
+  def self.between(start, finish) after(start).before(finish); end
   def self.in_year(date, kind)
     between(date.at_beginning_of_year, date.at_end_of_year).where(:kind => kind)
   end
 
-  # ----- Local Methods -----
+  # ----- Local Methods - Data Cleanup and Standardization -----
 
+  # CSV input data sometimes comes in non-standard formats.
+  # Some come in as "non-county", some as "non-county meetings"
+  # This method just reduces all variants to "non-county"
   def cleanup_non_county
     self.kind = 'non-county' if self.kind[0..5] == "non-co"
   end
@@ -73,8 +78,8 @@ class Event < ActiveRecord::Base
     self.description.gsub!(%q["],%q[']) unless self.description.nil?
   end
 
-  # Changes 'tba, TBD, tbd' to 'TBA'
-  # Changes nil or blank value to 'TBA'
+  # This method changes 'tba, TBD, tbd' to 'TBA'
+  # It also changes nil or blank value to 'TBA'
   def tbd_to_tba
     self.location.gsub!(/[Tt][Bb][DdAa]/, "TBA")
     self.location = "TBA" if self.location.nil? || self.location.blank?
@@ -84,15 +89,20 @@ class Event < ActiveRecord::Base
     end
   end
 
+  # If the finish date is identical to the start date,
+  # the finish date is set to 'nil'
   def check_for_identical_start_finish
     self.finish = nil if self.start == self.finish
   end
 
+  # ----- Local Methods - Signature/Digest -----
+
+  # These fields uniquely identify a record.
   def signature_fields
     "#{self.title}/#{self.location}/#{self.start}"
   end
 
-  # The signature is a MD5 digest.
+  # The signature is a MD5 digest generated from the signature_fields.
   def generate_signature
     Digest::MD5.hexdigest signature_fields
   end
@@ -103,28 +113,59 @@ class Event < ActiveRecord::Base
     self.digest = generate_signature
   end
 
+  # ----- Local Methods - Data Display -----
+
+  # Generates a formatted date. e.g.
+  # Jan 23, 2001    - one-day event   - first_in_year == true
+  # Jan 24-25, 2001 - multi-day event - first_in_year == false
+  # Feb 24          - one-day event   - first_in_year == true
+  # Feb 24-25       - multi-day event - first_in_year == false
   def date_display(show_year = false)
     year_string = first_in_year || show_year ? ", #{start.year}&nbsp;" : ""
     finish_string = finish ? "-#{finish.day}" : ""
     "#{start.strftime('%b')} #{start.day}#{finish_string}#{year_string}"
   end
 
-  def set_first_in_year
+  # ----- Local Methods - Year Formatting -----
+
+  # In the calendar display list, we wanted to display the year
+  # for the first event in the year, but not for the following events
+  # in the year.
+  #
+  # There is a database field 'first_in_year'
+  # The first event is a year is set to 'true'
+  # Other events in the year are set to 'false'
+  # The 'first_in_year' field is reset after records are added/modified/deleted.
+  #
+  # The 'first_in_year' field is used by the #date_display method to generate
+  # formatted output for the calendar page.
+
+  # This method resets the 'first_in_year' field for
+  # all field relevant to 'self'
+  def reset_first_in_year
     events = Event.in_year(start, kind).order('start').all
     events.first.update_attributes(:first_in_year => true) unless events.first.nil?
     events[1..-1].each {|x| x.update_attributes(:first_in_year => false)} unless events[1..-1].nil?
   end
 
+  # This method is called after a record is deleted.
+  # No reset is done unless the record is the first in the year.
   def set_first_in_year_after_delete
     return unless self.first_in_year == true
-    set_first_in_year
+    reset_first_in_year
   end
 
+  # This method is called after a record is created or saved.
+  # No reset is done unless the start field was changed.
   def set_first_in_year_after_save
     return unless self.start_changed?
-    set_first_in_year
+    reset_first_in_year
   end
 
+  # ----- Local Methods - Utility Methods ------
+
+  # This method is used for tests, to reset the database
+  # after each test scenario
   def self.delete_all_records
     Event.all.each { |x| x.destroy }
   end
