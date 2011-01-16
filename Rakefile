@@ -63,24 +63,35 @@ namespace :db do
   end
 
 end
-  namespace :spec do
-    desc "Run all specs"
-    task :all do
-      cmd = "rspec -O spec/spec.opts spec/**/*_spec.rb"
-      puts "Running All Specs"
-      puts cmd
-      system cmd
-    end
 
-    desc "Generate spec documentation"
-    task :doc do
-      cmd = "rspec -O spec/spec.opts --format documentation spec/**/*_spec.rb"
-      puts "Generating Spec Documentation"
-      puts cmd
-      system cmd
-    end
-
-
-
+desc "Run all specs"
+task :spec do
+  cmd = "rspec -O spec/spec.opts spec/**/*_spec.rb"
+  puts "Running All Specs"
+  puts cmd
+  system cmd
 end
 
+namespace :spec do
+  desc "Show spec documentation"
+  task :doc do
+    cmd = "rspec -O spec/spec.opts --format documentation spec/**/*_spec.rb"
+    puts "Generating Spec Documentation"
+    puts cmd
+    system cmd
+  end
+end
+
+desc "Generate Rdoc"
+task :rdoc => 'rdoc:clear' do
+  system "rdoc models/*.rb"
+  puts "Rdoc generated - view at 'doc/index.html'"
+end
+
+namespace :rdoc do
+  desc "Clear Rdoc"
+  task :clear do
+    system "rm -rf doc"
+    puts "Rdoc removed"
+  end
+end
