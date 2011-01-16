@@ -144,7 +144,7 @@ class Event < ActiveRecord::Base
   # all field relevant to 'self'
   def reset_first_in_year
     events = Event.in_year(start, kind).order('start').all
-    unless events.nil?
+    unless events.empty?  # this could happen if you delete a record...
       events.first.update_attributes(:first_in_year => true)
       events[1..-1].each { |x| x.update_attributes(:first_in_year => false) }
     end
