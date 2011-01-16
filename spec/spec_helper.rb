@@ -4,5 +4,5 @@ require 'rspec'
 
 RSpec.configure do |config|
   config.mock_with :rspec
-  config.before(:each) { Event.delete_all_records }
+  config.before(:each) { Event.delete_all_with_validation }
 end

@@ -144,8 +144,10 @@ class Event < ActiveRecord::Base
   # all field relevant to 'self'
   def reset_first_in_year
     events = Event.in_year(start, kind).order('start').all
-    events.first.update_attributes(:first_in_year => true) unless events.first.nil?
-    events[1..-1].each {|x| x.update_attributes(:first_in_year => false)} unless events[1..-1].nil?
+    unless events.nil?
+      events.first.update_attributes(:first_in_year => true)
+      events[1..-1].each { |x| x.update_attributes(:first_in_year => false) }
+    end
   end
 
   # This method is called after a record is deleted.
@@ -165,8 +167,11 @@ class Event < ActiveRecord::Base
   # ----- Local Methods - Utility Methods ------
 
   # This method is used for tests, to reset the database
-  # after each test scenario
-  def self.delete_all_records
+  # after each test scenario.  Deleting records using this
+  # method invokes all the validations.  You could also
+  # use built-in method 'Event.delete_all' which runs faster
+  # because it ignores validations.
+  def self.delete_all_with_validation
     Event.all.each { |x| x.destroy }
   end
 

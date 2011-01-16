@@ -53,7 +53,7 @@ namespace :db do
   desc "Remove all data from database."
   task :reset => :environment do
     puts "Removing all database records"
-    Event.delete_all_records
+    Event.delete_all_with_validation
   end
 
   desc "Load seed data"
