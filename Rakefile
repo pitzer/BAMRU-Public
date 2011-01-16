@@ -64,32 +64,23 @@ namespace :db do
 
 end
   namespace :spec do
-    desc "Run all specs in spec/models"
-    task :models do
-      cmd = "rspec -O spec/spec.opts spec/models/*_spec.rb"
-      puts "Running MODEL Specs"
-      puts cmd
-      system cmd
-    end
-
-    desc "Run all specs in specs/integration"
-    task :integration do
-      cmd = "rspec -O spec/spec.opts spec/integration/*_spec.rb"
-      puts "Running INTEGRATION Specs"
-      puts cmd
-      system cmd
-    end
-
-    # desc "Run all specs in specs/helpers"
-    task :helpers do
-      cmd = "rspec -O spec/spec.opts spec/helper/**/*_spec.rb"
-      puts "Running HELPER Specs"
-      puts cmd
-      system cmd
-    end
-
     desc "Run all specs"
-    task :all => [:models, :integration]
+    task :all do
+      cmd = "rspec -O spec/spec.opts spec/**/*_spec.rb"
+      puts "Running All Specs"
+      puts cmd
+      system cmd
+    end
+
+    desc "Generate spec documentation"
+    task :doc do
+      cmd = "rspec -O spec/spec.opts --format documentation spec/**/*_spec.rb"
+      puts "Generating Spec Documentation"
+      puts cmd
+      system cmd
+    end
+
+
 
 end
 
