@@ -33,8 +33,10 @@ GEM
     childprocess (0.1.6)
       ffi (~> 0.6.3)
     culerity (0.2.14)
+    daemons (1.1.0)
     diff-lcs (1.1.2)
     drx (0.4.5)
+    eventmachine (0.12.10)
     factory_girl (1.3.3)
     fastercsv (1.5.4)
     ffi (0.6.3)
@@ -85,6 +87,10 @@ GEM
       tilt (~> 1.2)
     spoon (0.0.1)
     sqlite3-ruby (1.2.5)
+    thin (1.2.7)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
     tilt (1.2.1)
     tzinfo (0.3.23)
     wirble (0.1.3)
@@ -112,4 +118,5 @@ DEPENDENCIES
   shotgun
   sinatra
   sqlite3-ruby (= 1.2.5)
+  thin
   wirble

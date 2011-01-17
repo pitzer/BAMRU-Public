@@ -14,6 +14,7 @@ gem "rspec"
 gem "capybara"
 gem "shotgun"
 gem "rcov"
+gem "thin"
 
 gem "drx"
 gem "hirb"
