@@ -8,6 +8,7 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 require 'rake'
+require 'rspec/core/rake_task'
 
 def break() puts '*' * 60; end
 
@@ -33,6 +34,12 @@ task :console do
   IRB.start
 end
 task :con => :console
+
+desc "Remove all Rcov and Rdoc data"
+rake :cleanup => [:rcov_cleanup, :rdoc_cleanup] do
+  puts "Done"
+end
+task :clean => :cleanup
 
 namespace :db do
 
@@ -80,18 +87,30 @@ namespace :spec do
     puts cmd
     system cmd
   end
+
+  task :rcov_cleanup do
+    system "rm -rf coverage"
+  end
+
+  RSpec::Core::RakeTask.new(:run_rcov) do |t|
+    t.rcov = true
+    t.rcov_opts = %q[--exclude "/home" --exclude "spec"]
+    t.verbose = true
+  end
+
+  desc "Generate Coverage Report"
+  task :rcov => [:rcov_cleanup, :run_rcov] do
+    puts "Rcov generated - view at 'coverage/index.html"
+  end
+
+end
+
+task :rdoc_cleanup do
+  system "rm -rf doc"
 end
 
 desc "Generate Rdoc"
-task :rdoc => 'rdoc:clear' do
-  system "rdoc models/*.rb README.rdoc --main README.rdoc"
+task :rdoc => :rdoc_cleanup do
+  system "rdoc models/*.rb README.rdoc -N --main README.rdoc"
   puts "Rdoc generated - view at 'doc/index.html'"
-end
-
-namespace :rdoc do
-  desc "Clear Rdoc"
-  task :clear do
-    system "rm -rf doc"
-    puts "Rdoc removed"
-  end
 end
