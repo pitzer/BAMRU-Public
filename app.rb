@@ -104,14 +104,14 @@ class BamruApp < Sinatra::Base
   end
 
   get '/admin_new' do
-    @event       = Action.new
+    @action       = Action.new
     @action      = "/admin_create"
     @button_text = "Create Action"
     erb :admin_new, :layout => :admin_layout
   end
 
   get '/admin_copy/:id' do
-    @event       = Action.find_by_id(params[:id])
+    @action       = Action.find_by_id(params[:id])
     @action      = "/admin_create"
     @button_text = "Create Action"
     erb :admin_new, :layout => :admin_layout
@@ -119,13 +119,13 @@ class BamruApp < Sinatra::Base
 
   post '/admin_create' do
     params.delete "submit"
-    event = Action.new(params)
-    if event.save
-      set_flash_notice("Created New Action (#{event.kind.capitalize} > #{event.title} > #{event.start})")
+    action = Action.new(params)
+    if action.save
+      set_flash_notice("Created New Action (#{action.kind.capitalize} > #{action.title} > #{action.start})")
       redirect '/admin_show'
     else
-      set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(event.errors)}")
-      @event = event
+      set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
+      @action = action
       @action = "/admin_create"
       @button_text = "Create Action"
       erb :admin_new, :layout => :admin_layout
@@ -133,22 +133,22 @@ class BamruApp < Sinatra::Base
   end
 
   get '/admin_edit/:id' do
-    @event       = Action.find_by_id(params[:id])
+    @action       = Action.find_by_id(params[:id])
     @action      = "/admin_update/#{params[:id]}"
     @button_text = "Update Action"
     erb :admin_edit, :layout => :admin_layout
   end
 
   post '/admin_update/:id' do
-    event = Action.find_by_id(params[:id])
+    action = Action.find_by_id(params[:id])
     debugger
     params.delete "submit"
-    if event.update_attributes(params)
-      set_flash_notice("Updated Action (#{event.kind.capitalize} > #{event.title} > #{event.start})")
+    if action.update_attributes(params)
+      set_flash_notice("Updated Action (#{action.kind.capitalize} > #{action.title} > #{action.start})")
       redirect '/admin_show'
     else
-      set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(event.errors)}")
-      @event = event
+      set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
+      @action = action
       @action = "/admin_create"
       @button_text = "Update Action"
       erb :admin_edit, :layout => :admin_layout
@@ -157,21 +157,21 @@ class BamruApp < Sinatra::Base
   end
 
   get '/admin_delete/:id' do
-    event = Action.find_by_id(params[:id])
-    set_flash_notice("Deleted Action (#{event.kind.capitalize} > #{event.title} > #{event.start})")
-    event.destroy
+    action = Action.find_by_id(params[:id])
+    set_flash_notice("Deleted Action (#{action.kind.capitalize} > #{action.title} > #{action.start})")
+    action.destroy
     redirect "/admin_show"
   end
 
   get '/calendar.ical' do
     response["Content-Type"] = "text/plain"
-    @events = Action.all
+    @actions = Action.all
     erb :admin_export_ical, :layout => false
   end
 
   get '/calendar.csv' do
     response["Content-Type"] = "text/plain"
-    @events = Action.all
+    @actions = Action.all
     erb :admin_export_csv, :layout => false
   end
 
@@ -207,7 +207,7 @@ class BamruApp < Sinatra::Base
       csv_link = "invalid CSV records. (<a href='/invalid_csv'>view</a>)"
       set_flash_error(" Warning: #{`wc -l /tmp/invalid.csv`.split(' ').first} #{csv_link}")
     end
-    set_flash_notice("CSV File Upload created #{finish_count - start_count} new event records.")
+    set_flash_notice("CSV File Upload created #{finish_count - start_count} new actions.")
     redirect '/admin_show'
   end
 

@@ -233,7 +233,7 @@ module Sinatra
     def admin_nav
       opt1 = [
               ['/admin',          'Admin Home'  ],
-              ['/admin_show',     'Events'      ],
+              ['/admin_show',     'Actions'      ],
               ['/admin_new',      'Create Action'],
               ['/admin_load_csv', 'Upload CSV'  ]
       ]

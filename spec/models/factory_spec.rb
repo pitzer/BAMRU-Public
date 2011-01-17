@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "Factory" do
 
   context "Using the Action Factory" do
-    specify { Factory(:event).should_not be_nil }
-    specify { Factory(:event).should be_valid }
+    specify { Factory(:action).should_not be_nil }
+    specify { Factory(:action).should be_valid }
   end
 
   context "Database Cleaning" do
@@ -13,7 +13,7 @@ describe "Factory" do
     end
 
     it "should be able to create a single record" do
-      Factory(:event)
+      Factory(:action)
       Action.count.should == 1
     end
 

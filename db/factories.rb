@@ -5,7 +5,7 @@ def randM() 1 + rand(12); end
 def randD() 1 + rand(28); end
 def randE() "2011-#{randM}-#{randD}"; end
 
-Factory.define :event do |u|
+Factory.define :action do |u|
   u.kind        "event" 
   u.title       { "T#{rand4}" }
   u.location    { "L#{rand4}" } 
