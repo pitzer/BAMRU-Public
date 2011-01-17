@@ -6,9 +6,20 @@ at http://www.bamru.org.
 The old application was written in the 2004 era.  It was written
 in PHP and used a MySQL database.
 
+The goal of the rewrite is to have a simpler, more reliable application
+that is easier to maintain.  Hopefully we'll be more efficient using
+newer tools:
+- ORM [ActiveRecord]
+- lightweight app framework [Sinatra]
+- source code control [Git]
+- automated regressions testing [Rspec, Rcov]
+- script tool [Rake]
+- deploy tool [Capistrano]
+- library manager [Bundler]
+
 == Live Demo - Public Pages
 
-To see a live demo of this prototype app, visit:
+To see a live demo of the prototype app, visit:
 http://btest.alt55.com/calendar.test
 
 All of the demo uses dynamically generated pages
@@ -35,11 +46,11 @@ Windows hasn't been tested.
 
 Installing the Server:
 1. install ruby, git, rubygems
-2. <tt>> gem install bundler</tt>
-3. > git clone https://github.com/andyl/BAMRU-Public
-4. +> cd BAMRU-Public+
-5. > bundle install
-6. > rake run_server
+2. <tt> > gem install bundler                             </tt>
+3. <tt> > git clone https://github.com/andyl/BAMRU-Public </tt>
+4. <tt> > cd BAMRU-Public                                 </tt>
+5. <tt> > bundle install                                  </tt>
+6. <tt> > rake run_server                                 </tt>
 
 Running the App:
 1. start your browser
@@ -48,12 +59,12 @@ Running the App:
 == Editing/Updating the App
 
 Please include tests with any update you make.
-Run 'rake -T' to see a list of test/edit commands.
+Run <tt>rake -T</tt> to see a list of test/edit commands.
 
 == Deploying the App
 
 All of the deployment scripts are in the Capfile.
-Run 'cap -T' to see a list of deployment commands.
+Run <tt>cap -T</tt> to see a list of deployment commands.
 
 == Administration and Security
 
