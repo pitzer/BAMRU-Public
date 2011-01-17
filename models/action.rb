@@ -1,4 +1,4 @@
-class Event < ActiveRecord::Base
+class Action < ActiveRecord::Base
 
   # ----- Callbacks -----
 
@@ -40,10 +40,10 @@ class Event < ActiveRecord::Base
   end
 
   def self.default_end()        10.months.from_now; end
-  def self.first_event(); x = Event.order('start').first; x.start unless x.nil? ; end
-  def self.last_event();  x = Event.order('start').last;  x.start unless x.nil? ;  end
-  def self.first_year();  x = Event.first_event; x.at_beginning_of_year unless x.nil?; end
-  def self.last_year();   x = Event.last_event;  x.at_end_of_year unless x.nil?; end
+  def self.first_event(); x = Action.order('start').first; x.start unless x.nil? ; end
+  def self.last_event();  x = Action.order('start').last;  x.start unless x.nil? ;  end
+  def self.first_year();  x = Action.first_event; x.at_beginning_of_year unless x.nil?; end
+  def self.last_year();   x = Action.last_event;  x.at_end_of_year unless x.nil?; end
 
   # Returns an array of dates that are used in select form on the calendar page.
   # Dates are in the format of ["Jan-2001", "Jan-2002", "Jan-2003"]
@@ -52,7 +52,7 @@ class Event < ActiveRecord::Base
   def self.range_array(extra_date = nil)
     return nil if self.first_year.nil? || self.last_year.nil?
     xa = ((self.first_year + 10.days).to_date .. (self.last_year + 1.year).to_date).step(365).to_a.map{|x| x.to_time}
-    xa << Event.date_parse(extra_date) unless extra_date.nil?
+    xa << Action.date_parse(extra_date) unless extra_date.nil?
     xa.sort.map {|x| x.to_label }.uniq
   end
 
@@ -161,7 +161,7 @@ class Event < ActiveRecord::Base
   # This method resets the 'first_in_year' field for
   # all field relevant to 'self'
   def reset_first_in_year
-    events = Event.in_year(start, kind).order('start').all
+    events = Action.in_year(start, kind).order('start').all
     unless events.empty?  # this could happen if you delete a record...
       events.first.update_attributes(:first_in_year => true)
       events[1..-1].each { |x| x.update_attributes(:first_in_year => false) }
@@ -187,10 +187,10 @@ class Event < ActiveRecord::Base
   # This method is used for tests, to reset the database
   # after each test scenario.  Deleting records using this
   # method invokes all the validations.  You could also
-  # use built-in method 'Event.delete_all' which runs faster
+  # use built-in method 'Action.delete_all' which runs faster
   # because it ignores validations.
   def self.delete_all_with_validation
-    Event.all.each { |x| x.destroy }
+    Action.all.each { |x| x.destroy }
   end
 
 end

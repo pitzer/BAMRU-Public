@@ -31,7 +31,7 @@ end
 #puts "Found #{csv_load.invalid} invalid records. (see #{csv_load.invalid_file})"
 
 #post('/admin_load_csv') do
-#  start_count = Event.count
+#  start_count = Action.count
 #  system "mkdir -p #{DATA_DIR}"
 #  system "rm -f #{CSV_FILE}"
 #  system "rm -f /tmp/invalid.csv"
@@ -44,12 +44,12 @@ end
 #  csv_to_hash(read_csv).each do |r|
 #    h = r.to_hash
 #    h["kind"].downcase! unless h["kind"].nil?
-#    record = Event.create(h)
+#    record = Action.create(h)
 #    unless record.valid?
 #      File.open('/tmp/invalid.csv', 'a') {|f| f.puts r; f.puts record.errors.inspect}
 #    end
 #  end
-#  finish_count = Event.count
+#  finish_count = Action.count
 #  if File.exist? '/tmp/malformed.csv'
 #    csv_link = "malformed CSV records. (<a href='/malformed_csv'>view</a>)"
 #    set_flash_error(" Warning: #{`wc -l /tmp/malformed.csv`.split(' ').first} #{csv_link}")

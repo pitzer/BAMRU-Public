@@ -21,8 +21,8 @@ module Sinatra
     end
 
     def number_of(kind = "")
-      return Event.count if kind.blank?
-      Event.where(:kind => kind).count
+      return Action.count if kind.blank?
+      Action.where(:kind => kind).count
     end
 
     def last_modification(file_spec = nil)
@@ -42,15 +42,15 @@ module Sinatra
     end
 
     def oldest_record
-      record_display Event.order('start').first
+      record_display Action.order('start').first
     end
 
     def newest_record
-      record_display Event.order('start').last
+      record_display Action.order('start').last
     end
 
     def last_update
-      rec = Event.order('updated_at').last
+      rec = Action.order('updated_at').last
       return if rec.nil?
       "<b>#{rec.updated_at.strftime("%a %b %d - %H:%M")}</b> (<a href='/admin_edit/#{rec.id}'>#{rec.title[0..15]}...</a>)"
     end
@@ -188,7 +188,7 @@ module Sinatra
       else
         opt  = finish.to_label
       end
-      opts = Event.range_array(opt)
+      opts = Action.range_array(opt)
       output = "<select name='#{direction}'>#{opt}"
       output << opts.map do |x|
         sel = x == opt ? " SELECTED" : ""
@@ -201,7 +201,7 @@ module Sinatra
     def select_helper(event)
       vals = {"meeting"    => "Meeting",
               "training"   => "Training",
-              "event"      => "Event",
+              "event"      => "Action",
               "non_county" => "Non-County Meeting"}
       vals.keys.map do |i|
         opt = i == event.kind ? " selected" : ""
@@ -234,7 +234,7 @@ module Sinatra
       opt1 = [
               ['/admin',          'Admin Home'  ],
               ['/admin_show',     'Events'      ],
-              ['/admin_new',      'Create Event'],
+              ['/admin_new',      'Create Action'],
               ['/admin_load_csv', 'Upload CSV'  ]
       ]
       opt2 = [

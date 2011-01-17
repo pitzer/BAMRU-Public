@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Event do
+describe Action do
 
-  context "basic Event creation" do
+  context "basic Action creation" do
     it "should create an event" do
-      t = Event.create(:title => "hello there")
+      t = Action.create(:title => "hello there")
       t.should_not be_nil
     end
   end

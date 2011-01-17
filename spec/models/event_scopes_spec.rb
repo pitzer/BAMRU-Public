@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Event / Scopes" do
+describe "Action / Scopes" do
 
   before(:each) do
     Factory(:event, :kind => "meeting")
@@ -10,7 +10,7 @@ describe "Event / Scopes" do
   end
 
   describe "#meetings" do
-    specify { Event.meetings.count.should == 1 }  
+    specify { Action.meetings.count.should == 1 }
   end
 
 end
