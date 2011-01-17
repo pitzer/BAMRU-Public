@@ -44,13 +44,13 @@ You can clone the app and run it on your system.
 This is going to work best on Linux or Mac.
 Windows hasn't been tested.
 
-Installing the Server:
-1. install ruby, git, rubygems
-2. <tt> > gem install bundler                             </tt>
-3. <tt> > git clone https://github.com/andyl/BAMRU-Public </tt>
-4. <tt> > cd BAMRU-Public                                 </tt>
-5. <tt> > bundle install                                  </tt>
-6. <tt> > rake run_server                                 </tt>
+To install the app, first install ruby, git, rubygems.  Then:
+
+    > gem install bundler
+    > git clone https://github.com/andyl/BAMRU-Public
+    > cd BAMRU-Public
+    > bundle install
+    > rake run_server
 
 Running the App:
 1. start your browser
@@ -59,12 +59,18 @@ Running the App:
 == Editing/Updating the App
 
 Please include tests with any update you make.
-Run <tt>rake -T</tt> to see a list of test/edit commands.
+
+To see a list of test/edit commands, run
+
+    rake -T
 
 == Deploying the App
 
 All of the deployment scripts are in the Capfile.
-Run <tt>cap -T</tt> to see a list of deployment commands.
+
+To see a list of deployment commands, run
+
+    cap -T
 
 == Administration and Security
 
