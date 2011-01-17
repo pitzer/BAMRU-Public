@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
 
   before_validation :check_for_identical_start_finish
   before_validation :save_signature_into_digest_field
-  before_validation :tbd_to_tba
+  before_validation :convert_tbd_to_tba
   before_validation :cleanup_non_county
   before_save       :remove_quotes
   after_destroy     :set_first_in_year_after_delete
@@ -12,22 +12,33 @@ class Event < ActiveRecord::Base
 
   # ----- Validations -----
 
-  validates_uniqueness_of :digest, :message => "duplicate record - identical title, location, start"
+  msg = "duplicate record - identical title, location, start"
+  validates_uniqueness_of :digest, :message => msg
   validates_presence_of   :kind, :title, :location, :start
   validates_format_of     :kind, :with => /^(meeting|training|event|non-county)$/
 
-  validate :check_dates
+  validate :confirm_start_happens_before_finish
 
-  # confirms that start happens before finish
-  def check_dates
+  # Confirms that start happens before finish
+  def confirm_start_happens_before_finish
     return if self.finish.nil? || self.finish.blank?
     errors[:start] << "must happen before 'end'" if self.finish < self.start
   end
 
   # ----- Date Methods -----
 
-  def self.date_parse(date) date.class == String ? Time.parse(date) : date; end
-  def self.default_start()      2.months.ago;       end
+  # Parse a date.  The date can either be a string in the format 'Jan-2001', or
+  # it can be a Time object.
+  def self.date_parse(date)
+    date.class == String ? Time.parse(date) : date
+  end
+
+  # When you bring up a calendar page, it shows events from a range of dates.
+  # The default start is set to '2.months.ago'.
+  def self.default_start()
+    2.months.ago
+  end
+
   def self.default_end()        10.months.from_now; end
   def self.first_event(); x = Event.order('start').first; x.start unless x.nil? ; end
   def self.last_event();  x = Event.order('start').last;  x.start unless x.nil? ;  end
@@ -47,13 +58,20 @@ class Event < ActiveRecord::Base
 
   # ----- Scopes -----
 
-  scope :meetings,   where(:kind => "meeting").order('start')
-  scope :events,     where(:kind => "event").order('start')
-  scope :non_county, where(:kind => "non-county").order('start')
-  scope :trainings,  where(:kind => "training").order('start')
+  # Returns all actions where :kind == "meeting"
+  def self.meetings
+    where(:kind => "meeting").order('start')
+  end
 
-  def self.after(date); where('start >= ?', self.date_parse(date)); end
-  def self.before(date); where('start <= ?', self.date_parse(date)); end
+  # Returns all actions where :kind == "event"
+  def self.events
+    where(:kind => "event").order('start')
+  end
+  
+  def self.non_county() where(:kind => "non-county").order('start'); end
+  def self.trainings()  where(:kind => "training").order('start'); end
+  def self.after(date)  where('start >= ?', self.date_parse(date)); end
+  def self.before(date) where('start <= ?', self.date_parse(date)); end
   def self.between(start, finish) after(start).before(finish); end
   def self.in_year(date, kind)
     between(date.at_beginning_of_year, date.at_end_of_year).where(:kind => kind)
@@ -80,7 +98,7 @@ class Event < ActiveRecord::Base
 
   # This method changes 'tba, TBD, tbd' to 'TBA'
   # It also changes nil or blank value to 'TBA'
-  def tbd_to_tba
+  def convert_tbd_to_tba
     self.location.gsub!(/[Tt][Bb][DdAa]/, "TBA")
     self.location = "TBA" if self.location.nil? || self.location.blank?
     unless self.kind == 'meeting'

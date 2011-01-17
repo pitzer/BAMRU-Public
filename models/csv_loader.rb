@@ -1,6 +1,10 @@
 class CsvLoader
 
-  attr_reader :input_filename, :input_text
+  # the CSV filename that is passed when the object is initialized
+  attr_reader :input_filename
+
+  # the text of the CSV input file
+  attr_reader :input_text
 
   def initialize(input_filename)
     @input_filename = input_filename
