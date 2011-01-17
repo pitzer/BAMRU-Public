@@ -35,12 +35,6 @@ task :console do
 end
 task :con => :console
 
-desc "Remove all Rcov and Rdoc data"
-task :cleanup => [:rcov_cleanup, :rdoc_cleanup] do
-  puts "Done"
-end
-task :clean => :cleanup
-
 namespace :db do
 
   task :environment do
@@ -115,3 +109,9 @@ task :rdoc => :rdoc_cleanup do
   system "rdoc models/*.rb README.rdoc -N --main README.rdoc"
   puts "Rdoc generated - view at 'doc/index.html'"
 end
+
+desc "Remove all Rcov and Rdoc data"
+task :cleanup => ['spec:rcov_cleanup', :rdoc_cleanup] do
+  puts "Done"
+end
+task :clean => :cleanup
