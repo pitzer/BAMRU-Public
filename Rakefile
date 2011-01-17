@@ -36,7 +36,7 @@ end
 task :con => :console
 
 desc "Remove all Rcov and Rdoc data"
-rake :cleanup => [:rcov_cleanup, :rdoc_cleanup] do
+task :cleanup => [:rcov_cleanup, :rdoc_cleanup] do
   puts "Done"
 end
 task :clean => :cleanup
@@ -92,13 +92,14 @@ namespace :spec do
     system "rm -rf coverage"
   end
 
+  desc ""
   RSpec::Core::RakeTask.new(:run_rcov) do |t|
     t.rcov = true
     t.rcov_opts = %q[--exclude "/home" --exclude "spec"]
     t.verbose = true
   end
 
-  desc "Generate Coverage Report"
+  desc "Generate coverage report"
   task :rcov => [:rcov_cleanup, :run_rcov] do
     puts "Rcov generated - view at 'coverage/index.html"
   end
