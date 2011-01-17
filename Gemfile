@@ -13,6 +13,7 @@ gem "fastercsv"
 gem "rspec"
 gem "capybara"
 gem "shotgun"
+gem "rcov"
 
 gem "drx"
 gem "hirb"

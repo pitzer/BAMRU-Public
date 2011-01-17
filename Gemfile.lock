@@ -60,6 +60,7 @@ GEM
     rack-test (0.5.7)
       rack (>= 1.0)
     rake (0.8.7)
+    rcov (0.9.9)
     rspec (2.4.0)
       rspec-core (~> 2.4.0)
       rspec-expectations (~> 2.4.0)
@@ -105,6 +106,7 @@ DEPENDENCIES
   hirb
   interactive_editor
   rack-flash
+  rcov
   rspec
   ruby-debug (= 0.10.0)
   shotgun
