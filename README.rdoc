@@ -4,7 +4,7 @@ This is a prototype application - a rewrite of the BAMRU website
 at http://www.bamru.org.
 
 The old application was written in the 2004 era.  It was written
-in PHP and used a MySQL database
+in PHP and used a MySQL database.
 
 == Live Demo - Public Pages
 
@@ -34,16 +34,16 @@ This is going to work best on Linux or Mac.
 Windows hasn't been tested.
 
 Installing the Server:
-1) install ruby, git, rubygems
-2) > gem install bundler
-3) > git clone https://github.com/andyl/BAMRU-Public
-4) > cd BAMRU-Public
-5) > bundle install
-6) > rake run_server
+1. install ruby, git, rubygems
+2. <tt>> gem install bundler</tt>
+3. > git clone https://github.com/andyl/BAMRU-Public
+4. +> cd BAMRU-Public+
+5. > bundle install
+6. > rake run_server
 
 Running the App:
-1) start your browser
-2) visit http://localhost:9393
+1. start your browser
+2. visit <tt>http://localhost:9393</tt>
 
 == Editing/Updating the App
 
