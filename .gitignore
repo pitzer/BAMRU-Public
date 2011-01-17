@@ -7,3 +7,5 @@ log/*
 db/test.*
 doc
 doc/*
+coverage
+coverage/*
