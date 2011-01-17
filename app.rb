@@ -20,7 +20,7 @@ class BamruApp < Sinatra::Base
   end
   
   get '/calendar.test' do
-    @start  = Action.date_parse(params[:start]  || session[:start] || Action.default_start)
+    @start  = Action.date_parse(params[:start]  || session[:start]  || Action.default_start)
     @finish = Action.date_parse(params[:finish] || session[:finish] || Action.default_end)
     @start, @finish = @finish, @start if @finish < @start
     session[:start] = @start
