@@ -15,10 +15,10 @@ def break() puts '*' * 60; end
 task :default => :msg
 
 task :msg do
-  puts "Use 'rake -T' to see rake options."
+  puts "Use 'rake -T' to see rake options"
 end
 
-desc "Run the development server."
+desc "Run the development server"
 task :run_server do
   system "xterm_title '<thin> #{File.basename(`pwd`).chomp}@#{ENV['SYSNAME']}'"
   system "touch tmp/restart.txt"
@@ -52,7 +52,7 @@ namespace :db do
     ActiveRecord::Migrator.migrate("db/migrate")
   end
 
-  desc "Remove all data from database."
+  desc "Remove all data from database"
   task :reset => :environment do
     puts "Removing all database records"
     Action.delete_all_with_validation
@@ -66,12 +66,25 @@ namespace :db do
 
   desc "Load CSV data"
   task :csv => :environment do
+    file = ENV['CSV'] || "data/csv/working_copy.csv"
     puts "Loading CSV Data"
-    csv_load = CsvLoader.new("data/csv/working_copy.csv")
+    puts " > using data from '#{file}'"
+    puts " > run with 'CSV=<filename>' to use another file"
+    csv_load = CsvLoader.new(file)
     puts "Processed #{csv_load.num_input} records."
     puts "Loaded #{csv_load.num_successful} records successfully."
-    puts "Found #{csv_load.num_malformed} malformed records."
-    puts "Found #{csv_load.num_invalid} invalid records."
+    ms = csv_load.num_malformed == 0 ? "" : "(view at #{MALFORMED_FILENAME})"
+    puts "Found #{csv_load.num_malformed} malformed records. #{ms}"
+    is = csv_load.num_invalid == 0 ? "" : "(view at #{INVALID_FILENAME})"
+    puts "Found #{csv_load.num_invalid} invalid records. #{is}"
+  end
+
+  desc "Show database statistics"
+  task :stats => :environment do
+    mc, tc = Action.meetings.count, Action.trainings.count
+    ec, nc = Action.events.count, Action.non_county.count
+    puts "There are a total of #{Action.count} records in the database."
+    puts "(#{mc} meetings, #{tc} trainings, #{ec} events, #{nc} non-county)"
   end
 
 end
