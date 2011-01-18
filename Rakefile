@@ -20,6 +20,7 @@ end
 
 desc "Run the development server."
 task :run_server do
+  system "xterm_title '<thin> #{File.basename(`pwd`).chomp}@#{ENV['SYSNAME']}'"
   system "touch tmp/restart.txt"
   system "shotgun config.ru -s thin -o 0.0.0.0"
 end
@@ -87,9 +88,19 @@ namespace :spec do
   desc "Show spec documentation"
   task :doc do
     cmd = "rspec -O spec/spec.opts --format documentation spec/**/*_spec.rb"
-    puts "Generating Spec Documentation"
+    puts "Generating Spec documentation"
     puts cmd
     system cmd
+  end
+
+  desc "Generate HTML documentation"
+  task :html do
+    outfile = '/tmp/spec.html'
+    cmd = "rspec -O spec/spec.opts --format html spec/**/*_spec.rb > #{outfile}"
+    puts "Generating HTML documentation"
+    puts cmd
+    system cmd
+    puts "HTML documentation written to #{outfile}"
   end
 
   task :rcov_cleanup do
