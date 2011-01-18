@@ -129,7 +129,7 @@ namespace :spec do
 
   desc "Generate coverage report"
   task :rcov => [:rcov_cleanup, :run_rcov] do
-    puts "Rcov generated - view at 'coverage/index.html"
+    puts "Rcov generated - view at 'coverage/index.html'"
   end
 
 end
