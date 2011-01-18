@@ -3,6 +3,7 @@ require 'spec_helper'
 describe CsvLoader do
 
   TEST_FILE = "/tmp/test.csv"
+  NUM_RECORDS = 5
   HEADER = %q("kind","title","location","description","start","finish","leaders")
 
   def csv_record
@@ -17,7 +18,7 @@ describe CsvLoader do
 
   def generate_test_data
     output = HEADER + "\n"
-    5.times { output << csv_record + "\n" }
+    NUM_RECORDS.times { output << csv_record + "\n" }
     File.open(TEST_FILE, 'w') {|f| f.puts output }
   end
 
@@ -87,15 +88,6 @@ describe CsvLoader do
 
 end
 
-#using from the controller...
-#csv_load = CsvLoader.new(file)
-#unless csv_load.input_file_exists?
-#  set_flash_error("No input file")
-#  redirect '/whatever'
-#end
-#set_flash_error(csv_load.error_message) if csv_load.load_errors?
-#set_flash_notice(csv_load.success_message)
-#
 #using from the rakefile (rake db:csv_load)
 #csv_load = CsvLoader.new(file)
 #puts "Processed #{csv_load.processed} records."

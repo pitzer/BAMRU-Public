@@ -63,6 +63,16 @@ namespace :db do
     require 'db/seed'
   end
 
+  desc "Load CSV data"
+  task :csv => :environment do
+    puts "Loading CSV Data"
+    csv_load = CsvLoader.new("data/csv/working_copy.csv")
+    puts "Processed #{csv_load.num_input} records."
+    puts "Loaded #{csv_load.num_successful} records successfully."
+    puts "Found #{csv_load.num_malformed} malformed records."
+    puts "Found #{csv_load.num_invalid} invalid records."
+  end
+
 end
 
 desc "Run all specs"
