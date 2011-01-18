@@ -1,6 +1,6 @@
 BEGIN:VCALENDAR
 VERSION:2.0
-<% @events.each do |e| -%>
+<% @actions.each do |e| -%>
 BEGIN:VEVENT
 DTSTART;VALUE=DATE:<%=e.start.strftime("%Y%m%d")%>
 DTEND;VALUE=DATE:<%=e.start.strftime("%Y%m%d")%>

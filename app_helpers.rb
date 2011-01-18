@@ -1,16 +1,14 @@
 require 'sinatra/base'
+require 'time'
 
 module Sinatra
   module AppHelpers
 
-    BASE_DIR  = File.dirname(File.expand_path(__FILE__))
-    DATA_DIR  = BASE_DIR + "/data"
-    CSV_FILE  = DATA_DIR + "/data.csv"
-    QUOTES    = YAML.load_file(BASE_DIR + "/data/quotes.yaml")
-    RIGHT_NAV = YAML.load_file(BASE_DIR + "/data/right_nav.yaml")
-    GUEST_POLICY   = File.read(BASE_DIR + "/data/guest_policy.erb")
-    PHOTO_LEFT     = File.read(DATA_DIR + "/photo_caption_left.html")
-    PHOTO_RIGHT    = File.read(DATA_DIR + "/photo_caption_right.html")
+    QUOTES       = YAML.load_file(BASE_DIR + "/data/quotes.yaml")
+    RIGHT_NAV    = YAML.load_file(BASE_DIR + "/data/right_nav.yaml")
+    GUEST_POLICY = File.read(BASE_DIR + "/data/guest_policy.erb")
+    PHOTO_LEFT   = File.read(DATA_DIR + "/photo_caption_left.html")
+    PHOTO_RIGHT  = File.read(DATA_DIR + "/photo_caption_right.html")
 
     def current_server
       "http://#{request.env["HTTP_HOST"]}"
@@ -18,6 +16,14 @@ module Sinatra
 
     def current_page
       request.path_info
+    end
+
+    def select_start_date
+      params[:start]  || session[:start] ||  Action.default_start
+    end
+
+    def select_finish_date
+      params[:finish] || session[:finish] || Action.default_end
     end
 
     def number_of(kind = "")
@@ -29,8 +35,6 @@ module Sinatra
       file_spec ||= %w(app* views/*)
       Dir[*file_spec].map {|f| File.ctime(f)}.max.strftime("%a %b %d - %H:%M")
     end
-
-    require 'time'
 
     def last_restart
       File.ctime(BASE_DIR + "/tmp/restart.txt").strftime("%a %b %d - %H:%M")
@@ -198,13 +202,13 @@ module Sinatra
       output
     end
 
-    def select_helper(event)
+    def select_helper(action)
       vals = {"meeting"    => "Meeting",
               "training"   => "Training",
               "event"      => "Action",
               "non_county" => "Non-County Meeting"}
       vals.keys.map do |i|
-        opt = i == event.kind ? " selected" : ""
+        opt = i == action.kind ? " selected" : "" unless action.nil?
         "<option value='#{i}'#{opt}>#{vals[i]}</option>"
       end.join(' ')
     end
@@ -271,33 +275,6 @@ module Sinatra
       '<img src="assets/dots.gif" width="134" height="10" border="0"><br>'
     end
 
-  require 'fastercsv'  
-
-  def read_csv
-    system "rm -f /tmp/malformed.csv"
-    bad_csv = ""
-    output = File.read(CSV_FILE).reduce([]) do |a,v|
-      begin
-        a << v.parse_csv
-      rescue
-        puts "BAD RECORD FOUND!! >> #{v[0..30]}"
-        bad_csv << v
-      end
-      a
-    end
-    File.open('/tmp/malformed.csv', 'w') {|f| f.puts bad_csv} unless bad_csv.empty?
-    output
-  end
-
-  def csv_to_hash(data)
-    headers = data.first
-    fields  = data[1..-1]
-    fields.reduce([]) do |a,v|
-      a << FasterCSV::Row.new(headers, v)
-      a
-    end
-  end
-        
   end
 
   helpers AppHelpers
