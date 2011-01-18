@@ -155,8 +155,8 @@ class BamruApp < Sinatra::Base
   end
 
   get '/admin_edit/:id' do
-    @action       = Action.find_by_id(params[:id])
-    @action      = "/admin_update/#{params[:id]}"
+    @action      = Action.find_by_id(params[:id])
+    @post_action = "/admin_update/#{params[:id]}"
     @button_text = "Update Action"
     erb :admin_edit, :layout => :admin_layout
   end
@@ -169,8 +169,8 @@ class BamruApp < Sinatra::Base
       redirect '/admin_show'
     else
       set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
-      @action = action
-      @action = "/admin_create"
+      @action      = action
+      @post_action = "/admin_create"
       @button_text = "Update Action"
       erb :admin_edit, :layout => :admin_layout
     end
