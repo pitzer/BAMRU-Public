@@ -4,7 +4,6 @@ require 'yaml'
 require 'ruby-debug'
 require 'rack-flash'
 require base_dir + '/config/environment'
-require base_dir + '/app_helpers'
 
 class BamruApp < Sinatra::Base
   helpers Sinatra::AppHelpers

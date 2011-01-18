@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Action, "Date Methods" do
 
   describe ".date_parse" do
-    date = Time.parse("Jan-01-01")
+    date = Date.parse("Jan-01-01").to_time
     context "when giving a string input" do
       specify { Action.date_parse("Jan-2001").should == date}
     end

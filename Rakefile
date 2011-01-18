@@ -140,7 +140,7 @@ end
 
 desc "Generate Rdoc"
 task :rdoc => :rdoc_cleanup do
-  system "rdoc models/*.rb README.rdoc -N --main README.rdoc"
+  system "rdoc lib/*.rb README.rdoc -N --main README.rdoc"
   puts "Rdoc generated - view at 'doc/index.html'"
 end
 

@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'active_record'
 require 'factory_girl'
+require 'time'
 
 BASE_DIR  = File.dirname(File.expand_path(__FILE__)) + "/../"
 DATA_DIR  = BASE_DIR + "/data"
@@ -21,8 +22,8 @@ ActiveRecord::Base.establish_connection(
   :database =>  BASE_DIR + "db/#{database_file}"
 )
 
-# load all models
-Dir[BASE_DIR + "models/*.rb"].each {|f| load f}
+# load all lib
+Dir[BASE_DIR + "lib/*.rb"].each {|f| load f}
 
 # load factory definitions
 require BASE_DIR + "db/factories"
