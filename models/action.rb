@@ -3,9 +3,9 @@ class Action < ActiveRecord::Base
   # ----- Callbacks -----
 
   before_validation :check_for_identical_start_finish
-  before_validation :save_signature_into_digest_field
   before_validation :convert_tbd_to_tba
   before_validation :cleanup_non_county
+  before_validation :save_signature_into_digest_field
   before_save       :remove_quotes
   after_destroy     :set_first_in_year_after_delete
   after_save        :set_first_in_year_after_save
@@ -120,15 +120,15 @@ class Action < ActiveRecord::Base
     "#{self.title}/#{self.location}/#{self.start}"
   end
 
-  # The signature is a MD5 digest generated from the signature_fields.
-  def generate_signature
-    Digest::MD5.hexdigest signature_fields
+  # The digest is a MD5 digest generated from the signature_fields.
+  def generate_digest_from_signature
+    Digest::MD5.hexdigest(signature_fields)
   end
 
   # The digest field is checked to ensure it is unique.
   # This eliminates the possibility of duplicate records.
   def save_signature_into_digest_field
-    self.digest = generate_signature
+    self.digest = generate_digest_from_signature
   end
 
   # ----- Local Methods - Data Display -----

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Action / Date Methods" do
+describe Action, "Date Methods" do
 
   describe ".date_parse" do
     date = Time.parse("Jan-01-01")

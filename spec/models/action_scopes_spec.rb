@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Action / Scopes" do
+describe Action, "Scopes" do
 
   before(:each) do
     Factory(:action, :kind => "meeting")

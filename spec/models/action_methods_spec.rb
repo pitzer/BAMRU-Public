@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Action / Local Methods" do
+describe Action, "Local Methods" do
 
   before(:each) do
     Factory(:action, :kind => "meeting")

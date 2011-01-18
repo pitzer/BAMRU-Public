@@ -193,8 +193,8 @@ class BamruApp < Sinatra::Base
       set_flash_error("Error - no CSV file was selected")
       redirect '/admin_load_csv'
     end
-    File.open('/tmp/data.csv', 'w') {|f| f.write params[:file][:tempfile].read}
-    csv_load = CsvLoader.new('/tmp/data.csv')
+    File.open(MARSHALL_FILENAME, 'w') {|f| f.write params[:file][:tempfile].read}
+    csv_load = CsvLoader.new(MARSHALL_FILENAME)
     set_flash_error(csv_load.error_message) if csv_load.has_errors?
     set_flash_notice(csv_load.success_message)
     redirect('/admin_show')
@@ -202,12 +202,12 @@ class BamruApp < Sinatra::Base
   
   get '/malformed_csv' do
     response["Content-Type"] = "text/plain"
-    File.read('/tmp/malformed.csv')
+    File.read(MARSHALL_FILENAME)
   end
 
   get '/invalid_csv' do
     response["Content-Type"] = "text/plain"
-    File.read('/tmp/invalid.csv')
+    File.read(INVALID_FILENAME)
   end
 
   not_found do
