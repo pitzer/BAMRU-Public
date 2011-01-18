@@ -10,7 +10,10 @@ describe Action, "Scopes" do
   end
 
   describe "#meetings" do
-    specify { Action.meetings.count.should == 1 }
+    it "returns the correct number of records" do
+      Action.meetings.count.should == 1
+    end
   end
 
 end
+

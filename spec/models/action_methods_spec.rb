@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Action, "Local Methods" do
+describe Action, "Public Methods" do
 
   before(:each) do
     Factory(:action, :kind => "meeting")
@@ -11,7 +11,9 @@ describe Action, "Local Methods" do
 
   describe ".delete_all_with_validation" do
     before(:each) { Action.delete_all_with_validation }
-    specify { Action.count.should == 0 }
+    it "deletes all records" do
+      Action.count.should == 0
+    end
   end
 
 #  describe "#reset_first_in_year" do
