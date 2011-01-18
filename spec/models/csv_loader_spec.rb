@@ -120,14 +120,16 @@ describe CsvLoader do
       end
     end
     context "when re-loading identical data" do
-      CsvLoader.new(TEST_FILE_VALID)
-      CsvLoader.new(TEST_FILE_VALID).num_invalid.should == NUM_INPUT
+      it "reports that all records are invalid (duplicate)" do
+        CsvLoader.new(TEST_FILE_VALID)
+        CsvLoader.new(TEST_FILE_VALID).num_invalid.should == NUM_INPUT
+      end
     end
   end
 
   describe "#num_malformed" do
     context "when loading valid data" do
-      it "reports no malformed records" do
+      it "reports zero malformed records" do
         CsvLoader.new(TEST_FILE_VALID).num_malformed.should == 0
       end
     end
@@ -137,8 +139,10 @@ describe CsvLoader do
       end
     end
     context "when re-loading data with errors" do
-      CsvLoader.new(TEST_FILE_ERRORS)
-      CsvLoader.new(TEST_FILE_ERRORS).num_malformed.should == NUM_MALFORMED
+      it "reports the correct number  of malformed records" do
+        CsvLoader.new(TEST_FILE_ERRORS)
+        CsvLoader.new(TEST_FILE_ERRORS).num_malformed.should == NUM_MALFORMED
+      end
     end
   end
 
@@ -176,7 +180,7 @@ describe CsvLoader do
       end
     end
     context "when loading data with errors" do
-      it "generates an error message" do
+      it "generates a non-empty error message" do
         x = CsvLoader.new(TEST_FILE_ERRORS)
         x.error_message.should_not be_nil
         x.error_message.should_not be_empty

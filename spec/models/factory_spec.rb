@@ -3,8 +3,12 @@ require 'spec_helper'
 describe "Factory" do
 
   context "Using the Action Factory" do
-    specify { Factory(:action).should_not be_nil }
-    specify { Factory(:action).should be_valid }
+    it "should create action objects w/o crashing" do
+      Factory(:action).should_not be_nil
+    end
+    it "should create valid action objects" do
+      Factory(:action).should be_valid
+    end
   end
 
   context "Database Cleaning" do
