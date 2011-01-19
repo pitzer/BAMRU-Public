@@ -201,7 +201,7 @@ class BamruApp < Sinatra::Base
   
   get '/malformed_csv' do
     response["Content-Type"] = "text/plain"
-    File.read(MARSHALL_FILENAME)
+    File.read(MALFORMED_FILENAME)
   end
 
   get '/invalid_csv' do
