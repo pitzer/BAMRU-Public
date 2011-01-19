@@ -1,0 +1,36 @@
+= HISTORY
+
+== 0.0.1 - 2011-01-18
+- all pages are generated dynamically
+- admin pages work
+- Ical integration with Google Calendar works
+- initial set of specs
+
+== 0.0.0 - 2010-12-14
+- initial creation
+
+= TODO
+
+== CLEANUP
+- create integration tests for each page
+- create integration tests for all rake tasks (Use Aruba)
+
+== LINODE CONFIG/DEPLOY
+- First-setup working
+- Link the database
+- Link the log file
+- Setup the nginx config file
+- Restart nginx
+
+== NEXT FEATURES
+- Add peer-to-peer event replication
+- Add peer-to-peer monitoring/alerting
+- Create an admin password at first-install
+- Create a cap task to update the admin password
+- Create docco on the GitHub wiki
+- Create docco on the BAMRU wiki
+- Fix the date ranges for the jQuery date picker - fewer years
+- Clean up the HTML and CSS...
+- Make the machine config script expicit & public
+
+
