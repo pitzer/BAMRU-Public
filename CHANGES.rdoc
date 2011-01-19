@@ -23,6 +23,7 @@
 - Restart nginx
 
 == NEXT FEATURES
+- Have delete open a confirmation form
 - Add peer-to-peer event replication
 - Add peer-to-peer monitoring/alerting
 - Create an admin password at first-install
