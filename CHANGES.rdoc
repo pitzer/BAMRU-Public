@@ -1,5 +1,8 @@
 = HISTORY
 
+== 0.0.2 - In Progress
+- added basic-auth password protection for admin pages
+
 == 0.0.1 - 2011-01-18
 - all pages are generated dynamically
 - admin pages work
@@ -13,18 +16,19 @@
 
 == CLEANUP
 - create integration tests for each page
-- create integration tests for all rake tasks (Use Aruba)
+- remove static html files
+- rename dynamic files from '.test'
 
 == LINODE CONFIG/DEPLOY
 - First-setup working
 - Link the database
 - Link the log file
+- Link the admin userid/password
 - Setup the nginx config file
 - Restart nginx
 
 == NEXT FEATURES
-- Create an admin password at first-install
-- Create a cap task to update the admin password
+- Add a password update form
 - Have delete open a confirmation form
 - Create docco on the GitHub wiki
 - Create docco on the BAMRU wiki
@@ -33,5 +37,5 @@
 - Make the machine config script expicit & public
 - Add peer-to-peer event replication
 - Add peer-to-peer monitoring/alerting
-
+- create integration tests for all rake tasks (Use Aruba)
 
