@@ -111,6 +111,7 @@ DEPENDENCIES
   fastercsv
   hirb
   interactive_editor
+  rack
   rack-flash
   rcov
   rspec
