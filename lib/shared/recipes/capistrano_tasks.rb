@@ -1,4 +1,5 @@
 set :scm, :git
+set :git_shallow_clone, 1
 set :deploy_to, "/home/aleak/a/#{APPDIR}"
 #set :repository, "alt55.com:rr/#{APPDIR}.git"
 set :repository,  "https://github.com/andyl/#{APPDIR}.git"
