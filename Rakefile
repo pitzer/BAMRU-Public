@@ -20,7 +20,7 @@ end
 
 desc "Run the development server"
 task :run_server do
-  system "xterm_title '<thin> #{File.basename(`pwd`).chomp}@#{ENV['SYSNAME']}'"
+  system "xterm_title '<thin> #{File.basename(`pwd`).chomp}@#{ENV['SYSNAME']}:9393'"
   system "touch tmp/restart.txt"
   system "shotgun config.ru -s thin -o 0.0.0.0"
 end
