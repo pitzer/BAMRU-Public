@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'time'
+require 'rack'
 
 module Sinatra
   module AppHelpers
@@ -9,6 +10,21 @@ module Sinatra
     GUEST_POLICY = File.read(BASE_DIR + "/data/guest_policy.erb")
     PHOTO_LEFT   = File.read(DATA_DIR + "/photo_caption_left.html")
     PHOTO_RIGHT  = File.read(DATA_DIR + "/photo_caption_right.html")
+
+    def protected!
+      unless authorized?
+        response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
+        throw(:halt, [401, "Not authorized\n"])
+      end
+    end
+
+    def authorized?
+      @auth ||= Rack::Auth::Basic::Request.new(request.env)
+      @auth.provided? &&
+              @auth.basic? &&
+              @auth.credentials &&
+              @auth.credentials == ['admin', 'admin']
+    end
 
     def current_server
       "http://#{request.env["HTTP_HOST"]}"
@@ -75,14 +91,6 @@ module Sinatra
       HTML
     end
 
-    def set_flash_notice(msg)
-      flash[:notice] ? flash[:notice] << msg : flash[:notice] = msg
-    end
-
-    def get_flash_notice
-      var = flash[:notice]; flash[:notice] = nil
-      "<div class='notice'>#{var}</div>" unless var.nil?
-    end
 
     def calendar_table(events, link="")
       alt = false
@@ -173,6 +181,15 @@ module Sinatra
       ERB
     end
 
+    def set_flash_notice(msg)
+      flash[:notice] ? flash[:notice] << msg : flash[:notice] = msg
+    end
+
+    def get_flash_notice
+      var = flash[:notice]; flash[:notice] = nil
+      "<div class='notice'>#{var}</div>" unless var.nil?
+    end
+
     def set_flash_error(msg)
       flash[:error] ? flash[:error] << msg : flash[:error] = msg
     end
@@ -236,10 +253,9 @@ module Sinatra
 
     def admin_nav
       opt1 = [
-              ['/admin',          'Admin Home'  ],
+              ['/admin',          'Admin Home'   ],
               ['/admin_show',     'Actions'      ],
-              ['/admin_new',      'Create Action'],
-              ['/admin_load_csv', 'Upload CSV'  ]
+              ['/admin_new',      'Create Action']
       ]
       opt2 = [
               ['/calendar.test', 'calendar.html'],
@@ -249,6 +265,15 @@ module Sinatra
       r1 = opt1.map {|i| admin_link(i.first, i.last)}.join(' | ')
       r2 = opt2.map {|i| admin_link(i.first, i.last)}.join(' | ')
       "#{r1} || #{r2}<p/><hr>"
+    end
+
+    def admin_nav_footer
+      opt1 = [
+              ['/admin_load_csv', 'Upload CSV'      ],
+              ['/admin_password', 'Admin Password'  ]
+      ]
+      r1 = opt1.map {|i| admin_link(i.first, i.last)}.join(' | ')
+      "<br/><p/><hr>#{r1}"
     end
 
     def right_link(target, label, fmt="nav3")
