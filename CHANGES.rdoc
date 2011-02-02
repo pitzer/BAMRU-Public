@@ -23,15 +23,15 @@
 - Restart nginx
 
 == NEXT FEATURES
-- Have delete open a confirmation form
-- Add peer-to-peer event replication
-- Add peer-to-peer monitoring/alerting
 - Create an admin password at first-install
 - Create a cap task to update the admin password
+- Have delete open a confirmation form
 - Create docco on the GitHub wiki
 - Create docco on the BAMRU wiki
 - Fix the date ranges for the jQuery date picker - fewer years
 - Clean up the HTML and CSS...
 - Make the machine config script expicit & public
+- Add peer-to-peer event replication
+- Add peer-to-peer monitoring/alerting
 
 
