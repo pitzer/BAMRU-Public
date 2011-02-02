@@ -110,10 +110,12 @@ class BamruApp < Sinatra::Base
   # ----- ADMIN PAGES -----
 
   get '/admin' do
+    protected!
     erb :admin, :layout => :admin_layout
   end
 
   get '/admin_show' do
+    protected!
     # select start / finish dates
     @start  = Action.date_parse(select_start_date)
     @finish = Action.date_parse(select_finish_date)
@@ -125,6 +127,7 @@ class BamruApp < Sinatra::Base
   end
 
   get '/admin_new' do
+    protected!
     @action      = Action.new
     @post_action = "/admin_create"
     @button_text = "Create Action"
@@ -132,6 +135,7 @@ class BamruApp < Sinatra::Base
   end
 
   get '/admin_copy/:id' do
+    protected!
     @action      = Action.find_by_id(params[:id])
     @post_action = "/admin_create"
     @button_text = "Create Action"
@@ -139,6 +143,7 @@ class BamruApp < Sinatra::Base
   end
 
   post '/admin_create' do
+    protected!
     params.delete "submit"
     action = Action.new(params)
     if action.save
@@ -154,6 +159,7 @@ class BamruApp < Sinatra::Base
   end
 
   get '/admin_edit/:id' do
+    protected!
     @action      = Action.find_by_id(params[:id])
     @post_action = "/admin_update/#{params[:id]}"
     @button_text = "Update Action"
@@ -161,6 +167,7 @@ class BamruApp < Sinatra::Base
   end
 
   post '/admin_update/:id' do
+    protected!
     action = Action.find_by_id(params[:id])
     params.delete "submit"
     if action.update_attributes(params)
@@ -177,17 +184,25 @@ class BamruApp < Sinatra::Base
   end
 
   get '/admin_delete/:id' do
+    protected!
     action = Action.find_by_id(params[:id])
     set_flash_notice("Deleted Action (#{action.kind.capitalize} > #{action.title} > #{action.start})")
     action.destroy
     redirect "/admin_show"
   end
 
+  get '/admin_password' do
+    protected!
+    erb :admin_password, :layout => :admin_layout
+  end
+
   get '/admin_load_csv' do
+    protected!
     erb :admin_load_csv, :layout => :admin_layout
   end
 
   post('/admin_load_csv') do
+    protected!
     if params[:file].nil?
       set_flash_error("Error - no CSV file was selected")
       redirect '/admin_load_csv'
@@ -200,11 +215,13 @@ class BamruApp < Sinatra::Base
   end
   
   get '/malformed_csv' do
+    protected!
     response["Content-Type"] = "text/plain"
     File.read(MALFORMED_FILENAME)
   end
 
   get '/invalid_csv' do
+    protected!
     response["Content-Type"] = "text/plain"
     File.read(INVALID_FILENAME)
   end
