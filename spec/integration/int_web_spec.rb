@@ -56,17 +56,18 @@ describe "Web Pages" do
   end
 
   context "admin pages" do
-    it "renders /admin" do
+    context "without admin credentials"
+    it "does not render /admin" do
       visit '/admin'
-      page.status_code.should == 200
+      page.status_code.should == 401
     end
-    it "renders /admin_show" do
+    it "does not render /admin_show" do
       visit '/admin_show'
-      page.status_code.should == 200
+      page.status_code.should == 401
     end
-    it "renders /admin_load_csv" do
+    it "does not render /admin_load_csv" do
       visit '/admin_load_csv'
-      page.status_code.should == 200
+      page.status_code.should == 401
     end
   end
 

@@ -144,22 +144,21 @@ module Sinatra
       ERB
     end
 
-    def event_table(events)
-      output = "<table width = 100%>"
+    def action_table(events)
+      output = ""
       alt   = true
       first = true
       events.each do |m|
         color = alt ? "#EEEEEE" : "#FFFFFF"
         outz = "<tr><td>#{m.title} / #{m.location}</td><td>#{m.date_display}</td><td>#{m.leaders}</td><td class='ac'><nobr>#{event_copy_link(m.id)} | #{event_edit_link(m.id)} | #{event_delete_link(m.id)}</nobr></td></tr>"
-        output << event_row(m, color, first)
+        output << action_row(m, color, first)
         first = false
         alt = ! alt
       end
-      output << "</table>"
       output
     end
 
-    def event_row(event, color='#EEEEEE', first = false)
+    def action_row(event, color='#EEEEEE', first = false)
       <<-ERB
       <tr bgcolor="#{color}">
         <td valign="top" class=summary>&nbsp;
@@ -222,7 +221,7 @@ module Sinatra
     def select_helper(action)
       vals = {"meeting"    => "Meeting",
               "training"   => "Training",
-              "event"      => "Action",
+              "event"      => "Event",
               "non_county" => "Non-County Meeting"}
       vals.keys.map do |i|
         opt = i == action.kind ? " selected" : "" unless action.nil?
