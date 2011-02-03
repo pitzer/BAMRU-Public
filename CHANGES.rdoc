@@ -15,12 +15,10 @@
 
 = TODO
 
-== CLEANUP
+- Action show option
+- Option for URL load (CSV)
 - Shared link for the database, log file, admin userid/password
-
-== NEXT FEATURES
 - Add a password update form
-- Option to sync CSV between apps
 - Have delete open a confirmation form
 - Create docco on the GitHub wiki
 - Create docco on the BAMRU wiki
