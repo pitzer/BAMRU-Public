@@ -20,13 +20,13 @@ desc "Update gem installation."
 task :update_gems do
   system "bundle pack"
   system "cd vendor ; rsync -a --delete cache #{SERVER}:a/#{APPDIR}/shared"
-  run "gem install rspec"
   run "cd #{current_path} ; bundle install --quiet --local --path=/home/aleak/.gems"
 end
 
 desc "RUN THIS FIRST!"
 task :first_deploy do
   check_for_passenger
+  run "gem install rspec"
   deploy.setup
   system "/home/aleak/util/bin/vhost add #{SERVER}"
   puts "READY TO RUN on #{SERVER}"
