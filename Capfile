@@ -1,4 +1,4 @@
-SERVER       = "ss3"
+SERVER       = "ss4"
 APPDIR       = "BAMRU-Public"
 
 set :application, "BAMRU TEST APP"
