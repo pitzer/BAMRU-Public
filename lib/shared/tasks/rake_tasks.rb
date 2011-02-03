@@ -16,7 +16,6 @@ module VtUtil
         root #{ENV['PWD'].chomp}/public;
         passenger_enabled on;
         rack_env development;
-        rails_env development;
       }
 
       EOF

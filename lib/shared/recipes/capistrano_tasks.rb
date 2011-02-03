@@ -26,7 +26,6 @@ end
 desc "RUN THIS FIRST!"
 task :first_deploy do
   check_for_passenger
-  run "mkdir -p #{release_path}"
   deploy.setup
   system "/home/aleak/util/bin/vhost add #{SERVER}"
   puts "READY TO RUN on #{SERVER}"
