@@ -20,23 +20,18 @@ newer tools:
 == Live Demo - Public Pages
 
 To see a live demo of the prototype app, visit:
-http://btest.alt55.com/calendar.test
+http://bamru-public.r210x.com
 
 All of the demo uses dynamically generated pages
 and a shared layout.  This means the site is
 easier to maintain.
 
-If you want to compare the dynamically generated
-page to the original static page, just change the
-url from '.test' to '.html' in your browser.
-
 == Live Demo - Admin Pages
 
 Admin pages are at:
-http://btest.alt55.com/admin
+http://bamru-public.r210x.com/admin
 
-The admin pages are a work in progress.
-There is no password protection yet!
+(admin pages default userid/passwd = admin/admin)
 
 == Installing & Running the App
 

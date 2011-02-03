@@ -257,7 +257,7 @@ module Sinatra
               ['/admin_new',      'Create Action']
       ]
       opt2 = [
-              ['/calendar.test', 'calendar.html'],
+              ['/calendar',      'calendar.html'],
               ['/calendar.ical', 'calendar.ical'],
               ['/calendar.csv',  'calendar.csv' ]
       ]
