@@ -1,7 +1,8 @@
 = HISTORY
 
-== 0.0.2 - In Progress
+== 0.0.2 - 2011-02-02
 - added basic-auth password protection for admin pages
+- working scripts to deploy to public server
 
 == 0.0.1 - 2011-01-18
 - all pages are generated dynamically
@@ -16,19 +17,14 @@
 
 == CLEANUP
 - create integration tests for each page
-- remove static html files
 - rename dynamic files from '.test'
-
-== LINODE CONFIG/DEPLOY
-- First-setup working
-- Link the database
-- Link the log file
-- Link the admin userid/password
-- Setup the nginx config file
-- Restart nginx
+- Shared link for the database
+- Shared link for the log file
+- Shared link for the admin userid/password
 
 == NEXT FEATURES
 - Add a password update form
+- Option to sync CSV between apps
 - Have delete open a confirmation form
 - Create docco on the GitHub wiki
 - Create docco on the BAMRU wiki
