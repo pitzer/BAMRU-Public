@@ -21,7 +21,7 @@ class BamruApp < Sinatra::Base
     redirect "/index-2.html"
   end
   
-  get '/calendar.test' do
+  get '/calendar' do
     # establish the start and finish range
     @start  = Action.date_parse(select_start_date)
     @finish = Action.date_parse(select_finish_date)
@@ -38,7 +38,7 @@ class BamruApp < Sinatra::Base
     erb :calendar
   end
 
-  get '/bamruinfo.test' do
+  get '/bamruinfo' do
     @title     = "Information about BAMRU"
     @hdr_img   = "images/approach.jpg"
     @right_nav = right_nav(:bamruinfo)
@@ -46,7 +46,7 @@ class BamruApp < Sinatra::Base
     erb :bamruinfo
   end
 
-  get '/join.test' do
+  get '/join' do
     @title     = "Joining BAMRU"
     @hdr_img   = "images/helo.jpg"
     @right_nav = right_nav(:join)
@@ -54,7 +54,7 @@ class BamruApp < Sinatra::Base
     erb :join
   end
 
-  get '/sgallery.test' do
+  get '/sgallery' do
     @title     = "BAMRU Photo Gallery"
     @hdr_img   = "images/hills.jpg"
     @right_nav = right_nav(:sgallery)
@@ -63,7 +63,7 @@ class BamruApp < Sinatra::Base
     erb :sgallery
   end
 
-  get '/meeting_locations.test' do
+  get '/meeting_locations' do
     @title     = "BAMRU Meeting Location"
     @hdr_img   = "images/mtn_2.jpg"
     @right_nav = right_nav(:meeting_locations)
@@ -71,7 +71,7 @@ class BamruApp < Sinatra::Base
     erb :meeting_locations
   end
 
-  get '/sarlinks.test' do
+  get '/sarlinks' do
     @title     = "Links to SAR-related sites"
     @hdr_img   = "images/glacier.jpg"
     @right_nav = right_nav(:sarlinks)
@@ -79,7 +79,7 @@ class BamruApp < Sinatra::Base
     erb :sarlinks
   end
 
-  get '/donate.test' do
+  get '/donate' do
     @title     = "Donate to BAMRU"
     @hdr_img   = "images/glacier.jpg"
     @right_nav = right_nav(:donate)
@@ -87,7 +87,7 @@ class BamruApp < Sinatra::Base
     erb :donate
   end
 
-  get '/contact.test' do
+  get '/contact' do
     @title     = "BAMRU Contacts"
     @hdr_img   = "images/HawthornLZ.jpg"
     @right_nav = right_nav(:contact)

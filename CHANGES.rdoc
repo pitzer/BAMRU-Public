@@ -16,11 +16,7 @@
 = TODO
 
 == CLEANUP
-- create integration tests for each page
-- rename dynamic files from '.test'
-- Shared link for the database
-- Shared link for the log file
-- Shared link for the admin userid/password
+- Shared link for the database, log file, admin userid/password
 
 == NEXT FEATURES
 - Add a password update form
@@ -31,7 +27,7 @@
 - Fix the date ranges for the jQuery date picker - fewer years
 - Clean up the HTML and CSS...
 - Make the machine config script expicit & public
+- Create integration tests for all rake tasks (Use Aruba)
 - Add peer-to-peer event replication
 - Add peer-to-peer monitoring/alerting
-- create integration tests for all rake tasks (Use Aruba)
 
