@@ -114,7 +114,7 @@ class BamruApp < Sinatra::Base
     erb :admin, :layout => :admin_layout
   end
 
-  get '/admin_show' do
+  get '/admin_index' do
     protected!
     # select start / finish dates
     @start  = Action.date_parse(select_start_date)
@@ -123,14 +123,14 @@ class BamruApp < Sinatra::Base
     # remember start/finish dates by saving them in the session
     session[:start] = @start
     session[:finish] = @finish
-    erb :admin_show, :layout => :admin_layout
+    erb :admin_index, :layout => :admin_layout
   end
 
   get '/admin_new' do
     protected!
     @action      = Action.new
     @post_action = "/admin_create"
-    @button_text = "Create Action"
+    @button_text = "Create"
     erb :admin_new, :layout => :admin_layout
   end
 
@@ -138,7 +138,7 @@ class BamruApp < Sinatra::Base
     protected!
     @action      = Action.find_by_id(params[:id])
     @post_action = "/admin_create"
-    @button_text = "Create Action"
+    @button_text = "Create"
     erb :admin_new, :layout => :admin_layout
   end
 
@@ -153,16 +153,22 @@ class BamruApp < Sinatra::Base
       set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
       @action      = action
       @post_action = "/admin_create"
-      @button_text = "Create Action"
+      @button_text = "Create"
       erb :admin_new, :layout => :admin_layout
     end
+  end
+
+  get '/admin_show/:id' do
+    protected!
+    @action      = Action.find_by_id(params[:id])
+    erb :admin_show, :layout => :admin_layout
   end
 
   get '/admin_edit/:id' do
     protected!
     @action      = Action.find_by_id(params[:id])
     @post_action = "/admin_update/#{params[:id]}"
-    @button_text = "Update Action"
+    @button_text = "Update"
     erb :admin_edit, :layout => :admin_layout
   end
 
@@ -177,7 +183,7 @@ class BamruApp < Sinatra::Base
       set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
       @action      = action
       @post_action = "/admin_create"
-      @button_text = "Update Action"
+      @button_text = "Update"
       erb :admin_edit, :layout => :admin_layout
     end
 

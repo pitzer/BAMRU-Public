@@ -14,17 +14,17 @@
 - initial creation
 
 = TODO
-- Action show option
-- Option for URL load (CSV)
-- Shared link for the database, log file, admin userid/password
+- Shared symlink for the database, admin userid/password
+- Add option for CSV upload via URL
 - Add a password update form
-- Have delete open a confirmation form
-- Create docco on the GitHub wiki
-- Create docco on the BAMRU wiki
+- Test & Tweak the ical data
+- Create docco on the GitHub and BAMRU wikis
+- Clean up the HTML and CSS
 - Fix the date ranges for the jQuery date picker - fewer years
-- Clean up the HTML and CSS...
-- Make the machine config script expicit & public
-- Create integration tests for all rake tasks (Use Aruba)
+- Document the machine config script
+- Add integration tests for rake tasks (Use Aruba)
+- Add integration tests for admin forms
+- Add unit tests for helpers
+- Create an undo option (in the flash message) for action delete
 - Add peer-to-peer event replication
 - Add peer-to-peer monitoring/alerting
-

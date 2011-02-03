@@ -174,7 +174,7 @@ module Sinatra
           #{format_leaders(event)}
         </td>
         <td class=ac>
-          <nobr>#{event_copy_link(event.id)} | #{event_edit_link(event.id)} | #{event_delete_link(event.id)}</nobr>
+          <nobr>#{event_show_link(event.id)} | #{event_copy_link(event.id)} | #{event_edit_link(event.id)} | #{event_delete_link(event.id)}</nobr>
         </td>
       </tr>
       ERB
@@ -229,6 +229,10 @@ module Sinatra
       end.join(' ')
     end
 
+    def event_show_link(eventid)
+      "<a href='/admin_show/#{eventid}'>show</a>"
+    end
+
     def event_copy_link(eventid)
       "<a href='/admin_copy/#{eventid}'>copy</a>"
     end
@@ -253,7 +257,7 @@ module Sinatra
     def admin_nav
       opt1 = [
               ['/admin',          'Admin Home'   ],
-              ['/admin_show',     'Actions'      ],
+              ['/admin_index',    'Actions'      ],
               ['/admin_new',      'Create Action']
       ]
       opt2 = [
@@ -272,7 +276,7 @@ module Sinatra
               ['/admin_password', 'Admin Password'  ]
       ]
       r1 = opt1.map {|i| admin_link(i.first, i.last)}.join(' | ')
-      "<br/><p/><hr>#{r1}"
+      "<hr>#{r1}"
     end
 
     def right_link(target, label, fmt="nav3")

@@ -1,0 +1,33 @@
+<div class="center">
+  <form action="/admin_show">
+    Showing actions
+    from <%=event_range_select(@start,@finish,"start")%>
+    to <%=event_range_select(@start,@finish,"finish")%>
+    <input type="submit" value="Change"> 
+  </form>
+</div>
+
+<table width=100%>
+
+<tr><td>
+<h3 style="margin: 0 0 2px 0;">Meetings (<%=Action.meetings.between(@start,@finish).count%>)</h3>
+</td></tr>
+<%= action_table(Action.meetings.between(@start,@finish)) %>
+
+<tr><td>
+<h3 style="margin: 12px 0 2px 0;">Trainings (<%=Action.trainings.between(@start,@finish).count%>)</h3>
+</td></tr>
+<%= action_table(Action.trainings.between(@start,@finish)) %>
+
+<tr><td>
+<h3 style="margin: 12px 0 2px 0;">Events (<%=Action.events.between(@start,@finish).count%>)</h3>
+</td></tr>
+<%= action_table(Action.events.between(@start,@finish)) %>
+
+<tr><td>
+<h3 style="margin: 12px 0 2px 0;">Non-County Meetings (<%=Action.non_county.between(@start,@finish).count%>)</h3>
+</td></tr>
+<%= action_table(Action.non_county.between(@start,@finish)) %>
+
+</table>
+<p/>

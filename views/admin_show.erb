@@ -1,33 +1,40 @@
-<div class="center">
-  <form action="/admin_show">
-    Showing actions
-    from <%=event_range_select(@start,@finish,"start")%>
-    to <%=event_range_select(@start,@finish,"finish")%>
-    <input type="submit" value="Change"> 
-  </form>
-</div>
-
+<div class="center"><b>Action #<%= @action.id %></b></div>
+<p/>
 
 <table width=100%>
-
-<tr><td>
-<h3 style="margin: 0 0 2px 0;">Meetings (<%=Action.meetings.between(@start,@finish).count%>)</h3>
-</td></tr>
-<%= action_table(Action.meetings.between(@start,@finish)) %>
-
-<tr><td>
-<h3 style="margin: 12px 0 2px 0;">Trainings (<%=Action.trainings.between(@start,@finish).count%>)</h3>
-</td></tr>
-<%= action_table(Action.trainings.between(@start,@finish)) %>
-
-<tr><td>
-<h3 style="margin: 12px 0 2px 0;">Events (<%=Action.events.between(@start,@finish).count%>)</h3>
-</td></tr>
-<%= action_table(Action.events.between(@start,@finish)) %>
-
-<tr><td>
-<h3 style="margin: 12px 0 2px 0;">Non-County Meetings (<%=Action.non_county.between(@start,@finish).count%>)</h3>
-</td></tr>
-<%= action_table(Action.non_county.between(@start,@finish)) %>
-
+  <tr><td align=center>
+    <table valign="center" border=1 cellpadding=3 cellspacing=3>
+      <tr>
+        <td class="ar">Kind:</td>
+        <td><%= @action.kind %></td>
+      </tr>
+      <tr>
+        <td class="ar">Title:</td>
+        <td><%=@action.title%></td>
+      </tr>
+      <tr>
+        <td class="ar">Location:</td>
+        <td><%=@action.location%></td>
+      </tr>
+      <tr>
+        <td class="ar">Leaders:</td>
+        <td><%=@action.leaders%></td>
+      </tr>
+      <tr>
+        <td class="ar">Start:</td>
+        <td><%=@action.start%> End:<%=@action.finish%> </td>
+      </tr>
+      <tr>
+        <td>Description:</td>
+        <td><%=@action.description%></td>
+      </tr>
+    </table>
+    <p/>
+    <form method="get" action="/admin_edit/<%=@action.id%>">
+      <input type=submit value="Edit">
+      <input type=reset
+             value="Return to Actions"
+             onclick="window.location.href='/admin_index';">
+    </form>
+  </td></tr>
 </table>
