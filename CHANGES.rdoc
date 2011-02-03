@@ -14,7 +14,6 @@
 - initial creation
 
 = TODO
-
 - Action show option
 - Option for URL load (CSV)
 - Shared link for the database, log file, admin userid/password
