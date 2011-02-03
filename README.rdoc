@@ -31,7 +31,7 @@ easier to maintain.
 Admin pages are at:
 http://bamru-public.r210x.com/admin
 
-(admin pages default userid/passwd = admin/admin)
+(userid/passwd = admin/admin)
 
 == Installing & Running the App
 
