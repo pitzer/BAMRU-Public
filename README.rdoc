@@ -70,9 +70,6 @@ To see a list of deployment commands, run
 == Administration and Security
 
 The admin page allows approved users to update calendar
-events on the website.  The admin page will be password 
-protected.  The password is set at install time, 
-and is not stored in the source code repository.
-The password can be updated by running the task
-'cap password'.
-
+events on the website.  The admin page is password
+protected.  Reset the password using the '/admin_password'
+page.

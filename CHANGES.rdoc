@@ -32,6 +32,7 @@ for 0.0.4
 - Add unit tests for helpers
 
 post 0.0.4
+- Manually input 2003-2005 calendar events
 - Fix the date ranges for the jQuery date picker - fewer years
 - Document the machine config script
 - Add integration tests for rake tasks (based on Aruba)
