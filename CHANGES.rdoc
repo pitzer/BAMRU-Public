@@ -1,30 +1,40 @@
 = HISTORY
 
+== 0.0.3 - In progress
+- added admin_show option
+- fixed broken rollover images on index page
+
 == 0.0.2 - 2011-02-02
-- added basic-auth password protection for admin pages
-- working scripts to deploy to public server
+- basic-auth password protection for admin pages
+- added deploy scripts
 
 == 0.0.1 - 2011-01-18
-- all pages are generated dynamically
-- admin pages work
-- Ical integration with Google Calendar works
+- all public pages are generated dynamically
+- added admin pages
+- Ical integration with Google Calendar
 - initial set of specs
 
 == 0.0.0 - 2010-12-14
 - initial creation
 
 = TODO
+
+for 0.0.3
 - Shared symlink for the database, admin userid/password
 - Add option for CSV upload via URL
 - Add a password update form
+
+for 0.0.4
 - Test & Tweak the ical data
 - Create docco on the GitHub and BAMRU wikis
 - Clean up the HTML and CSS
-- Fix the date ranges for the jQuery date picker - fewer years
-- Document the machine config script
-- Add integration tests for rake tasks (Use Aruba)
 - Add integration tests for admin forms
 - Add unit tests for helpers
+
+post 0.0.4
+- Fix the date ranges for the jQuery date picker - fewer years
+- Document the machine config script
+- Add integration tests for rake tasks (based on Aruba)
 - Create an undo option (in the flash message) for action delete
 - Add peer-to-peer event replication
 - Add peer-to-peer monitoring/alerting

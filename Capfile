@@ -1,4 +1,4 @@
-SERVER       = "gg1"
+SERVER       = "gg2"
 #SERVER       = "r210x.com"
 APPDIR       = "BAMRU-Public"
 
