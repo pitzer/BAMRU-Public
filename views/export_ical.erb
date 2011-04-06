@@ -8,6 +8,7 @@ X-WR-CALDESC:Calendar for the Bay Area Mountain Rescue Unit (http://bamru.org)
 <% @actions.each do |e| -%>
 BEGIN:VEVENT
 DTSTART:<%=e.dt_start%>
+DTSTAMP:<%=e.dt_stamp%>
 DTEND:<%=e.dt_end %>
 SUMMARY:<%=e.title%>
 LOCATION:<%=e.location%>

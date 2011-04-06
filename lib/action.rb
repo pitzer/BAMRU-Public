@@ -67,6 +67,10 @@ class Action < ActiveRecord::Base
     kind == "meeting" ? date + "T213000" : date
   end
 
+  def dt_stamp
+    updated_at.strftime("%Y%m%dT%H%M%S")
+  end
+
   # ----- Scopes -----
 
   # Returns all actions where :kind == "meeting"
