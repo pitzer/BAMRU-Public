@@ -58,11 +58,13 @@ class Action < ActiveRecord::Base
 
   # ----- iCal Date Methods -----
   def dt_start
-    start.strftime("%Y%m%d")
+    date = start.strftime("%Y%m%d")
+    kind == "meeting" ? date + "T193000" : date
   end
 
   def dt_end
-    (finish.nil? || finish.blank?) ? start.strftime("%Y%m%d") : finish.strftime("%Y%m%d")
+    date = (finish.nil? || finish.blank?) ? start.strftime("%Y%m%d") : finish.strftime("%Y%m%d")
+    kind == "meeting" ? date + "T213000" : date
   end
 
   # ----- Scopes -----

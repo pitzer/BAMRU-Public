@@ -38,9 +38,25 @@ describe Action, "Date Methods" do
   end
 
   describe "iCal Date Functions" do
-    before(:each) { @obj = Action.new }
+    before(:each) { @obj = Action.new(:start => Time.now, :finish => Time.now) }
     specify { @obj.should respond_to(:dt_start) }
     specify { @obj.should respond_to(:dt_end)   }
+
+    context "Meeting Actions" do
+      before(:each) { @obj.kind = "meeting" }
+
+      it "should contain a time stamp" do
+        @obj.dt_start.should include("T")
+      end
+
+      it "should show meeting start time of 7:30" do
+        @obj.dt_start.split("T").last.should == "193000"
+      end
+      
+      it "should show meeting end time of 9:30" do
+        @obj.dt_end.split("T").last.should == "213000"
+      end
+    end
   end
 
 end
