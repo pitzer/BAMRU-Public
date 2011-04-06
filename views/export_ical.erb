@@ -3,8 +3,9 @@ VERSION:2.0
 <% @actions.each do |e| -%>
 BEGIN:VEVENT
 DTSTART;VALUE=DATE:<%=e.start.strftime("%Y%m%d")%>
-DTEND;VALUE=DATE:<%=e.start.strftime("%Y%m%d")%>
+DTEND;VALUE=DATE:<%=(e.finish.nil? || e.finish.blank?) ? e.start.strftime("%Y%m%d") : e.finish.strftime("%Y%m%d") %>
 SUMMARY:<%=e.title%>
+DESCRIPTION:<%=e.description%>
 END:VEVENT
 <% end %>
 END:VCALENDAR
