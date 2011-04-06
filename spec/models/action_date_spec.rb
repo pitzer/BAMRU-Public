@@ -37,4 +37,10 @@ describe Action, "Date Methods" do
     end
   end
 
+  describe "iCal Date Functions" do
+    before(:each) { @obj = Action.new }
+    specify { @obj.should respond_to(:dt_start) }
+    specify { @obj.should respond_to(:dt_end)   }
+  end
+
 end

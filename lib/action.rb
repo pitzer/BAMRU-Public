@@ -56,6 +56,15 @@ class Action < ActiveRecord::Base
     xa.sort.map {|x| x.to_label }.uniq
   end
 
+  # ----- iCal Date Methods -----
+  def dt_start
+    start.strftime("%Y%m%d")
+  end
+
+  def dt_end
+    (finish.nil? || finish.blank?) ? start.strftime("%Y%m%d") : finish.strftime("%Y%m%d")
+  end
+
   # ----- Scopes -----
 
   # Returns all actions where :kind == "meeting"

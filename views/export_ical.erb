@@ -1,10 +1,16 @@
 BEGIN:VCALENDAR
 VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:BAMRU Calendar
+X-WR-TIMEZONE:America/Los_Angeles
+X-WR-CALDESC:Calendar for the Bay Area Mountain Rescue Unit (BAMRU).  Learn more at http://bamru.org
 <% @actions.each do |e| -%>
 BEGIN:VEVENT
-DTSTART;VALUE=DATE:<%=e.start.strftime("%Y%m%d")%>
-DTEND;VALUE=DATE:<%=(e.finish.nil? || e.finish.blank?) ? e.start.strftime("%Y%m%d") : e.finish.strftime("%Y%m%d") %>
+DTSTART;VALUE=DATE:<%=e.dt_start%>
+DTEND;VALUE=DATE:<%=e.dt_end %>
 SUMMARY:<%=e.title%>
+LOCATION:<%=e.location%>
 DESCRIPTION:<%=e.description%>
 END:VEVENT
 <% end %>
