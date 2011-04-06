@@ -178,7 +178,7 @@ class BamruApp < Sinatra::Base
     params.delete "submit"
     if action.update_attributes(params)
       set_flash_notice("Updated Action (#{action.kind.capitalize} > #{action.title} > #{action.start})")
-      redirect '/admin_show'
+      redirect '/admin_index'
     else
       set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
       @action      = action
