@@ -103,7 +103,6 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   awesome_print
-  bundler
   capistrano
   capybara
   drx
