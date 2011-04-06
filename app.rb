@@ -148,7 +148,7 @@ class BamruApp < Sinatra::Base
     action = Action.new(params)
     if action.save
       set_flash_notice("Created New Action (#{action.kind.capitalize} > #{action.title} > #{action.start})")
-      redirect '/admin_show'
+      redirect '/admin_index'
     else
       set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
       @action      = action
@@ -194,7 +194,7 @@ class BamruApp < Sinatra::Base
     action = Action.find_by_id(params[:id])
     set_flash_notice("Deleted Action (#{action.kind.capitalize} > #{action.title} > #{action.start})")
     action.destroy
-    redirect "/admin_show"
+    redirect "/admin_index"
   end
 
   get '/admin_password' do
@@ -217,7 +217,7 @@ class BamruApp < Sinatra::Base
     csv_load = CsvLoader.new(MARSHALL_FILENAME)
     set_flash_error(csv_load.error_message) if csv_load.has_errors?
     set_flash_notice(csv_load.success_message)
-    redirect('/admin_show')
+    redirect('/admin_index')
   end
   
   get '/malformed_csv' do
