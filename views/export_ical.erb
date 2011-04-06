@@ -7,8 +7,8 @@ X-WR-TIMEZONE:America/Los_Angeles
 X-WR-CALDESC:Calendar for the Bay Area Mountain Rescue Unit (http://bamru.org)
 <% @actions.each do |e| -%>
 BEGIN:VEVENT
-DTSTART;VALUE=DATE:<%=e.dt_start%>
-DTEND;VALUE=DATE:<%=e.dt_end %>
+DTSTART:<%=e.dt_start%>
+DTEND:<%=e.dt_end %>
 SUMMARY:<%=e.title%>
 LOCATION:<%=e.location%>
 DESCRIPTION:<%=e.description%>
