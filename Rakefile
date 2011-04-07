@@ -37,6 +37,12 @@ task :console do
 end
 task :con => :console
 
+desc "Sync Calendar Data with Google Calendar"
+task :gcal_sync do
+  require 'config/environment'
+  GcalSync.sync
+end
+
 namespace :db do
 
   task :environment do
