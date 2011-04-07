@@ -262,6 +262,7 @@ module Sinatra
       ]
       opt2 = [
               ['/calendar',      'calendar.html'],
+              ['/calendar.gcal', 'calendar.gcal'],
               ['/calendar.ical', 'calendar.ical'],
               ['/calendar.csv',  'calendar.csv' ]
       ]

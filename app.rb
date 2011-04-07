@@ -107,6 +107,13 @@ class BamruApp < Sinatra::Base
     erb :export_csv, :layout => false
   end
 
+  get '/calendar.gcal' do
+    @title     = "BAMRU's Google Calendar"
+    @hdr_img   = "images/glacier.jpg"
+    @right_nav = quote
+    erb :calendar_gcal
+  end
+
   # ----- ADMIN PAGES -----
 
   get '/admin' do
