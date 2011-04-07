@@ -71,6 +71,25 @@ class Action < ActiveRecord::Base
     updated_at.strftime("%Y%m%dT%H%M%S")
   end
 
+  # ----- gCal Date Methods -----
+  def gcal_start
+    kind == "meeting" ? start.to_time.change(:hour => 19, :min => 30) : start.to_time
+  end
+
+  def gcal_finish
+    if kind == "meeting"
+      start.to_time.change(:hour => 21, :min => 30)
+    else
+      (finish.nil? || finish.blank?) ?
+              start.to_time :
+              (finish + 1.day).to_time
+    end
+  end
+
+  def gcal_all_day?
+    kind == "meeting" ? false : true
+  end
+
   # ----- Scopes -----
 
   # Returns all actions where :kind == "meeting"

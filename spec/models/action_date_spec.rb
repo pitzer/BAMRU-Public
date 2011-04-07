@@ -59,4 +59,31 @@ describe Action, "Date Methods" do
     end
   end
 
+  describe "gCal Date Functions" do
+    before(:each) { @obj = Action.new(:start => Time.now)}
+    specify { @obj.should respond_to(:gcal_start)    }
+    specify { @obj.should respond_to(:gcal_finish)   }
+    specify { @obj.gcal_start.class.should == Time   }
+    specify { @obj.gcal_finish.class.should == Time  }
+
+    context "Meeting Actions" do
+      before(:each) { @obj.kind = "meeting"}
+      specify { @obj.gcal_start.class.should == Time   }
+      specify { @obj.gcal_finish.class.should == Time  }
+      it "should have the right hour for the event start" do
+        @obj.gcal_start.hour.should == 19
+      end
+      it "should have the right hour for the event finish" do
+        @obj.gcal_finish.hour.should == 21
+      end
+    end
+
+    context "Other Actions, with a finish date" do
+      before(:each) { @obj.finish = 1.day.from_now }
+      specify { @obj.gcal_start.class.should == Time   }
+      specify { @obj.gcal_finish.class.should == Time  }
+    end
+
+  end
+
 end

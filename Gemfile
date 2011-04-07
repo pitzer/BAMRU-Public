@@ -3,6 +3,7 @@ source "http://rubygems.org"
 gem 'activerecord'
 gem 'sinatra'
 # gem "bundler"
+gem "gcal4ruby"
 gem "ruby-debug", "0.10.0"
 gem "capistrano"
 gem "sqlite3-ruby", "1.2.5", :require => "sqlite3"
