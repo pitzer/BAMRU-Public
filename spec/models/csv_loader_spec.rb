@@ -102,7 +102,7 @@ describe CsvLoader do
         total_records = NUM_INPUT - NUM_INVALID - NUM_MALFORMED + NUM_INPUT
         CsvLoader.new(TEST_FILE_VALID)
         CsvLoader.new(TEST_FILE_ERRORS)
-        Action.count.should == total_records
+        Event.count.should == total_records
       end
     end
 

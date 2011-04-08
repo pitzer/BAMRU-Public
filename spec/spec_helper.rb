@@ -5,7 +5,7 @@ require 'time'
 
 RSpec.configure do |config|
   config.mock_with :rspec
-  config.before(:each) { Action.delete_all_with_validation }
+  config.before(:each) { Event.delete_all_with_validation }
 end
 
 # ----- This is for testing the CsvLoader -----

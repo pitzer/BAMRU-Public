@@ -61,13 +61,13 @@ class CsvLoader
   # - stores invalid CSV records in @invalid_filename
   def read_and_process_csv_data(input_file = @input_filename)
     setup_csv_loader_files_and_directories
-    start_count = Action.count
+    start_count = Event.count
     @input_text = File.read(input_file)
     csv_array = parse_csv_and_return_array(input_file)
     csv_array_to_hash(csv_array).each do |r|
       h = r.to_hash
       h["kind"].downcase! unless h["kind"].nil?
-      record = Action.create(h)
+      record = Event.create(h)
       unless record.valid?
         @num_invalid += 1
         File.open(@invalid_filename, 'a') do |f|
@@ -75,7 +75,7 @@ class CsvLoader
         end
       end
     end
-    finish_count = Action.count
+    finish_count = Event.count
     @num_successful = finish_count - start_count
   end
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Action, "Validations" do
+describe Event, "Validations" do
 
   describe ":kind validity checks" do
     context "when using valid :kind field" do

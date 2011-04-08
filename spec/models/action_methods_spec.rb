@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Action, "Public Methods" do
+describe Event, "Public Methods" do
 
   before(:each) do
     Factory(:action, :kind => "meeting")
@@ -10,9 +10,9 @@ describe Action, "Public Methods" do
   end
 
   describe ".delete_all_with_validation" do
-    before(:each) { Action.delete_all_with_validation }
+    before(:each) { Event.delete_all_with_validation }
     it "deletes all records" do
-      Action.count.should == 0
+      Event.count.should == 0
     end
   end
 

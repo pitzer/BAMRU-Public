@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe Action, "Date Methods" do
+describe Event, "Date Methods" do
 
   describe ".date_parse" do
     date = Time.parse("Jan-01-01")
     context "when giving a string input" do
-      specify { Action.date_parse("Jan-2001").should == date}
+      specify { Event.date_parse("Jan-2001").should == date}
     end
     context "when giving a date input" do
-      specify { Action.date_parse(date).should == date }
+      specify { Event.date_parse(date).should == date }
     end
   end
 
@@ -21,24 +21,24 @@ describe Action, "Date Methods" do
       @range_data = %w(Jan-2001 Jan-2002 Jan-2003 Jan-2004)
     end
     describe ".first_event" do
-      specify { Action.first_event.to_s.should == @first_date}
+      specify { Event.first_event.to_s.should == @first_date}
     end
     describe ".last_event" do
-      specify { Action.last_event.to_s.should == @last_date}
+      specify { Event.last_event.to_s.should == @last_date}
     end
     describe ".first_year" do
-      specify { Action.first_year.to_s.should == @first_year}
+      specify { Event.first_year.to_s.should == @first_year}
     end
     describe ".last_year" do
-      specify { Action.last_year.to_s.should == @last_year}
+      specify { Event.last_year.to_s.should == @last_year}
     end
     describe ".range_array" do
-      specify { Action.range_array.should == @range_data}
+      specify { Event.range_array.should == @range_data}
     end
   end
 
   describe "iCal Date Functions" do
-    before(:each) { @obj = Action.new(:start => Time.now, :finish => Time.now) }
+    before(:each) { @obj = Event.new(:start => Time.now, :finish => Time.now) }
     specify { @obj.should respond_to(:dt_start) }
     specify { @obj.should respond_to(:dt_end)   }
 
@@ -60,7 +60,7 @@ describe Action, "Date Methods" do
   end
 
   describe "gCal Date Functions" do
-    before(:each) { @obj = Action.new(:start => Time.now)}
+    before(:each) { @obj = Event.new(:start => Time.now)}
     specify { @obj.should respond_to(:gcal_start)    }
     specify { @obj.should respond_to(:gcal_finish)   }
     specify { @obj.gcal_start.class.should == Time   }

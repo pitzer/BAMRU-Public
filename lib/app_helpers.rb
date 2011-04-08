@@ -44,16 +44,16 @@ module Sinatra
     end
 
     def select_start_date
-      params[:start]  || session[:start] ||  Action.default_start
+      params[:start]  || session[:start] ||  Event.default_start
     end
 
     def select_finish_date
-      params[:finish] || session[:finish] || Action.default_end
+      params[:finish] || session[:finish] || Event.default_end
     end
 
     def number_of(kind = "")
-      return Action.count if kind.blank?
-      Action.where(:kind => kind).count
+      return Event.count if kind.blank?
+      Event.where(:kind => kind).count
     end
 
     def last_modification(file_spec = nil)
@@ -71,15 +71,15 @@ module Sinatra
     end
 
     def oldest_record
-      record_display Action.order('start').first
+      record_display Event.order('start').first
     end
 
     def newest_record
-      record_display Action.order('start').last
+      record_display Event.order('start').last
     end
 
     def last_update
-      rec = Action.order('updated_at').last
+      rec = Event.order('updated_at').last
       return if rec.nil?
       "<b>#{rec.updated_at.strftime("%a %b %d - %H:%M")}</b> (<a href='/admin_edit/#{rec.id}'>#{rec.title[0..15]}...</a>)"
     end
@@ -217,7 +217,7 @@ module Sinatra
       else
         opt  = finish.to_label
       end
-      opts = Action.range_array(opt)
+      opts = Event.range_array(opt)
       output = "<select name='#{direction}'>#{opt}"
       output << opts.map do |x|
         sel = x == opt ? " SELECTED" : ""
@@ -267,7 +267,7 @@ module Sinatra
       opt1 = [
               ['/admin',          'Admin Home'   ],
               ['/admin_index',    'Actions'      ],
-              ['/admin_new',      'Create Action']
+              ['/admin_new',      'Create Event']
       ]
       opt2 = [
               ['/calendar',      'calendar.html'],

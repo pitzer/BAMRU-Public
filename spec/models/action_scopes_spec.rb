@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Action, "Scopes" do
+describe Event, "Scopes" do
 
   before(:each) do
     Factory(:action, :kind => "meeting")
@@ -11,7 +11,7 @@ describe Action, "Scopes" do
 
   describe "#meetings" do
     it "returns the correct number of records" do
-      Action.meetings.count.should == 1
+      Event.meetings.count.should == 1
     end
   end
 

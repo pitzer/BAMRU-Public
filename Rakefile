@@ -63,7 +63,7 @@ namespace :db do
   desc "Remove all data from database"
   task :reset => :environment do
     puts "Removing all database records"
-    Action.delete_all_with_validation
+    Event.delete_all_with_validation
   end
 
   desc "Load seed data"
@@ -89,9 +89,9 @@ namespace :db do
 
   desc "Show database statistics"
   task :stats => :environment do
-    mc, tc = Action.meetings.count, Action.trainings.count
-    ec, nc = Action.events.count, Action.non_county.count
-    puts "There are a total of #{Action.count} records in the database."
+    mc, tc = Event.meetings.count, Event.trainings.count
+    ec, nc = Event.events.count, Event.non_county.count
+    puts "There are a total of #{Event.count} records in the database."
     puts "(#{mc} meetings, #{tc} trainings, #{ec} events, #{nc} non-county)"
   end
 

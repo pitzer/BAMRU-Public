@@ -23,8 +23,8 @@ class BamruApp < Sinatra::Base
   
   get '/calendar' do
     # establish the start and finish range
-    @start  = Action.date_parse(select_start_date)
-    @finish = Action.date_parse(select_finish_date)
+    @start  = Event.date_parse(select_start_date)
+    @finish = Event.date_parse(select_finish_date)
     @start, @finish  = @finish, @start if @finish < @start
     # remember start/finish settings by saving them in the session
     session[:start]  = @start
@@ -97,13 +97,13 @@ class BamruApp < Sinatra::Base
 
   get '/calendar.ical' do
     response["Content-Type"] = "text/plain"
-    @actions = Action.all
+    @actions = Event.all
     erb :export_ical, :layout => false
   end
 
   get '/calendar.csv' do
     response["Content-Type"] = "text/plain"
-    @actions = Action.all
+    @actions = Event.all
     erb :export_csv, :layout => false
   end
 
@@ -131,8 +131,8 @@ class BamruApp < Sinatra::Base
   get '/admin_index' do
     protected!
     # select start / finish dates
-    @start  = Action.date_parse(select_start_date)
-    @finish = Action.date_parse(select_finish_date)
+    @start  = Event.date_parse(select_start_date)
+    @finish = Event.date_parse(select_finish_date)
     @start, @finish = @finish, @start if @finish < @start
     # remember start/finish dates by saving them in the session
     session[:start] = @start
@@ -142,7 +142,7 @@ class BamruApp < Sinatra::Base
 
   get '/admin_new' do
     protected!
-    @action      = Action.new
+    @action      = Event.new
     @post_action = "/admin_create"
     @button_text = "Create"
     erb :admin_new, :layout => :admin_layout
@@ -150,7 +150,7 @@ class BamruApp < Sinatra::Base
 
   get '/admin_copy/:id' do
     protected!
-    @action      = Action.find_by_id(params[:id])
+    @action      = Event.find_by_id(params[:id])
     @post_action = "/admin_create"
     @button_text = "Create"
     erb :admin_new, :layout => :admin_layout
@@ -159,10 +159,10 @@ class BamruApp < Sinatra::Base
   post '/admin_create' do
     protected!
     params.delete "submit"
-    action = Action.new(params)
+    action = Event.new(params)
     if action.save
       background { GcalSync.create_event(action) }
-      set_flash_notice("Created New Action (#{action.kind.capitalize} > #{action.title} > #{action.start})")
+      set_flash_notice("Created New Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
       redirect '/admin_index'
     else
       set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
@@ -175,13 +175,13 @@ class BamruApp < Sinatra::Base
 
   get '/admin_show/:id' do
     protected!
-    @action      = Action.find_by_id(params[:id])
+    @action      = Event.find_by_id(params[:id])
     erb :admin_show, :layout => :admin_layout
   end
 
   get '/admin_edit/:id' do
     protected!
-    @action      = Action.find_by_id(params[:id])
+    @action      = Event.find_by_id(params[:id])
     @post_action = "/admin_update/#{params[:id]}"
     @button_text = "Update"
     erb :admin_edit, :layout => :admin_layout
@@ -189,11 +189,11 @@ class BamruApp < Sinatra::Base
 
   post '/admin_update/:id' do
     protected!
-    action = Action.find_by_id(params[:id])
+    action = Event.find_by_id(params[:id])
     params.delete "submit"
     if action.update_attributes(params)
       background { GcalSync.update_event(action) }
-      set_flash_notice("Updated Action (#{action.kind.capitalize} > #{action.title} > #{action.start})")
+      set_flash_notice("Updated Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
       redirect '/admin_index'
     else
       set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
@@ -207,9 +207,9 @@ class BamruApp < Sinatra::Base
 
   get '/admin_delete/:id' do
     protected!
-    action = Action.find_by_id(params[:id])
+    action = Event.find_by_id(params[:id])
     background { GcalSync.delete_event(action) }
-    set_flash_notice("Deleted Action (#{action.kind.capitalize} > #{action.title} > #{action.start})")
+    set_flash_notice("Deleted Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
     action.destroy
     redirect "/admin_index"
   end

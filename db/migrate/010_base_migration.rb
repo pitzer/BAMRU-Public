@@ -1,6 +1,6 @@
 class BaseMigration < ActiveRecord::Migration
   def self.up
-    create_table :actions do |t|
+    create_table :events do |t|
       t.string   :digest
       t.string   :kind,     :default => "event"
       t.string   :title
@@ -9,6 +9,8 @@ class BaseMigration < ActiveRecord::Migration
       t.date     :start,    :default => Time.now
       t.date     :finish
       t.text     :description
+      t.float    :lat
+      t.float    :lon
       t.boolean  :first_in_year, :default => false
       t.timestamps
     end

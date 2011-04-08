@@ -11,5 +11,5 @@ require "capybara/dsl"
 RSpec.configure do |config|
   config.mock_with :rspec
   config.include Capybara
-  config.before(:each) { Action.delete_all_with_validation }
+  config.before(:each) { Event.delete_all_with_validation }
 end
