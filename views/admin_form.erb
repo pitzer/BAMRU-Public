@@ -60,6 +60,14 @@
         <td>End is optional - only use it for multi-day events.</td>
       </tr>
       <tr>
+        <td class="ar">Lat:</td>
+        <td>
+          <input id="lat" type="Text" size=10 maxlength=10 name="lat" value="<%=@action.lat%>">
+          <span style="margin-left: 30px;">Lon:</span> <input id="lon" type="Text" size=10 maxlength=10 name="lon" value="<%=@action.lon%>">
+        </td>
+        <td>Only required for operations.</td>
+      </tr>
+      <tr>
         <td>Description:</td>
         <td colspan=2><textarea cols=72 rows=8 name="description"><%=@action.description%></textarea></td>
       </tr>

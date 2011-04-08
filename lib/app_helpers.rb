@@ -227,14 +227,11 @@ module Sinatra
       output
     end
 
-    def select_helper(action)
-      vals = {"meeting"    => "Meeting",
-              "training"   => "Training",
-              "event"      => "Event",
-              "non_county" => "Non-County Meeting"}
-      vals.keys.map do |i|
+    def select_helper(action = nil)
+      vals = %w(meeting training operation other)
+      vals.map do |i|
         opt = i == action.kind ? " selected" : "" unless action.nil?
-        "<option value='#{i}'#{opt}>#{vals[i]}</option>"
+        "<option value='#{i}'#{opt}>#{i.capitalize}</option>"
       end.join(' ')
     end
 

@@ -20,6 +20,7 @@ class GcalSync
   end
 
   def self.save_event_to_gcal(service, event, action)
+    return if action.kind == "operation"
     event.calendar    = service.calendars.first
     event.title       = action.title
     event.start_time  = action.gcal_start
@@ -56,9 +57,11 @@ class GcalSync
   def self.add_all_current_actions_to_gcal
     service = authenticate_and_return_service
     get_current_actions_from_database.each do |action|
-      puts "Adding #{action.title.ljust(18)[0..17]} #{action.gcal_start} | #{action.gcal_finish}"
-      event = Event.new(service)
-      save_event_to_gcal(service, event, action)
+      if action.kind != "operation"
+        puts "Adding #{action.title}"
+        event = Event.new(service)
+        save_event_to_gcal(service, event, action)
+      end
     end
     "OK"
   end
