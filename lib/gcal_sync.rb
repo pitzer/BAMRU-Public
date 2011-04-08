@@ -1,27 +1,47 @@
 require 'gcal4ruby'
-require 'ruby-debug'
 
 class GcalSync
+  
   USERNAME = "bamru.calendar@gmail.com"
   PASSWORD = "bamcalendar"
 
   include GCal4Ruby
 
-  def self.get_current_actions
+  # ----- Utility Methods -----
+
+  def self.get_current_actions_from_database
     Action.between(Action.default_start, Action.default_end)
   end
 
-  def self.count_gcal_events
+  def self.authenticate_and_return_service
     service = Service.new
     service.authenticate(USERNAME, PASSWORD)
-    cal = service.calendars.first
+    service
+  end
+
+  def self.save_event_to_gcal(service, event, action)
+    event.calendar    = service.calendars.first
+    event.title       = action.title
+    event.start_time  = action.gcal_start
+    event.end_time    = action.gcal_finish
+    event.all_day     = action.gcal_all_day?
+    event.content     = action.gcal_content
+    event.where       = action.gcal_location
+    event.save
+  end
+
+  def self.count_gcal_events
+    service = authenticate_and_return_service
+    cal     = service.calendars.first
     cal.events.length
   end
 
+  # ----- Batch Sync Functions -----
+  # - called by command-line tool to completely resync the calendars
+
   def self.delete_all_gcal_events
-    service = Service.new
-    service.authenticate(USERNAME, PASSWORD)
-    cal = service.calendars.first
+    service = authenticate_and_return_service
+    cal     = service.calendars.first
     cal.events.each do |event|
       puts "Deleting #{event.title}"
       event.delete
@@ -33,29 +53,42 @@ class GcalSync
     "OK"
   end
 
-  def self.add_current_actions
-    service = Service.new
-    service.authenticate(USERNAME, PASSWORD)
-    cal = service.calendars.first
-    get_current_actions.each do |action|
-      debugger if action.gcal_finish.class != Time
+  def self.add_all_current_actions_to_gcal
+    service = authenticate_and_return_service
+    get_current_actions_from_database.each do |action|
       puts "Adding #{action.title.ljust(18)[0..17]} #{action.gcal_start} | #{action.gcal_finish}"
       event = Event.new(service)
-      event.title       = action.title
-      event.calendar    = cal
-      event.start_time  = action.gcal_start
-      event.end_time    = action.gcal_finish
-      event.all_day     = action.gcal_all_day?
-      event.content     = action.description
-      event.where       = action.location
-      event.save
+      save_event_to_gcal(service, event, action)
     end
     "OK"
   end
 
   def self.sync
     delete_all_gcal_events
-    add_current_actions
+    add_all_current_actions_to_gcal
+  end
+
+  # ----- Event-Driven Sync Functions -----
+  # - called by WebApp during CRUD operations
+
+  def self.create_event(action)
+    service = authenticate_and_return_service
+    event   = Event.new(service)
+    save_event_to_gcal(service, event, action)
+  end
+
+  def self.update_event(action)
+    service = authenticate_and_return_service
+    event   = Event.find(service, "BE#{action.id}")
+    event   = event.first        if event.class == Array
+    event   = Event.new(service) if event.nil?
+    save_event_to_gcal(service, event, action)
+  end
+
+  def self.delete_event(action)
+    service = authenticate_and_return_service
+    event   = Event.find(service, "BE#{action.id}").first
+    event.delete unless event.nil?
   end
 
 end

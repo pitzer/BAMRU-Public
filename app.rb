@@ -154,6 +154,7 @@ class BamruApp < Sinatra::Base
     params.delete "submit"
     action = Action.new(params)
     if action.save
+      background { GcalSync.create_event(action) }
       set_flash_notice("Created New Action (#{action.kind.capitalize} > #{action.title} > #{action.start})")
       redirect '/admin_index'
     else
@@ -184,6 +185,7 @@ class BamruApp < Sinatra::Base
     action = Action.find_by_id(params[:id])
     params.delete "submit"
     if action.update_attributes(params)
+      background { GcalSync.update_event(action) }
       set_flash_notice("Updated Action (#{action.kind.capitalize} > #{action.title} > #{action.start})")
       redirect '/admin_index'
     else
@@ -199,6 +201,7 @@ class BamruApp < Sinatra::Base
   get '/admin_delete/:id' do
     protected!
     action = Action.find_by_id(params[:id])
+    background { GcalSync.delete_event(action) }
     set_flash_notice("Deleted Action (#{action.kind.capitalize} > #{action.title} > #{action.start})")
     action.destroy
     redirect "/admin_index"

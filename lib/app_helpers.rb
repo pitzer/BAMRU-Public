@@ -18,6 +18,15 @@ module Sinatra
       end
     end
 
+    def background
+      puts "Starting Background Process"
+      pid = fork do
+        yield
+      end
+      Process.detach(pid)
+      pid
+    end
+
     def authorized?
       @auth ||= Rack::Auth::Basic::Request.new(request.env)
       @auth.provided? &&
