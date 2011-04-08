@@ -114,6 +114,13 @@ class BamruApp < Sinatra::Base
     erb :calendar_gcal
   end
 
+  get '/operations' do
+    @title     = "BAMRU Operations"
+    @hdr_img   = "images/glacier.jpg"
+    @right_nav = quote
+    erb :operations
+  end
+
   # ----- ADMIN PAGES -----
 
   get '/admin' do
