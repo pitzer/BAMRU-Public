@@ -121,7 +121,7 @@ class BamruApp < Sinatra::Base
     erb :operations
   end
 
-  get '/operations.kml' do
+  get "/operations.kml*" do
     response["Content-Type"] = "text/plain"
     @operations = Event.operations
     erb :operations_kml, :layout => false
