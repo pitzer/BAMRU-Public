@@ -1,13 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <kml xmlns='http://www.opengis.net/kml/2.2'>
-<% @operations.each do |event| %>
-  <Placemark>
-    <name><%= event.title%></name>
-    <description><%= event.description %></description>
-    <Point>
-      <coordinates><%=event.lon%>,<%=event.lat%>,0</coordinates>
-    </Point>
-  </Placemark>
-<% end %>
-  
+  <Document>
+    <% @operations.each do |event| %>
+      <Placemark>
+        <name><%= event.title%></name>
+        <description><%= event.description %></description>
+        <Point>
+          <coordinates><%=event.lon%>,<%=event.lat%>,0</coordinates>
+        </Point>
+      </Placemark>
+    <% end %>
+  </Document>
 </kml>
