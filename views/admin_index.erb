@@ -1,6 +1,6 @@
 <div class="center">
   <form action="/admin_index">
-    Showing actions
+    Showing events
     from <%=event_range_select(@start,@finish,"start")%>
     to <%=event_range_select(@start,@finish,"finish")%>
     <input type="submit" value="Change"> 
@@ -20,14 +20,15 @@
 <%= action_table(Event.trainings.between(@start,@finish)) %>
 
 <tr><td>
+<h3 style="margin: 12px 0 2px 0;">Operations (<%=Event.operations.between(@start,@finish).count%>)</h3>
+</td></tr>
+<%= action_table(Event.operations.between(@start,@finish)) %>
+
+<tr><td>
 <h3 style="margin: 12px 0 2px 0;">Others (<%=Event.others.between(@start,@finish).count%>)</h3>
 </td></tr>
 <%= action_table(Event.others.between(@start,@finish)) %>
 
-<tr><td>
-<h3 style="margin: 12px 0 2px 0;">Operations (<%=Event.operations.between(@start,@finish).count%>)</h3>
-</td></tr>
-<%= action_table(Event.operations.between(@start,@finish)) %>
 
 </table>
 <p/>

@@ -17,6 +17,9 @@ class Event < ActiveRecord::Base
   validates_presence_of   :kind, :title, :location, :start
   validates_format_of     :kind, :with => /^(meeting|training|operation|other)$/
 
+  validates_numericality_of :lat, :allow_nil => true, :greater_than => 30,   :less_than => 43
+  validates_numericality_of :lon, :allow_nil => true, :greater_than => -126, :less_than => -113
+
   validate :confirm_start_happens_before_finish
 
   # Confirms that start happens before finish
@@ -136,7 +139,7 @@ class Event < ActiveRecord::Base
   # Some come in as "non-county", some as "non-county meetings"
   # This method just reduces all variants to "non-county"
   def cleanup_non_county
-    self.kind = 'non-county' if self.kind[0..5] == "non-co"
+    self.kind = 'other' if self.kind[0..5] == "non-co"
   end
 
   # Convert double quotes to single quotes.
