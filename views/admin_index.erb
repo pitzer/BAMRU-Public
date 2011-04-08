@@ -20,14 +20,14 @@
 <%= action_table(Event.trainings.between(@start,@finish)) %>
 
 <tr><td>
-<h3 style="margin: 12px 0 2px 0;">Events (<%=Event.events.between(@start,@finish).count%>)</h3>
+<h3 style="margin: 12px 0 2px 0;">Others (<%=Event.others.between(@start,@finish).count%>)</h3>
 </td></tr>
-<%= action_table(Event.events.between(@start,@finish)) %>
+<%= action_table(Event.others.between(@start,@finish)) %>
 
 <tr><td>
-<h3 style="margin: 12px 0 2px 0;">Non-County Meetings (<%=Event.non_county.between(@start,@finish).count%>)</h3>
+<h3 style="margin: 12px 0 2px 0;">Operations (<%=Event.operations.between(@start,@finish).count%>)</h3>
 </td></tr>
-<%= action_table(Event.non_county.between(@start,@finish)) %>
+<%= action_table(Event.operations.between(@start,@finish)) %>
 
 </table>
 <p/>

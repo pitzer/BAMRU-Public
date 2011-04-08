@@ -116,12 +116,12 @@ class Event < ActiveRecord::Base
     where(:kind => "meeting").order('start')
   end
 
-  # Returns all actions where :kind == "event"
-  def self.events
-    where(:kind => "event").order('start')
+  # Returns all actions where :kind == "other"
+  def self.others
+    where(:kind => "other").order('start')
   end
   
-  def self.non_county() where(:kind => "non-county").order('start'); end
+  def self.operations() where(:kind => "operation").order('start'); end
   def self.trainings()  where(:kind => "training").order('start'); end
   def self.after(date)  where('start >= ?', self.date_parse(date)); end
   def self.before(date) where('start <= ?', self.date_parse(date)); end
@@ -155,7 +155,7 @@ class Event < ActiveRecord::Base
     self.location.gsub!(/[Tt][Bb][DdAa]/, "TBA")
     self.location = "TBA" if self.location.nil? || self.location.blank?
     unless self.kind == 'meeting'
-      self.leaders.gsub!(/[Tt][Bb][DdAa]/,  "TBA")
+      self.leaders.gsub!(/[Tt][Bb][DdAa]/,  "TBA") unless self.leaders.nil?
       self.leaders = "TBA" if self.leaders.nil? || self.leaders.blank?
     end
   end

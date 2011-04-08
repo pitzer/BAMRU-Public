@@ -13,10 +13,10 @@ end
   TEST_FILE_VALID = "/tmp/test_valid.csv"
   TEST_FILE_ERRORS = "/tmp/test_errors.csv"
   NUM_INPUT = 5
-  HEADER = %q("kind","title","location","description","start","finish","leaders")
+  HEADER = %q("kind","title","location","description","start","finish","lat","lon","leaders")
 
   def csv_record(direction = "none")
-    kind  = %w(meeting non-county training event).to_a.sample
+    kind  = %w(meeting training operation other).to_a.sample
     kind  = "invalid" if direction == "invalid"
     title = "Test Record " + (1..999).to_a.sample.to_s
     title = %q(Malformed " Record) if direction == "malformed"
@@ -24,7 +24,7 @@ end
     month = ("01" .. "12").to_a.sample
     day   = ("01" .. "30").to_a.sample
     start = "#{year}-#{month}-#{day}"
-    %Q("#{kind}","#{title}","","","#{start}","","")
+    %Q("#{kind}","#{title}","","","#{start}","","","","")
   end
 
   def generate_valid_test_data

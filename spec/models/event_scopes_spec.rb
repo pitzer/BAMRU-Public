@@ -30,7 +30,7 @@ describe Event, "Scopes" do
 
   describe "#other" do
     it "returns the correct number of records" do
-      Event.other.count.should == 1
+      Event.others.count.should == 1
     end
   end
 

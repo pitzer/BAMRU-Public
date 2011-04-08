@@ -17,7 +17,7 @@ describe Event, "Date Methods" do
       @first_year, @last_year = %w(2001-01-01 2003-12-31)
       date_array = %w(2001-04-01 2002-04-04 2003-03-04)
       @first_date, @mid_date, @last_date = date_array
-      date_array.each {|x| Factory(:action, :start => x)}
+      date_array.each {|x| Factory(:event, :start => x)}
       @range_data = %w(Jan-2001 Jan-2002 Jan-2003 Jan-2004)
     end
     describe ".first_event" do
