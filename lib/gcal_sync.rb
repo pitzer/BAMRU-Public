@@ -10,7 +10,7 @@ class GcalSync
   # ----- Utility Methods -----
 
   def self.get_current_actions_from_database
-    Event.between(Event.default_start, Event.default_end)
+    ::Event.between(::Event.default_start, ::Event.default_end)
   end
 
   def self.authenticate_and_return_service
