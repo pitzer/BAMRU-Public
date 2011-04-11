@@ -51,6 +51,14 @@ module Sinatra
       params[:finish] || session[:finish] || Event.default_end
     end
 
+    def select_start_operation
+      params[:start]  || session[:start_operation] ||  Event.default_start_operation
+    end
+
+    def select_finish_operation
+      params[:finish] || session[:finish_operation] || Event.default_end_operation
+    end
+
     def number_of(kind = "")
       return Event.count if kind.blank?
       Event.where(:kind => kind).count
@@ -211,13 +219,13 @@ module Sinatra
       hash.map {|k,v| "<b>#{k}:</b> #{v}"}.join("<br/>")
     end
 
-    def event_range_select(start, finish, direction)
+    def event_range_select(start, finish, direction, scope = Event)
       if direction == "start"
         opt  = start.to_label
       else
         opt  = finish.to_label
       end
-      opts = Event.range_array(opt)
+      opts = scope.range_array(opt)
       output = "<select name='#{direction}'>#{opt}"
       output << opts.map do |x|
         sel = x == opt ? " SELECTED" : ""

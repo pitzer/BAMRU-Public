@@ -20,23 +20,6 @@ class BamruApp < Sinatra::Base
   get '/' do
     redirect "/index-2.html"
   end
-  
-  get '/calendar' do
-    # establish the start and finish range
-    @start  = Event.date_parse(select_start_date)
-    @finish = Event.date_parse(select_finish_date)
-    @start, @finish  = @finish, @start if @finish < @start
-    # remember start/finish settings by saving them in the session
-    session[:start]  = @start
-    session[:finish] = @finish
-    # setup the display variables
-    @title     = "BAMRU Calendar"
-    @hdr_img   = "images/mtn.jpg"
-    @right_nav = right_nav(:calendar)
-    @right_txt = erb GUEST_POLICY, :layout => false
-    @left_txt  = quote
-    erb :calendar
-  end
 
   get '/bamruinfo' do
     @title     = "Information about BAMRU"
@@ -95,6 +78,23 @@ class BamruApp < Sinatra::Base
     erb :contact
   end
 
+  get '/calendar' do
+    # establish the start and finish range
+    @start  = Event.date_parse(select_start_date)
+    @finish = Event.date_parse(select_finish_date)
+    @start, @finish  = @finish, @start if @finish < @start
+    # remember start/finish settings by saving them in the session
+    session[:start]  = @start
+    session[:finish] = @finish
+    # setup the display variables
+    @title     = "BAMRU Calendar"
+    @hdr_img   = "images/mtn.jpg"
+    @right_nav = right_nav(:calendar)
+    @right_txt = erb GUEST_POLICY, :layout => false
+    @left_txt  = quote
+    erb :calendar
+  end
+
   get '/calendar.ical' do
     response["Content-Type"] = "text/plain"
     @actions = Event.all
@@ -115,15 +115,32 @@ class BamruApp < Sinatra::Base
   end
 
   get '/operations' do
+    # establish the start and finish range
+    @start  = Event.date_parse(select_start_operation)
+    @finish = Event.date_parse(select_finish_operation)
+    @start, @finish  = @finish, @start if @finish < @start
+    # remember start/finish settings by saving them in the session
+    session[:start_operation]  = @start
+    session[:finish_operation] = @finish
+    # display variables
     @title     = "BAMRU Operations"
     @hdr_img   = "images/glacier.jpg"
+    @filename  = "operations#{(rand * 10000).round}.kml"
     @right_nav = quote
     erb :operations
   end
 
   get "/operations*.kml*" do
+    # establish the start and finish range
+    @start  = Event.date_parse(select_start_operation)
+    @finish = Event.date_parse(select_finish_operation)
+    @start, @finish  = @finish, @start if @finish < @start
+    # remember start/finish settings by saving them in the session
+    session[:start_operation]  = @start
+    session[:finish_operation] = @finish
+    # display variables
     response["Content-Type"] = "text/plain"
-    @operations = Event.operations
+    @operations = Event.operations.between(@start, @finish)
     erb :operations_kml, :layout => false
   end
 

@@ -1,9 +1,23 @@
-<div style="height:15px;">Under Construction...</div>
+<table cellpadding="8" bgcolor="#CC0000" width="423" height="45">
+  <tr>
+    <td valign="bottom"> <font class="title1"><font style="color: #FFFFFF">BAMRU Operations<br>
+    </font>
+      </font>
+    </td>
+  </tr>
+</table>
 
+<form action="/calendar" style="margin-top: 3px; margin-bottom: 3px;">
+  Showing operations
+  from <%=event_range_select(@start,@finish,"start", Event.operations)%>
+  to <%=event_range_select(@start,@finish,"finish", Event.operations)%>
+  <input type="submit" value="Change">
+</form>
 <iframe width="423" height="350" frameborder="0"
         scrolling="no" marginheight="0" marginwidth="0"
-        src="http://maps.google.com/maps/ms?hl=en&amp;ie=UTF8&amp;msa=0&amp;msid=208194508550431831359.000480da105d9b49224be&amp;source=embed&amp;ll=37.4852,-122.2352&amp;spn=2.184343,4.661851&amp;t=p&amp;output=embed">
+        src="http://maps.google.com/?q=http:%2F%2Fbamru.info%2F<%=@filename%>&amp;ie=UTF8&amp;ll=38.3904,-121.2232&amp;spn=3.855285,0.03265&amp;t=p&amp;output=embed">
 </iframe>
-
-
-<br /><small>View <a href="http://maps.google.com/maps/ms?hl=en&amp;ie=UTF8&amp;msa=0&amp;msid=208194508550431831359.000480da105d9b49224be&amp;source=embed&amp;ll=37.4852,-122.2352&amp;spn=2.184343,4.661851&amp;t=p" style="color:#0000FF;text-align:left">Mission Log</a> in a larger map</small>
+<br />
+<small>
+  <a href="http://maps.google.com/?q=http:%2F%2Fbamru.info%2F<%=@filename%>&amp;ie=UTF8&amp;ll=38.3904,-121.2232&amp;spn=3.855285,0.03265&amp;t=p&amp;source=embed" style="color:#0000FF;text-align:left">View Larger Map</a>
+</small>

@@ -3,7 +3,7 @@
   <Document>
     <% @operations.each do |event| %>
       <Placemark>
-        <name><%= event.title%></name>
+        <name><%= event.title%> (<%=event.start%>)</name>
         <description><%= event.description %></description>
         <Point>
           <coordinates><%=event.lon%>,<%=event.lat%>,0</coordinates>

@@ -29,7 +29,21 @@ class Event < ActiveRecord::Base
     errors[:start] << "must happen before 'end'" if self.finish < self.start
   end
 
-  # ----- Date Methods -----
+  # ----- Scopes -----
+
+  def self.kind(kind)   where(:kind => kind).order('start');        end
+  def self.meetings()   where(:kind => "meeting").order('start');   end
+  def self.others()     where(:kind => "other").order('start');     end
+  def self.operations() where(:kind => "operation").order('start'); end
+  def self.trainings()  where(:kind => "training").order('start');  end
+  def self.after(date)  where('start >= ?', self.date_parse(date)); end
+  def self.before(date) where('start <= ?', self.date_parse(date)); end
+  def self.between(start, finish) after(start).before(finish);      end
+  def self.in_year(date)
+    between(date.at_beginning_of_year, date.at_end_of_year)
+  end
+
+  # ----- Generic Date Methods -----
 
   # Parse a date.  The date can either be a string in the format 'Jan-2001', or
   # it can be a Time object.
@@ -37,25 +51,30 @@ class Event < ActiveRecord::Base
     date.class == String ? Time.parse(date) : date
   end
 
-  # When you bring up a calendar page, it shows events from a range of dates.
-  # The default start is set to '2.months.ago'.
-  def self.default_start()
-    2.months.ago
-  end
+  def self.default_start() 2.months.ago;       end
+  def self.default_end()   10.months.from_now; end
+  def self.default_start_operation() 3.years.ago;      end
+  def self.default_end_operation()   1.month.from_now; end
 
-  def self.default_end()        10.months.from_now; end
-  def self.first_event(); x = Event.order('start').first; x.start unless x.nil? ; end
-  def self.last_event();  x = Event.order('start').last;  x.start unless x.nil? ;  end
-  def self.first_year();  x = Event.first_event; x.at_beginning_of_year unless x.nil?; end
-  def self.last_year();   x = Event.last_event;  x.at_end_of_year unless x.nil?; end
+  # Any of these methods may be used with a scope.
+  #   Event.first_event            - first event of all Events
+  #   Event.operations.first_event - first event of operations Events
+  def self.first_event(); x = where("").order('start').first; x.start unless x.nil? ; end
+  def self.last_event();  x = where("").order('start').last;  x.start unless x.nil? ;  end
+  def self.first_year();  x = where("").first_event; x.at_beginning_of_year unless x.nil?; end
+  def self.last_year();   x = where("").last_event;  x.at_end_of_year unless x.nil?; end
 
   # Returns an array of dates that are used in select form on the calendar page.
   # Dates are in the format of ["Jan-2001", "Jan-2002", "Jan-2003"]
   # An 'extra_date' may be provided, which will be inserted into the range_array
   # in the correct sort order.
+  # This method may be used with a scope.
+  #   Event.range_array             - generate a range_array over all Events
+  #   Event.operations.range_array  - generage a range_array over 'operations'
   def self.range_array(extra_date = nil)
-    return nil if self.first_year.nil? || self.last_year.nil?
-    xa = ((self.first_year + 10.days).to_date .. (self.last_year + 1.year).to_date).step(365).to_a.map{|x| x.to_time}
+    scope = where("")
+    return nil if scope.first_year.nil? || scope.last_year.nil?
+    xa = ((scope.first_year + 10.days).to_date .. (scope.last_year + 1.year).to_date).step(365).to_a.map{|x| x.to_time}
     xa << Event.date_parse(extra_date) unless extra_date.nil?
     xa.sort.map {|x| x.to_label }.uniq
   end
@@ -113,27 +132,6 @@ class Event < ActiveRecord::Base
     end
   end
 
-  # ----- Scopes -----
-
-  # Returns all actions where :kind == "meeting"
-  def self.meetings
-    where(:kind => "meeting").order('start')
-  end
-
-  # Returns all actions where :kind == "other"
-  def self.others
-    where(:kind => "other").order('start')
-  end
-  
-  def self.operations() where(:kind => "operation").order('start'); end
-  def self.trainings()  where(:kind => "training").order('start'); end
-  def self.after(date)  where('start >= ?', self.date_parse(date)); end
-  def self.before(date) where('start <= ?', self.date_parse(date)); end
-  def self.between(start, finish) after(start).before(finish); end
-  def self.in_year(date, kind)
-    between(date.at_beginning_of_year, date.at_end_of_year).where(:kind => kind)
-  end
-
   # ----- Local Methods - Data Cleanup and Standardization -----
 
   # CSV input data sometimes comes in non-standard formats.
@@ -153,7 +151,7 @@ class Event < ActiveRecord::Base
     self.description.gsub!(%q["],%q[']) unless self.description.nil?
   end
 
-  # Truncates coordinates to
+  # Truncates coordinates to five digits
   def truncate_coordinates
     self.lat = (self.lat * 1000000).round / 1000000.0 unless self.lat.blank?
     self.lon = (self.lon * 1000000).round / 1000000.0 unless self.lon.blank?
@@ -224,7 +222,7 @@ class Event < ActiveRecord::Base
   # This method resets the 'first_in_year' field for
   # all field relevant to 'self'
   def reset_first_in_year
-    events = Event.in_year(start, kind).order('start').all
+    events = Event.kind(kind).in_year(start).order('start').all
     unless events.empty?  # this could happen if you delete a record...
       events.first.update_attributes(:first_in_year => true)
       events[1..-1].each { |x| x.update_attributes(:first_in_year => false) }
