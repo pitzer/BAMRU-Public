@@ -52,12 +52,12 @@ module Sinatra
     end
 
     def select_start_operation
-      range params[:range].nil? ? nil : params[:range].split('_').first
+      range = params[:range].nil? ? nil : params[:range].split('_').first
       range || params[:start]  || session[:start_operation] ||  Event.default_start_operation
     end
 
     def select_finish_operation
-      range params[:range].nil? ? nil : params[:range].split('_').last
+      range = params[:range].nil? ? nil : params[:range].split('_').last
       range || params[:finish] || session[:finish_operation] || Event.default_end_operation
     end
 
