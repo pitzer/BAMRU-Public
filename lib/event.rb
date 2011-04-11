@@ -254,4 +254,17 @@ class Event < ActiveRecord::Base
     Event.all.each { |x| x.destroy }
   end
 
+  def archive_url
+    start.strftime("%Y_%m_01_archive.html")
+  end
+
+  def blog_link
+    if start < Date.parse("Oct-2009")
+      ""
+    else
+      label = "BAMRU Blog Posts for #{start.strftime('%B %Y')}"
+      " [for more info see <a href='http://bamru.blogspot.com/#{archive_url}>#{label}</a>]"
+    end
+  end
+
 end

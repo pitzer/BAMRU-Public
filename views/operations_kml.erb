@@ -4,7 +4,7 @@
     <% @operations.each do |event| %>
       <Placemark>
         <name><%= event.title%> (<%=event.start%>)</name>
-        <description><%= event.description %></description>
+        <description><%= event.description %><%= event.blog_link%></description>
         <Point>
           <coordinates><%=event.lon%>,<%=event.lat%>,0</coordinates>
         </Point>

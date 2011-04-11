@@ -125,7 +125,8 @@ class BamruApp < Sinatra::Base
     # display variables
     @title     = "BAMRU Operations"
     @hdr_img   = "images/glacier.jpg"
-    @filename  = "operations#{(rand * 10000).round}.kml"
+    range      = "start=#{@start.to_label}&finish=#{@finish.to_label}"
+    @filename  = "operations#{(rand * 10000).round}.kml?#{range}"
     @right_nav = quote
     erb :operations
   end
