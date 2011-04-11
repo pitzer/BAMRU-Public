@@ -1,3 +1,19 @@
+<script src="http://api.mygeoposition.com/api/geopicker/api.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+  function lookupGeoData() {
+    myGeoPositionGeoPicker({
+      <%= geo_start(@action) %>
+
+      mapType          : 'terrain',
+      returnFieldMap   : {
+        'lat' : '<LAT>',
+        'lon' : '<LNG>'
+      }
+    });
+  }
+</script>
+
 <script type="text/javascript">
         $(function() {
             $("#start, #finish").datepicker({
@@ -65,7 +81,7 @@
           <input id="lat" type="Text" size=10 maxlength=10 name="lat" value="<%=@action.lat%>">
           <span style="margin-left: 30px;">Lon:</span> <input id="lon" type="Text" size=10 maxlength=10 name="lon" value="<%=@action.lon%>">
         </td>
-        <td>Only required for operations.</td>
+        <td>Only required for operations. <button type="button" onclick="lookupGeoData();">Use GeoPicker</button></td>
       </tr>
       <tr>
         <td>Description:</td>

@@ -7,6 +7,7 @@ class Event < ActiveRecord::Base
   before_validation :cleanup_non_county
   before_validation :save_signature_into_digest_field
   before_save       :remove_quotes
+  before_save       :truncate_coordinates
   after_destroy     :set_first_in_year_after_delete
   after_save        :set_first_in_year_after_save
 
@@ -150,6 +151,12 @@ class Event < ActiveRecord::Base
     self.location.gsub!(%q["],%q['])    unless self.location.nil?
     self.leaders.gsub!(%q["],%q['])     unless self.leaders.nil?
     self.description.gsub!(%q["],%q[']) unless self.description.nil?
+  end
+
+  # Truncates coordinates to
+  def truncate_coordinates
+    self.lat = (self.lat * 1000000).round / 1000000.0 unless self.lat.blank?
+    self.lon = (self.lon * 1000000).round / 1000000.0 unless self.lon.blank?
   end
 
   # This method changes 'tba, TBD, tbd' to 'TBA'

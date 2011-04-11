@@ -310,6 +310,14 @@ module Sinatra
       '<img src="assets/dots.gif" width="134" height="10" border="0"><br>'
     end
 
+    def geo_start(action)
+      if action.lat.blank? || action.lon.blank?
+        "startAddress: 'Redwood City, California',"
+      else
+        "startPositionLat: #{action.lat}, startPositionLng: #{action.lon},"
+      end
+    end
+
   end
 
   helpers AppHelpers
