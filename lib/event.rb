@@ -262,7 +262,7 @@ class Event < ActiveRecord::Base
     if start < Date.parse("Oct-2009")
       ""
     else
-      label = "BAMRU Blog (#{start.strftime('%b %Y')})"
+      label = "BAMRU Blog - #{start.strftime('%b %Y')}"
       link  = "<a href='http://bamru.blogspot.com/#{archive_url}'>#{label}</a>"
       " [more info: #{link}]"
     end
