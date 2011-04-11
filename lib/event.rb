@@ -264,6 +264,7 @@ class Event < ActiveRecord::Base
     else
       label = "BAMRU Blog Posts for #{start.strftime('%B %Y')}"
       " [for more info see <a href='http://bamru.blogspot.com/#{archive_url}>#{label}</a>]"
+      " test test test"
     end
   end
 
