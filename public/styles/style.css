@@ -87,3 +87,10 @@ a.copy:hover    {color: #000;}
   left: 10;
   top: 18;
 }
+
+.content {
+  padding: 8px;
+}
+
+.six_px { margin-bottom: 6px; }
+.ten_px { margin-bottom: 10px; }
