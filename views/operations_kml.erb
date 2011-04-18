@@ -12,13 +12,16 @@
         <Point>
           <coordinates><%=event.lon%>,<%=event.lat%>,0</coordinates>
         </Point>
-        <BalloonStyle>
+        <styleUrl>#my_style</styleUrl>
+        <Style id="my_style">
+          <BalloonStyle>
           <text>
             <![CDATA[
-            $[description]
+              $[description]
             ]]>
           </text>
         </BalloonStyle>
+        </Style>
       </Placemark>
     <% end %>
   </Document>
