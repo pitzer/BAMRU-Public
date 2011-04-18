@@ -262,7 +262,8 @@ class Event < ActiveRecord::Base
     lbl = leaders.include?(",") ? "Leaders" : "Leader"
     ldr = leaders == "TBA" ? "" : "#{lbl}: #{leaders} - "
     link = description.gsub("[","").gsub("]", "")
-    mesg = "find more information on the BAMRU Blog: <a href='#{link}'>#{link}</a>"
+    fwrd = ldr.empty? ? "Find" : "find"
+    mesg = "#{fwrd} more information on the <a href='#{link}'>BAMRU Blog</a>"
     ldr + mesg
   end
 
