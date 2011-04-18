@@ -8,6 +8,9 @@
         <Point>
           <coordinates><%=event.lon%>,<%=event.lat%>,0</coordinates>
         </Point>
+        <BalloonStyle>
+          <text>$[description]</text>
+        </BalloonStyle>
       </Placemark>
     <% end %>
   </Document>
