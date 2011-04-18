@@ -5,9 +5,7 @@
       <Placemark>
         <name><%= event.title%> (<%=event.start%>)</name>
         <description>
-          <![CDATA[
-          <%= event.kml_description %>
-          ]]>
+          <![CDATA[<%= event.kml_description %>]]>
         </description>
         <Point>
           <coordinates><%=event.lon%>,<%=event.lat%>,0</coordinates>
