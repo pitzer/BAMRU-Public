@@ -259,7 +259,8 @@ class Event < ActiveRecord::Base
   end
 
   def kml_description
-    ldr = leaders == "TBA" ? "" : "Leaders: #{leaders} - "
+    lbl = leaders.include?(",") ? "Leaders" : "Leader"
+    ldr = leaders == "TBA" ? "" : "#{lbl}: #{leaders} - "
     link = description.gsub("[","").gsub("]", "")
     mesg = "find more information on the BAMRU Blog: <a href='#{link}'>#{link}</a>"
     ldr + mesg
