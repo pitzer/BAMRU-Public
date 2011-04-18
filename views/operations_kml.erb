@@ -4,12 +4,20 @@
     <% @operations.each do |event| %>
       <Placemark>
         <name><%= event.title%> (<%=event.start%>)</name>
-        <description><%= event.kml_description %></description>
+        <description>
+          <![CDATA[
+          <%= event.kml_description %>
+          ]]>
+        </description>
         <Point>
           <coordinates><%=event.lon%>,<%=event.lat%>,0</coordinates>
         </Point>
         <BalloonStyle>
-          <text>$[description]</text>
+          <text>
+            <![CDATA[
+            $[description]
+            ]]>
+          </text>
         </BalloonStyle>
       </Placemark>
     <% end %>
