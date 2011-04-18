@@ -71,3 +71,11 @@ td.btn {
     background-color: #adff2f;
     border: 20px;
 }
+
+.checkdiv input {
+  margin-left:0px;
+}
+
+.admin_table h3 {
+  margin: 12px 0 2px 0;
+}

@@ -1,34 +1,71 @@
-<div class="center">
-  <form action="/admin_index">
-    Showing events
-    from <%=event_range_select(@start,@finish,"start")%>
-    to <%=event_range_select(@start,@finish,"finish")%>
-    <input type="submit" value="Change"> 
-  </form>
+<script type="text/javascript">
+
+  function hideSection(name){
+    $(name).hide();
+    $.cookie(name, "false", {expires: 7});
+    $(name + "_check").attr("checked", false);
+  };
+
+  function showSection(name) {
+    $(name).show();
+    $.cookie(name, null);
+  };
+
+  $(function() {
+    if ($.cookie("#meetings")   == "false") { hideSection("#meetings");   }
+    if ($.cookie("#trainings")  == "false") { hideSection("#trainings");  }
+    if ($.cookie("#operations") == "false") { hideSection("#operations"); }
+    if ($.cookie("#other")      == "false") { hideSection("#other");      }
+    $(".xbx").change(function() {
+      chx_id = "#" + this.id
+      div_id = "#" + this.id.split("_")[0];
+      if ($(chx_id).attr("checked")) {
+        showSection(div_id);
+        return;
+      }
+      hideSection(div_id)
+    });
+  });
+</script>
+
+<div class="center" id="admin_selector">
+  <div style="float: left; width: 50%;" class="center">
+    <form action="/admin_index">
+      Showing events
+      from <%=event_range_select(@start,@finish,"start")%>
+      to <%=event_range_select(@start,@finish,"finish")%>
+      <input type="submit" value="Change">
+    </form>
+  </div>
+  <div class="center checkdiv">
+    meetings   <input class="xbx" type="checkbox" id="meetings_check" checked>
+    trainings  <input class="xbx" type="checkbox" id="trainings_check" checked>
+    operations <input class="xbx" type="checkbox" id="operations_check" checked>
+    other      <input class="xbx" type="checkbox" id="other_check" checked>
+  </div>
 </div>
+<div style="clear: both;"></div>
 
-<table width=100%>
-
-<tr><td>
-<h3 style="margin: 0 0 2px 0;">Meetings (<%=Event.meetings.between(@start,@finish).count%>)</h3>
+<div id="meetings" class="admin_table"><table width=100%><tr><td>
+<h3>Meetings (<%=Event.meetings.between(@start,@finish).count%>)</h3>
 </td></tr>
 <%= action_table(Event.meetings.between(@start,@finish)) %>
+</table></div>
 
-<tr><td>
-<h3 style="margin: 12px 0 2px 0;">Trainings (<%=Event.trainings.between(@start,@finish).count%>)</h3>
+<div id="trainings" class="admin_table"><table width=100%><tr><td>
+<h3>Trainings (<%=Event.trainings.between(@start,@finish).count%>)</h3>
 </td></tr>
 <%= action_table(Event.trainings.between(@start,@finish)) %>
+</table></div>
 
-<tr><td>
-<h3 style="margin: 12px 0 2px 0;">Operations (<%=Event.operations.between(@start,@finish).count%>)</h3>
+<div id="operations" class="admin_table"><table width=100%><tr><td>
+<h3>Operations (<%=Event.operations.between(@start,@finish).count%>)</h3>
 </td></tr>
 <%= action_table(Event.operations.between(@start,@finish)) %>
+</table></div>
 
-<tr><td>
-<h3 style="margin: 12px 0 2px 0;">Others (<%=Event.others.between(@start,@finish).count%>)</h3>
+<div id="other" class="admin_table"><table width=100%><tr><td>
+<h3>Other (<%=Event.others.between(@start,@finish).count%>)</h3>
 </td></tr>
 <%= action_table(Event.others.between(@start,@finish)) %>
-
-
-</table>
-<p/>
+</table></div>
