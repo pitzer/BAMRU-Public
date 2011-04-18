@@ -7,13 +7,21 @@
         <description>
           <![CDATA[
           <%= event.kml_description %>
-          <table>
           ]]>
         </description>
         <Point>
           <coordinates><%=event.lon%>,<%=event.lat%>,0</coordinates>
         </Point>
-
+        <styleUrl>#my_style</styleUrl>
+        <Style id="my_style">
+          <BalloonStyle>
+            <text>
+              <![CDATA[
+                <b>$[name]</b><br/>$[description]
+              ]]>
+            </text>
+          </BalloonStyle>
+        </Style>
       </Placemark>
     <% end %>
   </Document>
