@@ -64,7 +64,7 @@ module Sinatra
 
     def number_of(kind = "")
       return Event.count if kind.blank?
-      Event.where(:kind => kind).count
+      Event.kind(kind).count
     end
 
     def last_modification(file_spec = nil)
