@@ -128,6 +128,7 @@ class BamruApp < Sinatra::Base
     range      = "range=#{@start.to_label}_#{@finish.to_label}"
     @filename  = "operations#{(rand * 10000).round}.kml?#{range}"
     @right_nav = quote
+    @right_txt = erb BIG_MAP, :layout => false
     erb :operations
   end
 
