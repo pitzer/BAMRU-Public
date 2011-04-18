@@ -258,14 +258,11 @@ class Event < ActiveRecord::Base
     start.strftime("%Y_%m_01_archive.html")
   end
 
-  def blog_link
-    if start < Date.parse("Oct-2009")
-      ""
-    else
-      label = "BAMRU Blog - #{start.strftime('%b %Y')}"
-      link  = "<a href='http://bamru.blogspot.com/#{archive_url}'>#{label}</a>"
-      " [more info: #{link}]"
-    end
+  def kml_description
+    ldr = leaders == "TBA" ? "" : "Leaders: #{leaders} - "
+    link = description.gsub("[","").gsub("]", "")
+    mesg = "find more information on the BAMRU Blog: <a href='#{link}'>#{link}</a>"
+    ldr + mesg
   end
 
 end
