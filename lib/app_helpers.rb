@@ -19,6 +19,10 @@ module Sinatra
       end
     end
 
+    def sayhi
+      "hi"
+    end
+
     def background
       puts "Starting Background Process"
       pid = fork do
@@ -42,6 +46,10 @@ module Sinatra
 
     def current_page
       request.path_info
+    end
+
+    def current_mode
+      "Master"
     end
 
     def select_start_date
@@ -278,7 +286,7 @@ module Sinatra
               ['/admin_new',      'Create Event']
       ]
       opt2 = [
-              ['/calendar',      'calendar.html'],
+              ['/calendar',      'calendar'     ],
               ['/calendar.gcal', 'calendar.gcal'],
               ['/calendar.ical', 'calendar.ical'],
               ['/calendar.csv',  'calendar.csv' ]
@@ -290,8 +298,9 @@ module Sinatra
 
     def admin_nav_footer
       opt1 = [
-              ['/admin_load_csv', 'Upload CSV'      ],
-              ['/admin_password', 'Admin Password'  ]
+              ['/admin_settings', 'Settings'  ],
+              ['/admin_data',     'Data'      ],
+              ['/admin_alerts',   'Alerts'    ]
       ]
       r1 = opt1.map {|i| admin_link(i.first, i.last)}.join(' | ')
       "<hr>#{r1}"

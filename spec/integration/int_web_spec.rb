@@ -1,4 +1,4 @@
-require 'integration_helper'
+require 'spec_helper'
 
 describe "Web Pages" do
 
@@ -69,8 +69,8 @@ describe "Web Pages" do
         visit '/admin_new'
         page.status_code.should == 401
       end
-      it "does not render /admin_load_csv" do
-        visit '/admin_load_csv'
+      it "does not render /admin_data" do
+        visit '/admin_data'
         page.status_code.should == 401
       end
     end
@@ -84,8 +84,8 @@ describe "Web Pages" do
         visit '/admin_index'
         page.status_code.should == 200
       end
-      it 'renders /admin_load_csv' do
-        visit '/admin_load_csv'
+      it 'renders /admin_data' do
+        visit '/admin_data'
         page.status_code.should == 200
       end
     end

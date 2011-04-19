@@ -1,19 +1,20 @@
 source "http://rubygems.org"
 
+# production
 gem 'activerecord'
 gem 'sinatra'
-# gem "bundler"
 gem "gcal4ruby"
-gem "ruby-debug", "0.10.0"
-gem "capistrano"
 gem "sqlite3-ruby", "1.2.5", :require => "sqlite3"
-gem "factory_girl"
 gem "rack"
 gem "rack-flash"
 gem "fastercsv"
 
-gem "rspec"
+# development, test
+gem "factory_girl"
+gem "ruby-debug", "0.10.0"
+gem "capistrano"
 gem "capybara"
+gem "rspec", "2.6.0.rc2"
 gem "shotgun"
 gem "rcov"
 gem "thin"

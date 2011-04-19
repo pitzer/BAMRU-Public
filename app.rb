@@ -239,27 +239,45 @@ class BamruApp < Sinatra::Base
     redirect "/admin_index"
   end
 
-  get '/admin_password' do
+  get '/admin_alerts' do
     protected!
-    erb :admin_password, :layout => :admin_layout
+    erb :admin_alerts, :layout => :admin_layout
   end
 
-  get '/admin_load_csv' do
-    protected!
-    erb :admin_load_csv, :layout => :admin_layout
-  end
-
-  post('/admin_load_csv') do
+  post('/admin_alerts') do
     protected!
     if params[:file].nil?
       set_flash_error("Error - no CSV file was selected")
-      redirect '/admin_load_csv'
+      redirect '/admin_alerts'
     end
     File.open(MARSHALL_FILENAME, 'w') {|f| f.write params[:file][:tempfile].read}
     csv_load = CsvLoader.new(MARSHALL_FILENAME)
     set_flash_error(csv_load.error_message) if csv_load.has_errors?
     set_flash_notice(csv_load.success_message)
     redirect('/admin_index')
+  end
+
+  get '/admin_data' do
+    protected!
+    erb :admin_data, :layout => :admin_layout
+  end
+
+  post('/admin_data') do
+    protected!
+    if params[:file].nil?
+      set_flash_error("Error - no CSV file was selected")
+      redirect '/admin_data'
+    end
+    File.open(MARSHALL_FILENAME, 'w') {|f| f.write params[:file][:tempfile].read}
+    csv_load = CsvLoader.new(MARSHALL_FILENAME)
+    set_flash_error(csv_load.error_message) if csv_load.has_errors?
+    set_flash_notice(csv_load.success_message)
+    redirect('/admin_index')
+  end
+
+  get '/admin_settings' do
+    protected!
+    erb :admin_settings, :layout => :admin_layout
   end
   
   get '/malformed_csv' do
