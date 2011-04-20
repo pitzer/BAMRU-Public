@@ -49,23 +49,23 @@
 <div id="meetings" class="admin_table"><table width=100%><tr><td>
 <h3>Meetings (<%=Event.meetings.between(@start,@finish).count%>)</h3>
 </td></tr>
-<%= action_table(Event.meetings.between(@start,@finish)) %>
+<%= event_table(Event.meetings.between(@start,@finish)) %>
 </table></div>
 
 <div id="trainings" class="admin_table"><table width=100%><tr><td>
 <h3>Trainings (<%=Event.trainings.between(@start,@finish).count%>)</h3>
 </td></tr>
-<%= action_table(Event.trainings.between(@start,@finish)) %>
+<%= event_table(Event.trainings.between(@start,@finish)) %>
 </table></div>
 
 <div id="operations" class="admin_table"><table width=100%><tr><td>
 <h3>Operations (<%=Event.operations.between(@start,@finish).count%>)</h3>
 </td></tr>
-<%= action_table(Event.operations.between(@start,@finish)) %>
+<%= event_table(Event.operations.between(@start,@finish)) %>
 </table></div>
 
 <div id="other" class="admin_table"><table width=100%><tr><td>
 <h3>Other (<%=Event.others.between(@start,@finish).count%>)</h3>
 </td></tr>
-<%= action_table(Event.others.between(@start,@finish)) %>
+<%= event_table(Event.others.between(@start,@finish)) %>
 </table></div>

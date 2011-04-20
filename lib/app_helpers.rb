@@ -48,10 +48,6 @@ module Sinatra
       request.path_info
     end
 
-    def current_mode
-      "Master"
-    end
-
     def select_start_date
       params[:start]  || session[:start] ||  Event.default_start
     end
@@ -172,21 +168,20 @@ module Sinatra
       ERB
     end
 
-    def action_table(events)
+    def event_table(events)
       output = ""
       alt   = true
       first = true
       events.each do |m|
         color = alt ? "#EEEEEE" : "#FFFFFF"
-        outz = "<tr><td>#{m.title} / #{m.location}</td><td>#{m.date_display}</td><td>#{m.leaders}</td><td class='ac'><nobr>#{event_copy_link(m.id)} | #{event_edit_link(m.id)} | #{event_delete_link(m.id)}</nobr></td></tr>"
-        output << action_row(m, color, first)
+        output << event_row(m, color, first)
         first = false
         alt = ! alt
       end
       output
     end
 
-    def action_row(event, color='#EEEEEE', first = false)
+    def event_row(event, color='#EEEEEE', first = false)
       <<-ERB
       <tr bgcolor="#{color}">
         <td valign="top" class=summary>&nbsp;
@@ -202,10 +197,17 @@ module Sinatra
           #{format_leaders(event)}
         </td>
         <td class=ac>
-          <nobr>#{event_show_link(event.id)} | #{event_copy_link(event.id)} | #{event_edit_link(event.id)} | #{event_delete_link(event.id)}</nobr>
+          <nobr>#{event_links(event.id)}</nobr>
         </td>
       </tr>
       ERB
+    end
+    
+    def event_links(eid)
+      x1 = [event_show_link(eid)]
+      x2 = [event_copy_link(eid), event_edit_link(eid), event_delete_link(eid)]
+      output = @sitep.site_role == "Master" ? x1 + x2 : x1
+      output.join(' | ')
     end
 
     def set_flash_notice(msg)
@@ -281,10 +283,13 @@ module Sinatra
 
     def admin_nav
       opt1 = [
-              ['/admin',          'Admin Home'  ],
-              ['/admin_index',    'Events'      ],
-              ['/admin_new',      'Create Event']
+              ['/admin_home',          'Admin Home'  ],
+              ['/admin_events',    'Events'      ],
+              ['/admin_create',      'Create Event']
       ]
+      
+      opt1 = opt1[0..1] if @sitep.site_role != "Public"
+
       opt2 = [
               ['/calendar',      'calendar'     ],
               ['/calendar.gcal', 'calendar.gcal'],

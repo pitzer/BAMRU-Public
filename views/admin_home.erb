@@ -1,3 +1,4 @@
+<div class="data_box1">
 <h2>Overview</h2>
 
 Use these pages to update the BAMRU calendar.
@@ -14,10 +15,10 @@ Edit with care! Your changes go live onto the BAMRU website!<p/>
   </tr>
   <tr>
     <td>
-      Operations Mode: <b><%= current_mode%></b> (<a href="/admin_settings">change</a>)</a>
+      Website Role: <b><%= @sitep.site_role %></b> (<a href="/admin_settings">change</a>)</a>
     </td>
     <td>
-      Website Peer: <a href="http://bamru.info">http://bamru.info</a> (<a href="/admin_settings">change</a>)</a>
+      Website Peer: <a href="<%= @sitep.peer_url%>"><%= @sitep.peer_url %></a> (<a href="/admin_settings">change</a>)</a>
     </td>
   </tr>
   <tr>
@@ -33,7 +34,7 @@ Edit with care! Your changes go live onto the BAMRU website!<p/>
       There are <b><%=number_of%></b> events in our database
     </td>
     <td>
-      (<%=number_of "meeting"%> meetings, <%=number_of "training"%> trainings, <%=number_of "operation"%> operations, <%=number_of "other"%> other)
+      (<%=number_of "meeting"%> meetings, <%=number_of "training"%> trainings, <%=number_of "operation"%> operations, <%=number_of "other"%> others)
     </td>
   </tr>
   <tr>
@@ -68,3 +69,4 @@ download/study/reuse/enhance the code.<p/>
 Get the code at <%= link_url "http://github.com/andyl/BAMRU-Public" %>.<p/>
 There is a wiki for site developers at <%= link_url "http://github.com/andyl/BAMRU-Public/wiki" %>.
 
+</div>

@@ -149,12 +149,18 @@ class BamruApp < Sinatra::Base
   # ----- ADMIN PAGES -----
 
   get '/admin' do
-    protected!
-    erb :admin, :layout => :admin_layout
+    redirect '/admin_home'
   end
 
-  get '/admin_index' do
+  get '/admin_home' do
     protected!
+    @sitep ||= Settings.new
+    erb :admin_home, :layout => :adminx_layout
+  end
+
+  get '/admin_events' do
+    protected!
+    @sitep ||= Settings.new
     # select start / finish dates
     @start  = Event.date_parse(select_start_date)
     @finish = Event.date_parse(select_finish_date)
@@ -162,23 +168,25 @@ class BamruApp < Sinatra::Base
     # remember start/finish dates by saving them in the session
     session[:start] = @start
     session[:finish] = @finish
-    erb :admin_index, :layout => :admin_layout
+    erb :admin_events, :layout => :adminx_layout
   end
 
-  get '/admin_new' do
+  get '/admin_create' do
     protected!
+    @sitep ||= Settings.new
     @action      = Event.new
     @post_action = "/admin_create"
     @button_text = "Create"
-    erb :admin_new, :layout => :admin_layout
+    erb :admin_create, :layout => :adminx_layout
   end
 
   get '/admin_copy/:id' do
     protected!
+    @sitep ||= Settings.new
     @action      = Event.find_by_id(params[:id])
     @post_action = "/admin_create"
     @button_text = "Create"
-    erb :admin_new, :layout => :admin_layout
+    erb :admin_create, :layout => :adminx_layout
   end
 
   post '/admin_create' do
@@ -194,22 +202,24 @@ class BamruApp < Sinatra::Base
       @action      = action
       @post_action = "/admin_create"
       @button_text = "Create"
-      erb :admin_new, :layout => :admin_layout
+      erb :admin_new, :layout => :adminx_layout
     end
   end
 
   get '/admin_show/:id' do
     protected!
+    @sitep ||= Settings.new
     @action      = Event.find_by_id(params[:id])
-    erb :admin_show, :layout => :admin_layout
+    erb :admin_show, :layout => :adminx_layout
   end
 
   get '/admin_edit/:id' do
     protected!
+    @sitep ||= Settings.new
     @action      = Event.find_by_id(params[:id])
     @post_action = "/admin_update/#{params[:id]}"
     @button_text = "Update"
-    erb :admin_edit, :layout => :admin_layout
+    erb :admin_edit, :layout => :adminx_layout
   end
 
   post '/admin_update/:id' do
@@ -225,13 +235,14 @@ class BamruApp < Sinatra::Base
       @action      = action
       @post_action = "/admin_create"
       @button_text = "Update"
-      erb :admin_edit, :layout => :admin_layout
+      erb :admin_edit, :layout => :adminx_layout
     end
 
   end
 
   get '/admin_delete/:id' do
     protected!
+    @sitep ||= Settings.new
     action = Event.find_by_id(params[:id])
     background { GcalSync.delete_event(action) }
     set_flash_notice("Deleted Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
@@ -241,7 +252,8 @@ class BamruApp < Sinatra::Base
 
   get '/admin_alerts' do
     protected!
-    erb :admin_alerts, :layout => :admin_layout
+    @sitep ||= Settings.new
+    erb :admin_alerts, :layout => :adminx_layout
   end
 
   post('/admin_alerts') do
@@ -259,7 +271,8 @@ class BamruApp < Sinatra::Base
 
   get '/admin_data' do
     protected!
-    erb :admin_data, :layout => :admin_layout
+    @sitep ||= Settings.new
+    erb :admin_data, :layout => :adminx_layout
   end
 
   post('/admin_data') do
@@ -277,7 +290,8 @@ class BamruApp < Sinatra::Base
 
   get '/admin_settings' do
     protected!
-    erb :admin_settings, :layout => :admin_layout
+    @sitep ||= Settings.new
+    erb :admin_settings, :layout => :adminx_layout
   end
   
   get '/malformed_csv' do

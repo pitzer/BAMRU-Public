@@ -1,40 +1,46 @@
-<div class='center'><b>Import CSV Data</b></div><p/>
-
+<div class='center'><b>Import CSV Data</b></div>
+<div class="data_box2">
 This page allows you to import calendar data in CSV format.<br/>
 CSV import is primarily for use by system administrators, to
-backup and restore data in case of a system crash.<br/>
+backup and restore data in case of a system crash.
+<p></p>
 Things to note:
-<ul>
-  <li>visit <%= link_url("#{current_server}/calendar.csv")%> for an example of valid CSV formatting
-  <li>duplicate records are detected and rejected - you can re-load the same data without creating duplicate records
-  <li>invalid data records are rejected (missing title, missing date, etc.)
-</ul>
-<p/>
+<li>visit <%= link_url("#{current_server}/calendar.csv")%> for an example of valid CSV formatting
+<li>invalid data records are rejected (missing title, missing date, etc.)
+<li>duplicates are rejected - you can re-load the same data without creating duplicate records
+<li>caution! there is no UNDO (protip: make a backup CSV file before importing)
+</div>
 <div class="center"><b>Please don't import CSV data unless you know what you are doing!!</b></div>
 <p/>
 <table align=center><tr>
 <td width=300>
-<b>Import via File</b>
+<b>Import CSV Data from File</b>
 <form action="/admin_data_file" method='post' enctype='multipart/form-data'>
   <input type="file" name="file"/><br/>
-  <input type="submit" value="Upload and Merge"/><br/>
-  <input type="submit" value="Upload and Overwrite"/><br/>
+  <select name="mode">
+    <option value="merge">Merge with Existing Data</option>
+    <option value="overwrite">Overwrite Existing Data</option>
+  </select><br/>
+  <input type="submit" value="Upload"/><br/>
 </form>
 </td>
-<td width=250>
-<b>Import via URL</b>
+<td width=300>
+<b>Import CSV Data via URL</b>
 <form action="/admin_data_url" method='post' enctype='multipart/form-data'>
-  <input type="url" name="url"/><br/>
-  <input type="submit" value="Import and Merge"/><br/>
-  <input type="submit" value="Import and Overwrite"/><br/>
+  <a href="http://bamru.info/calendar.csv">http://bamru.info/calendar.csv</a> (<a href="/admin_settings">change</a>)<br/>
+  <select name="mode">
+    <option value="merge">Merge with Existing Data</option>
+    <option value="overwrite">Overwrite Existing Data</option>
+  </select><br/>
+  <input type="submit" value="Import"/><br/>
 </form>
 </td>
-<td width=250>
-<b>Periodic Import via URL</b>
+<td width=300>
+<b>Auto-Import via URL (currently OFF)</b>
 <form action="/admin_data_url" method='post' enctype='multipart/form-data'>
-  <input type="url" name="url"/><br/>
-  <input type="submit" value="Import and Merge"/><br/>
-  <input type="submit" value="Import and Overwrite"/><br/>
+  <a href="http://bamru.info/calendar.csv">http://bamru.info/calendar.csv</a> (<a href="/admin_settings">change</a>)<br/>
+  Merge with Existing Data every 15 minutes<br/>
+  <input type="submit" value="Turn On"/><br/>
 </form>
 </td>
 </table>

@@ -11,7 +11,11 @@
 <body>
 <div id='container'>
   <div class="center">
-    <h2>BAMRU Calendar Admin</h2>
+    <div>
+      <div style="float: left; width: 50%;"><h2 style="margin-top: 5px;">BAMRU Calendar Admin</h2></div>
+      <div style="padding-top: 12px;"><%= @sitep.site_role %> Site - <%= current_server %></div>
+    </div>
+    <div style="clear: both;"></div>
     <%= admin_nav %>
     <%= get_flash_notice %>
     <%= get_flash_error %>

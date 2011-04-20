@@ -57,35 +57,47 @@ describe "Web Pages" do
 
   context "admin pages" do
     context "without admin credentials" do
-      it "does not render /admin" do
-        visit '/admin'
+      it "does not render /admin_home" do
+        visit '/admin_home'
         page.status_code.should == 401
       end
-      it "does not render /admin_index" do
-        visit '/admin_index'
+      it "does not render /admin_events" do
+        visit '/admin_events'
         page.status_code.should == 401
       end
-      it "does not render /admin_new" do
-        visit '/admin_new'
+      it "does not render /admin_create" do
+        visit '/admin_create'
         page.status_code.should == 401
       end
       it "does not render /admin_data" do
         visit '/admin_data'
         page.status_code.should == 401
       end
+      it "does not render /admin_alerts" do
+        visit '/admin_alerts'
+        page.status_code.should == 401
+      end
     end
     context "with admin credentials" do
       before(:each) { page.driver.basic_authorize 'admin', 'admin' }
-      it 'renders /admin' do
-        visit '/admin'
+      it 'renders /admin_home' do
+        visit '/admin_home'
         page.status_code.should == 200
       end
-      it 'renders /admin_index' do
-        visit '/admin_index'
+      it 'renders /admin_events' do
+        visit '/admin_events'
+        page.status_code.should == 200
+      end
+      it 'renders /admin_alerts' do
+        visit '/admin_alerts'
         page.status_code.should == 200
       end
       it 'renders /admin_data' do
         visit '/admin_data'
+        page.status_code.should == 200
+      end
+      it 'renders /admin_settings' do
+        visit '/admin_settings'
         page.status_code.should == 200
       end
     end

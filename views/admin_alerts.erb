@@ -1,7 +1,45 @@
-<div class='center'><b>Alerts</b></div><p/>
+<div class='center'><b>Alerts</b></div>
+<div class="data_box3">
+This page allows you to setup site monitoring and alerting.<p/>
+<p></p>
+Background information:
+  <li>this application is designed to be deployed to multiple servers (typically two)
+  <li><b>Peer</b> sites <b>monitor</b> each other, once every <b>three minutes</b>
+  <li>if the <b>Peer</b> site is down for more than <b>15 minutes</b>, an <b>Alert email</b> is sent
+  <li><b>Alert emails</b> continue to be sent every hour, as long as the <b>Peer</b> site is down
+  <li><b>Notification emails</b> are sent after a site has been upgraded or restarted
+  <li>Click here to learn more</li>
+</div>
+<div class="center">
+  <b>Please don't change these settings unless you know what you are doing!!!</b>
+</div>
+<p/>
+<form method="post" action="hi">
+  <table width=100%><tr><td align=center>
+    <table cellpadding=1 cellspacing=1>
+      <tr>
+        <td class="ar">Peer Site:</td>
+        <td><a href="<%= @sitep.peer_url %>"><%= @sitep.peer_url %></a> (<a href="/admin_settings">change</a>)</td>
+      </tr>
+      <tr>
+      <td class="ar" valign=top>Alert eMail:</td>
+      <td><input type="Text" size=70 maxlength=400 name="password" value="andy@r210.com, bamru_sec@gmail.com"><br/><i>separate multiple addresses with commas</i></td>
+      </tr>
+      <tr>
+      <td class="ar" valign=top>Notification eMail:</td>
+      <td><input type="Text" size=70 maxlength=400 name="site_role" value="andy@r210.com"><br/><i>separate multiple addresses with commas</i></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <br/>
+          <input type="submit" name="submit" value="Change">
+          <input type=reset
+                 value="Return to Events"
+                 onclick="window.location.href='/admin_index';">
+        </td>
+      </tr>
+    </table>
+  </td></tr></table>
+</form>
 
-Send an email alert in case of outage.<p/>
-
-Your peer system is undefined. (update)<p/>
-
-Alerts will go to these email addresses.

@@ -79,3 +79,31 @@ td.btn {
 .admin_table h3 {
   margin: 12px 0 2px 0;
 }
+
+.data_box1 {
+  padding-right:  80px;
+  padding-left:   80px;
+  padding-top:    0px;
+  padding-bottom: 10px;">
+}
+
+.data_box2 {
+  padding-right:  80px;
+  padding-left:   80px;
+  padding-top:    15px;
+  padding-bottom: 30px;">
+}
+
+.data_box3 {
+  padding-right:  190px;
+  padding-left:   190px;
+  padding-top:    15px;
+  padding-bottom: 30px;">
+}
+
+.data_box2 li {
+  margin-left: 20px;
+}
+.data_box3 li {
+  margin-left: 20px;
+}
