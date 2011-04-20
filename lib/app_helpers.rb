@@ -96,7 +96,7 @@ module Sinatra
     def last_update
       rec = Event.order('updated_at').last
       return if rec.nil?
-      "<b>#{rec.updated_at.strftime("%a %b %d - %H:%M")}</b> (<a href='/admin_edit/#{rec.id}'>#{rec.title[0..15]}...</a>)"
+      "<b>#{rec.updated_at.strftime("%a %b %d - %H:%M")}</b> (<a href='/admin_edit/#{rec.id}'>#{rec.title[0..7]}...</a>)"
     end
 
     def link_url(url)

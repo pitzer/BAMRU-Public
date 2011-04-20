@@ -9,7 +9,8 @@ table {
 }
 
 table.info_table td {
-    padding-left: 60px;
+    padding-left: 30px;
+    width: 400px;
 }
 
 #container {
