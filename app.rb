@@ -98,13 +98,13 @@ class BamruApp < Sinatra::Base
   get '/calendar.ical' do
     response["Content-Type"] = "text/plain"
     @actions = Event.all
-    erb :export_ical, :layout => false
+    erb :calendar_ical, :layout => false
   end
 
   get '/calendar.csv' do
     response["Content-Type"] = "text/plain"
     @actions = Event.all
-    erb :export_csv, :layout => false
+    erb :calendar_csv, :layout => false
   end
 
   get '/calendar.gcal' do
@@ -258,7 +258,7 @@ class BamruApp < Sinatra::Base
     erb :admin_data, :layout => :admin_x_layout
   end
 
-  post('/admin_data') do
+  post('/admin_data_file') do
     if params[:file].nil?
       set_flash_error("Error - no CSV file was selected")
       redirect '/admin_data'
