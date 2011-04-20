@@ -1,4 +1,4 @@
-<div class="center"><b>Action #<%= @action.id %></b></div>
+<div class="center"><b>Event #<%= @action.id %></b></div>
 <p/>
 
 <table width=100%>
@@ -31,10 +31,10 @@
     </table>
     <p/>
     <form method="get" action="/admin_edit/<%=@action.id%>">
-      <input type=submit value="Edit">
+      <% if @sitep.public? %> <input type=submit value="Edit"> <% end %>
       <input type=reset
-             value="Return to Actions"
-             onclick="window.location.href='/admin_index';">
+             value="Return to Events"
+             onclick="window.location.href='/admin_events';">
     </form>
   </td></tr>
 </table>

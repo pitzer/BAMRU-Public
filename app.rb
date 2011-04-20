@@ -192,7 +192,7 @@ class BamruApp < Sinatra::Base
     if action.save
       background { GcalSync.create_event(action) }
       set_flash_notice("Created New Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
-      redirect '/admin_index'
+      redirect '/admin_events'
     else
       set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
       @action      = action
@@ -220,7 +220,7 @@ class BamruApp < Sinatra::Base
     if action.update_attributes(params)
       background { GcalSync.update_event(action) }
       set_flash_notice("Updated Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
-      redirect '/admin_index'
+      redirect '/admin_events'
     else
       set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
       @action      = action
@@ -235,7 +235,7 @@ class BamruApp < Sinatra::Base
     background { GcalSync.delete_event(action) }
     set_flash_notice("Deleted Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
     action.destroy
-    redirect "/admin_index"
+    redirect "/admin_events"
   end
 
   get '/admin_alerts' do
@@ -251,7 +251,7 @@ class BamruApp < Sinatra::Base
     csv_load = CsvLoader.new(MARSHALL_FILENAME)
     set_flash_error(csv_load.error_message) if csv_load.has_errors?
     set_flash_notice(csv_load.success_message)
-    redirect('/admin_index')
+    redirect('/admin_events')
   end
 
   get '/admin_data' do
@@ -267,7 +267,7 @@ class BamruApp < Sinatra::Base
     csv_load = CsvLoader.new(MARSHALL_FILENAME)
     set_flash_error(csv_load.error_message) if csv_load.has_errors?
     set_flash_notice(csv_load.success_message)
-    redirect('/admin_index')
+    redirect('/admin_events')
   end
 
   get '/admin_settings' do

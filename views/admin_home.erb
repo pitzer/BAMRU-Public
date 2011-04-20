@@ -1,5 +1,5 @@
 <div class="data_box1">
-<h2>Overview</h2>
+<h3>Overview</h3>
 
 Use these pages to update the BAMRU calendar.
 Edit with care! Your changes go live onto the BAMRU website!<p/>
@@ -18,7 +18,7 @@ Edit with care! Your changes go live onto the BAMRU website!<p/>
       Website Role: <b><%= @sitep.site_role %></b> (<a href="/admin_settings">change</a>)</a>
     </td>
     <td>
-      Website Peer: <a href="<%= @sitep.peer_url%>"><%= @sitep.peer_url %></a> (<a href="/admin_settings">change</a>)</a>
+      Website Peer: <%= @sitep.peer_url_link%> (<a href="/admin_settings">change</a>)</a>
     </td>
   </tr>
   <tr>
@@ -55,18 +55,19 @@ Edit with care! Your changes go live onto the BAMRU website!<p/>
   </tr>
 </table>
 
-<h2>Bugs and Change Requests</h2>
+<h3>Bugs and Change Requests</h3>
 
 To report bugs or ideas for improving the website, use our 
 issue tracker at <%= link_url "https://github.com/andyl/BAMRU-Public/issues" %>.<p/>
 
 You can also contact the site maintainer, Andy Leak - andy@r210.com - 650-823-0836.
 
-<h2>Website Source Code</h2>
+<h3>Website Source Code</h3>
 
 The website source code is publicly available.  Anyone is welcome to
 download/study/reuse/enhance the code.<p/>
-Get the code at <%= link_url "http://github.com/andyl/BAMRU-Public" %>.<p/>
-There is a wiki for site developers at <%= link_url "http://github.com/andyl/BAMRU-Public/wiki" %>.
+The code is at <%= link_url "http://github.com/andyl/BAMRU-Public" %>.
+
+Developer doc is at <%= link_url "http://github.com/andyl/BAMRU-Public/wiki" %>.
 
 </div>

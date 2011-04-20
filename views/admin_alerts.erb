@@ -19,15 +19,17 @@ Background information:
     <table cellpadding=1 cellspacing=1>
       <tr>
         <td class="ar">Peer Site:</td>
-        <td><a href="<%= @sitep.peer_url %>"><%= @sitep.peer_url %></a> (<a href="/admin_settings">change</a>)</td>
+        <td><%= @sitep.peer_url_link %> (<a href="/admin_settings">change</a>)</td>
       </tr>
       <tr>
       <td class="ar" valign=top>Alert eMail:</td>
-      <td><input type="Text" size=70 maxlength=400 name="password" value="andy@r210.com, bamru_sec@gmail.com"><br/><i>separate multiple addresses with commas</i></td>
+      <td><input type="Text" size=70 maxlength=400 name="password" value="andy@r210.com, bamru_sec@gmail.com"><br/>
+          <i>use commas to separate multiple addresses</i></td>
       </tr>
       <tr>
       <td class="ar" valign=top>Notification eMail:</td>
-      <td><input type="Text" size=70 maxlength=400 name="site_role" value="andy@r210.com"><br/><i>separate multiple addresses with commas</i></td>
+      <td><input type="Text" size=70 maxlength=400 name="site_role" value="andy@r210.com"><br/>
+        <i>use commas to separate multiple addresses</i></td>
       </tr>
       <tr>
         <td></td>
@@ -36,7 +38,7 @@ Background information:
           <input type="submit" name="submit" value="Change">
           <input type=reset
                  value="Return to Events"
-                 onclick="window.location.href='/admin_index';">
+                 onclick="window.location.href='/admin_events';">
         </td>
       </tr>
     </table>

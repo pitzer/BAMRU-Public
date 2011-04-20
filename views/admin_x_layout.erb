@@ -12,11 +12,21 @@
 <div id='container'>
   <div class="center">
     <div>
-      <div style="float: left; width: 50%;"><h2 style="margin-top: 5px;">BAMRU Calendar Admin</h2></div>
-      <div style="padding-top: 12px;"><%= @sitep.site_role %> Site - <%= current_server %></div>
+      <div style="float: left; width: 50%;">
+        <h2 style="margin-top: 5px;">BAMRU Calendar Admin</h2>
+      </div>
+      <div style="padding-top: 12px;">
+        <%= @sitep.site_role %> Site - <%= current_server %>
+      </div>
     </div>
     <div style="clear: both;"></div>
-    <%= admin_nav %>
+    <div>
+      <div style="float: left; width: 50%;"><%= admin_nav %></div>
+      <div><%= admin_cal_nav %></div>
+    </div>
+    <div style="clear: both;"></div>
+    <p/><hr>
+
     <%= get_flash_notice %>
     <%= get_flash_error %>
   </div>

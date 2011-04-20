@@ -6,41 +6,49 @@ backup and restore data in case of a system crash.
 <p></p>
 Things to note:
 <li>visit <%= link_url("#{current_server}/calendar.csv")%> for an example of valid CSV formatting
-<li>invalid data records are rejected (missing title, missing date, etc.)
-<li>duplicates are rejected - you can re-load the same data without creating duplicate records
+<li>invalid Events are rejected (missing title, missing date, etc.)
+<li>duplicates are rejected (you can re-load the same data without creating duplicate Events)
 <li>use caution! there is no UNDO!! (protip: make a backup CSV file before importing)
 </div>
 <div class="center"><b>Please don't import CSV data unless you know what you are doing!!</b></div>
 <p/>
 <table align=center><tr>
-<td width=300>
-<b>Import CSV Data from File</b>
-<form action="/admin_data_file" method='post' enctype='multipart/form-data'>
-  <input type="file" name="file"/><br/>
-  <select name="mode">
-    <option value="merge">Merge with Existing Data</option>
-    <option value="overwrite">Overwrite Existing Data</option>
-  </select><br/>
-  <input type="submit" value="Upload"/><br/>
-</form>
-</td>
-<td width=300>
-<b>Import CSV Data via URL</b>
-<form action="/admin_data_url" method='post' enctype='multipart/form-data'>
-  <a href="http://bamru.info/calendar.csv">http://bamru.info/calendar.csv</a> (<a href="/admin_settings">change</a>)<br/>
-  <select name="mode">
-    <option value="merge">Merge with Existing Data</option>
-    <option value="overwrite">Overwrite Existing Data</option>
-  </select><br/>
-  <input type="submit" value="Import"/><br/>
-</form>
-</td>
-<td width=300>
-<b>Auto-Import via URL (currently OFF)</b>
-<form action="/admin_data_url" method='post' enctype='multipart/form-data'>
-  <a href="http://bamru.info/calendar.csv">http://bamru.info/calendar.csv</a> (<a href="/admin_settings">change</a>)<br/>
-  Merge with Existing Data every 15 minutes<br/>
-  <input type="submit" value="Turn On"/><br/>
-</form>
-</td>
+  <td width=300 valign=top>
+    <b>Import CSV Data from File</b>
+    <form action="/admin_data_file" method='post' enctype='multipart/form-data'>
+      <input type="file" name="file"/><br/>
+      <select name="mode">
+        <option value="merge">Merge with Existing Data</option>
+        <option value="overwrite">Overwrite Existing Data</option>
+      </select><br/>
+      <input type="submit" value="Upload"/><br/>
+    </form>
+  </td>
+  <td width=300 valign=top>
+    <b>Import CSV Data via Peer URL</b>
+    <form action="/admin_data_url" method='post' enctype='multipart/form-data'>
+      <%=@sitep.peer_csv_link%> (<a href="/admin_settings">change</a>)<br/>
+      <% if @sitep.peer_url_defined? %>
+        <select name="mode">
+          <option value="merge">Merge with Existing Data</option>
+          <option value="overwrite">Overwrite Existing Data</option>
+        </select><br/>
+        <input type="submit" value="Import"/><br/>
+      <% end %>
+    </form>
+  </td>
+  <td width=300 valign=top>
+    <b>Auto-Import via Peer URL (currently <%= @sitep.auto_sync%>)</b>
+    <% if @sitep.public? %>
+      <br/>Only works for Backup sites. (<a href="/admin_settings">change settings</a>)
+    <% else %>
+      <form action="/admin_data_url" method='post' enctype='multipart/form-data'>
+        <%=@sitep.peer_csv_link%> (<a href="/admin_settings">change</a>)<br/>
+        <% if @sitep.peer_url_defined? %>
+          Merge with Existing Data every 15 minutes<br/>
+          <input type="submit" value="Turn On"/><br/>
+        <% end %>
+      </form>
+    <% end %>
+  </td>
 </table>

@@ -36,7 +36,7 @@ describe Settings do
     specify { @obj.password.should    == "admin"              }
     specify { @obj.peer_url.should    == "http://bamru.info"  }
     specify { @obj.site_role.should   == "Public"             }
-    specify { @obj.auto_sync.should   == "true"               }
+    specify { @obj.auto_sync.should   == "OFF"                }
     specify { @obj.alert_email.should == "akleak@gmail.com"   }
     specify { @obj.notif_email.should == "andy@r210.com"      }
   end

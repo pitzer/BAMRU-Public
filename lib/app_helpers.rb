@@ -206,7 +206,7 @@ module Sinatra
     def event_links(eid)
       x1 = [event_show_link(eid)]
       x2 = [event_copy_link(eid), event_edit_link(eid), event_delete_link(eid)]
-      output = @sitep.site_role == "Master" ? x1 + x2 : x1
+      output = @sitep.public? ? x1 + x2 : x1
       output.join(' | ')
     end
 
@@ -293,23 +293,25 @@ module Sinatra
     end
 
     def admin_nav
-      opt1 = [
+      opt = [
               ['/admin_home',          'Admin Home'  ],
-              ['/admin_events',    'Events'      ],
-              ['/admin_create',      'Create Event']
+              ['/admin_events',        'Events'      ],
+              ['/admin_create',        'Create Event']
       ]
       
-      opt1 = opt1[0..1] if @sitep.site_role != "Public"
+      opt = opt[0..1] if @sitep.backup?
 
-      opt2 = [
+      opt.map {|i| admin_link(i.first, i.last)}.join(' | ')
+    end
+
+    def admin_cal_nav
+      opt = [
               ['/calendar',      'calendar'     ],
               ['/calendar.gcal', 'calendar.gcal'],
               ['/calendar.ical', 'calendar.ical'],
               ['/calendar.csv',  'calendar.csv' ]
       ]
-      r1 = opt1.map {|i| admin_link(i.first, i.last)}.join(' | ')
-      r2 = opt2.map {|i| admin_link(i.first, i.last)}.join(' | ')
-      "#{r1} || #{r2}<p/><hr>"
+      opt.map {|i| admin_link(i.first, i.last)}.join(' | ')
     end
 
     def admin_nav_footer
