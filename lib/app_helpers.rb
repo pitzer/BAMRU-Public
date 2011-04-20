@@ -248,6 +248,17 @@ module Sinatra
       output
     end
 
+    def site_role(obj, string)
+      obj.site_role == string ? 'selected="selected"' : ""
+    end
+
+    def site_role_options(site_obj)
+      <<-STRING
+        <option value="Public" #{site_role(site_obj, "Public")}>Public</option>
+        <option value="Backup" #{site_role(site_obj, "Backup")}>Backup</option>
+      STRING
+    end
+
     def select_helper(action = nil)
       vals = %w(meeting training operation other)
       vals.map do |i|
