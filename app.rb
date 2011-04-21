@@ -263,9 +263,13 @@ class BamruApp < Sinatra::Base
       set_flash_error("Error - no CSV file was selected")
       redirect '/admin_data'
     end
-    File.open(MARSHALL_FILENAME, 'w') {|f| f.write params[:file][:tempfile].read}
-    csv_load = CsvLoader.new(MARSHALL_FILENAME)
-    set_flash_error(csv_load.error_message) if csv_load.has_errors?
+    csv_text = params[:file][:tempfile].read
+    csv_load = CsvLoader2.new(csv_text)
+    if csv_load.has_errors?
+      set_flash_error(csv_load.error_message)
+      redirect('/admin_data')
+    end
+    set_flash_error(csv_load.warning_message) if csv_load.has_warnings?
     set_flash_notice(csv_load.success_message)
     redirect('/admin_events')
   end

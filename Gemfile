@@ -2,6 +2,7 @@ source "http://rubygems.org"
 
 # production
 gem 'activerecord'
+gem 'activesupport'
 gem 'sinatra'
 gem "gcal4ruby"
 gem "sqlite3-ruby", "1.2.5", :require => "sqlite3"

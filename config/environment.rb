@@ -1,5 +1,7 @@
 require 'rubygems'
+require 'bundler/setup'
 require 'active_record'
+require 'active_support/core_ext'
 require 'factory_girl'
 require 'time'
 

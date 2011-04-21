@@ -210,6 +210,10 @@ module Sinatra
       output.join(' | ')
     end
 
+    def csv_file_data(file_param)
+      file_params[:tempfile].read
+    end
+
     def set_flash_notice(msg)
       flash[:notice] ? flash[:notice] << msg : flash[:notice] = msg
     end
