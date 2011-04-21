@@ -71,5 +71,4 @@ To see a list of deployment commands, run
 
 The admin page allows approved users to update calendar
 events on the website.  The admin page is password
-protected.  Reset the password using the '/admin_password'
-page.
+protected.  

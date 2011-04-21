@@ -4,8 +4,8 @@
 - added new Event type: operations
 - added lan/lon fields to the event record
 - added a geo-picker to the admin form
-- added a callout map (request from Cal)
-- added Google Calendar sync (http://server/calendar.gcal)
+- added a callout map (request from Cal) (/operations)
+- added Google Calendar sync (/calendar.gcal)
 - added CSV import from File and URL
 
 == 0.0.2 - 2011-02-02
@@ -36,6 +36,7 @@ for 0.0.6 (Deployment)
 - add dual-deploy script
 - send secure data via SSH - not stored in repository
 - Shared symlink for the database, admin userid/password
+- Setup to deployment systems and dns (bamru.info, backup.bamru.info)
 
 for 0.0.7 (Docco)
 - create wiki pages
