@@ -4,6 +4,8 @@ require 'yaml'
 require 'ruby-debug'
 require 'rack-flash'
 require base_dir + '/config/environment'
+require 'uri'
+require 'net/http'
 
 class BamruApp < Sinatra::Base
   helpers Sinatra::AppHelpers
@@ -264,12 +266,36 @@ class BamruApp < Sinatra::Base
       redirect '/admin_data'
     end
     csv_text = params[:file][:tempfile].read
-    csv_load = CsvLoader2.new(csv_text)
-    if csv_load.has_errors?
+    if params["mode"] == "overwrite"
+      Event.delete_all if CsvLoader.load_ready?(csv_text)
+    end
+    csv_load = CsvLoader.new(csv_text)
+    if csv_load.errors?
       set_flash_error(csv_load.error_message)
       redirect('/admin_data')
     end
-    set_flash_error(csv_load.warning_message) if csv_load.has_warnings?
+    set_flash_error(csv_load.warning_message) if csv_load.warnings?
+    set_flash_notice(csv_load.success_message)
+    redirect('/admin_events')
+  end
+
+  post('/admin_data_url') do
+    if params[:peer_url].nil?
+      set_flash_error("Error - no CSV file was selected")
+      redirect '/admin_data'
+    end
+    url = params[:peer_url]
+    uri = URI.parse(url)
+    csv_text = Net::HTTP.get_response(uri.host, uri.path).body
+    if params["mode"] == "overwrite"
+      Event.delete_all if CsvLoader.load_ready?(csv_text)
+    end
+    csv_load = CsvLoader.new(csv_text)
+    if csv_load.errors?
+      set_flash_error(csv_load.error_message)
+      redirect('/admin_data')
+    end
+    set_flash_error(csv_load.warning_message) if csv_load.warnings?
     set_flash_notice(csv_load.success_message)
     redirect('/admin_events')
   end
@@ -290,16 +316,14 @@ class BamruApp < Sinatra::Base
     end
   end
   
-  get '/malformed_csv' do
-    protected!
+  get '/admin_inval_csv' do
     response["Content-Type"] = "text/plain"
-    File.read(MALFORMED_FILENAME)
+    File.read(INVAL_CSV_FILENAME)
   end
 
-  get '/invalid_csv' do
-    protected!
+  get '/admin_inval_rec' do
     response["Content-Type"] = "text/plain"
-    File.read(INVALID_FILENAME)
+    File.read(INVAL_REC_FILENAME)
   end
 
   not_found do

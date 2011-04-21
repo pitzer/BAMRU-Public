@@ -38,5 +38,30 @@ class CsvProcessor
     hdr_a = @input_header.parse_csv
     hdr_a.reduce({}) {|a,v| a[v] = rec[hdr_a.index(v)]; a}
   end
-  
+
+  def save_records_to_file
+    save_inval_csv_to_file
+    save_inval_rec_to_file
+  end
+
+  private
+
+  def save_inval_csv_to_file
+    return if @csv_result[:inval_csv].nil?
+    File.open(INVAL_CSV_FILENAME, 'w') do |f|
+      f.puts @input_header
+      @csv_result[:inval_csv].each {|r| f.puts r}
+    end
+  end
+
+  def save_inval_rec_to_file
+    return if @rec_result[:inval_rec].nil?
+    File.open(INVAL_REC_FILENAME, 'w') do |f|
+      f.puts @input_header
+      @rec_result[:inval_rec].each do |r|
+        f.puts r.map {|e| %Q("#{e}")}.join(",")
+      end
+    end
+  end
+
 end

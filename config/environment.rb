@@ -8,9 +8,8 @@ require 'time'
 BASE_DIR  = File.dirname(File.expand_path(__FILE__)) + "/../"
 DATA_DIR  = BASE_DIR + "/data"
 
-MARSHALL_FILENAME  = "/tmp/marshall.csv"
-MALFORMED_FILENAME = "/tmp/malformed.csv"
-INVALID_FILENAME   = "/tmp/invalid.csv"
+INVAL_CSV_FILENAME = "/tmp/inval_csv.csv"
+INVAL_REC_FILENAME = "/tmp/inval_rec.csv"
 
 database_file = case ENV['RACK_ENV']
   when "production" : "production.sqlite3"

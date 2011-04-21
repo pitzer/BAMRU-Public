@@ -29,6 +29,7 @@ Things to note:
     <form action="/admin_data_url" method='post' enctype='multipart/form-data'>
       <%=@sitep.peer_csv_link%> (<a href="/admin_settings">change</a>)<br/>
       <% if @sitep.peer_url_defined? %>
+        <input type="hidden" name="peer_url" value="<%=@sitep.peer_csv%>"/>
         <select name="mode">
           <option value="merge">Merge with Existing Data</option>
           <option value="overwrite">Overwrite Existing Data</option>
