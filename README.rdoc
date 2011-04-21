@@ -12,7 +12,7 @@ newer tools:
 - ORM [ActiveRecord]
 - lightweight app framework [Sinatra]
 - source code control [Git]
-- automated regressions testing [Rspec, Rcov]
+- automated regressions testing [Rspec]
 - script tool [Rake]
 - deploy tool [Capistrano]
 - library manager [Bundler]
@@ -20,7 +20,7 @@ newer tools:
 == Live Demo - Public Pages
 
 To see a live demo of the prototype app, visit:
-http://bamru-public.r210x.com
+http://bamru.info
 
 All of the demo uses dynamically generated pages
 and a shared layout.  This means the site is
@@ -29,15 +29,15 @@ easier to maintain.
 == Live Demo - Admin Pages
 
 Admin pages are at:
-http://bamru-public.r210x.com/admin
+http://bamru.info/admin
 
 (userid/passwd = admin/admin)
 
 == Installing & Running the App
 
 You can clone the app and run it on your system.
-This is going to work best on Linux or Mac.
-Windows hasn't been tested.
+This is going to work best on Linux (ubuntu). Mac
+and Windows haven't been tested.
 
 To install the app, first install ruby, git, rubygems.  Then:
 
