@@ -1,3 +1,16 @@
+<script type="text/javascript">
+  $(function() {
+    $('#notify').hide();
+    $('.zform').click(function() {
+      $('#notify').show();
+    });
+  });
+</script>
+
+<div id="notify">
+  <p>Working...</p>
+</div>
+
 <div class='center'><b>Import CSV Data</b></div>
 <div class="data_box2">
 This page allows you to import calendar data in CSV format.<br/>
@@ -21,7 +34,7 @@ Things to note:
         <option value="merge">Merge with Existing Data</option>
         <option value="overwrite">Overwrite Existing Data</option>
       </select><br/>
-      <input type="submit" value="Upload"/><br/>
+      <input class="zform" type="submit" value="Upload"/><br/>
     </form>
   </td>
   <td width=300 valign=top>
@@ -34,7 +47,7 @@ Things to note:
           <option value="merge">Merge with Existing Data</option>
           <option value="overwrite">Overwrite Existing Data</option>
         </select><br/>
-        <input type="submit" value="Import"/><br/>
+        <input class="zform" type="submit" value="Import"/><br/>
       <% end %>
     </form>
   </td>

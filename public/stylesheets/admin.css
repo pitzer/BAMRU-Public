@@ -5,12 +5,12 @@ body {
 }
 
 table {
-    font-size: 12px;
+  font-size: 12px;
 }
 
 table.info_table td {
-    padding-left: 30px;
-    width: 400px;
+  padding-left: 30px;
+  width: 400px;
 }
 
 #container {
@@ -23,7 +23,7 @@ table.info_table td {
 }
 
 .center {
-    text-align: center;
+  text-align: center;
 }
 
 table.basic {
@@ -55,22 +55,22 @@ td.ac {
 
 td.btn {
   border: blue;
-  /*background-color: green;*/
+/*background-color: green;*/
   text-align: center;
 }
 
 .error {
-    padding: 5px;
-    margin: 10px;
-    background-color: pink;
-    border: 20px;
+  padding: 5px;
+  margin: 10px;
+  background-color: pink;
+  border: 20px;
 }
 
 .notice {
-    padding: 5px;
-    margin: 10px;
-    background-color: #adff2f;
-    border: 20px;
+  padding: 5px;
+  margin: 10px;
+  background-color: #adff2f;
+  border: 20px;
 }
 
 .checkdiv input {
@@ -107,4 +107,14 @@ td.btn {
 }
 .data_box3 li {
   margin-left: 20px;
+}
+
+#notify {
+  padding: 50px;
+  background-color:lightblue;
+  position:absolute;
+  top:25%;
+  left:43%;
+  border:2px solid red;
+  text-align:center;
 }
