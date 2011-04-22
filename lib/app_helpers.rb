@@ -37,7 +37,7 @@ module Sinatra
       @auth.provided? &&
               @auth.basic? &&
               @auth.credentials &&
-              @auth.credentials == ['admin', 'admin']
+              @auth.credentials == ['admin', @sitep.password]
     end
 
     def current_server

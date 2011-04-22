@@ -151,8 +151,8 @@ class BamruApp < Sinatra::Base
   # ----- ADMIN PAGES -----
 
   before '/admin*' do
-    protected!
     @sitep ||= Settings.new
+    protected!
   end
 
   get '/admin' do
