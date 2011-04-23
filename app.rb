@@ -193,6 +193,7 @@ class BamruApp < Sinatra::Base
     action = Event.new(params)
     if action.save
       background { GcalSync.create_event(action) }
+      background { CsvHistory.save }
       set_flash_notice("Created New Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
       redirect '/admin_events'
     else
@@ -221,6 +222,7 @@ class BamruApp < Sinatra::Base
     params.delete "submit"
     if action.update_attributes(params)
       background { GcalSync.update_event(action) }
+      background { CsvHistory.save }
       set_flash_notice("Updated Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
       redirect '/admin_events'
     else
@@ -234,9 +236,10 @@ class BamruApp < Sinatra::Base
 
   get '/admin_delete/:id' do
     action = Event.find_by_id(params[:id])
-    background { GcalSync.delete_event(action) }
     set_flash_notice("Deleted Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
     action.destroy
+    background { GcalSync.delete_event(action) }
+    background { CsvHistory.save }
     redirect "/admin_events"
   end
 
@@ -276,6 +279,7 @@ class BamruApp < Sinatra::Base
     end
     set_flash_error(csv_load.warning_message) if csv_load.warnings?
     set_flash_notice(csv_load.success_message)
+    background { CsvHistory.save }
     redirect('/admin_events')
   end
 
@@ -293,6 +297,7 @@ class BamruApp < Sinatra::Base
     csv_load = CsvLoader.new(csv_text)
     if csv_load.errors?
       set_flash_error(csv_load.error_message)
+      background { CsvHistory.save }
       redirect('/admin_data')
     end
     set_flash_error(csv_load.warning_message) if csv_load.warnings?

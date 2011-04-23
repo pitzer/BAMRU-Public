@@ -15,3 +15,5 @@ vendor/**/*
 .paths*
 .tags*
 data/settings.yaml
+data/history
+data/history/*
