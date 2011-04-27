@@ -264,6 +264,7 @@ class BamruApp < Sinatra::Base
     erb :admin_data, :layout => :admin_x_layout
   end
 
+  # duplication with admin_data_url - needs refactoring
   post('/admin_data_file') do
     if params[:file].nil?
       set_flash_error("Error - no CSV file was selected")
@@ -284,9 +285,10 @@ class BamruApp < Sinatra::Base
     redirect('/admin_events')
   end
 
+  # duplication with admin_data_url - needs refactoring
   post('/admin_data_url') do
     if params[:peer_url].nil?
-      set_flash_error("Error - no CSV file was selected")
+      set_flash_error("Error - no peer CSV was selected")
       redirect '/admin_data'
     end
     url = params[:peer_url]
