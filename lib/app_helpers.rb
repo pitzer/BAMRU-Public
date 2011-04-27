@@ -19,10 +19,6 @@ module Sinatra
       end
     end
 
-    def sayhi
-      "hi"
-    end
-
     def background
       puts "Starting Background Process"
       pid = fork do
