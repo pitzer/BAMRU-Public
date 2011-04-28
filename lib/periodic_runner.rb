@@ -5,13 +5,12 @@ class PeriodicRunner
   attr_accessor :delay_seconds, :pid, :name, :code
 
   def initialize(params = {}, &code)
-    remove_state_file
     set_params(params, code)
   end
 
-  def self.create(params = {}, &code)
-    set_params(params, code)
-    return self
+  def self.reset_new(params = {}, &code)
+    PeriodicRunner.new(params, code).remove_state_file
+    PeriodicRunner.new(params, code)
   end
 
   def start(params = {}, &code)
@@ -53,6 +52,10 @@ class PeriodicRunner
     name = "#{state_dir}/#{@name}.yaml"
   end
 
+  def remove_state_file
+    system "rm -f #{state_file}" unless state_file.empty?
+  end
+
   private
 
   def set_params(params, code)
@@ -74,10 +77,6 @@ class PeriodicRunner
 
   def state_dir
     "/tmp/periodic_runner"
-  end
-
-  def remove_state_file
-    system "rm -f #{state_file}" unless state_file.empty?
   end
 
   def read_params_from_yaml_file

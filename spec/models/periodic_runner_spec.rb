@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe PeriodicRunner do
+  TEST_NAME = "test"
 
   describe "instance attributes" do
     before(:each) { @obj = PeriodicRunner.new }
@@ -29,11 +30,16 @@ describe PeriodicRunner do
       specify { @obj.state_file.should be_empty }
     end
     context "with a name attribute" do
-      before(:each) { @obj = PeriodicRunner.new(:name => "hi") }
-      specify { @obj.should_not be_nil                         }
-      specify { @obj.name.should == "hi"                       }
-      specify { @obj.state_file.should_not be_empty            }
-      specify { File.exist?(@obj.state_file).should be_true    }
+      before(:each) do 
+        opts = {:name => TEST_NAME, :delay_seconds => 33}
+        PeriodicRunner.new(:name => TEST_NAME).remove_state_file
+        @obj = PeriodicRunner.new(opts)
+      end
+      specify { @obj.should_not be_nil                      }
+      specify { @obj.name.should == "hi"                    }
+      specify { @obj.state_file.should_not be_empty         }
+      specify { @obj.delay_seconds.should == 33             }
+      specify { File.exist?(@obj.state_file).should be_true }
     end
     context "with a code block" do
       before(:each) { @obj = PeriodicRunner.new {puts 'hi'} }
@@ -41,14 +47,14 @@ describe PeriodicRunner do
       specify { @obj.code.should_not be_nil                    }
     end
   end
-
-  context "create" do
-    it "reloads" do
-      @obj1 = PeriodicRunner.new :name => "test1", :delay_seconds => 33
-      @obj2 = PeriodicRunner.create :name => "test1"
-      @obj2.delay_seconds.should == 33
-    end
-  end
+  
+  # context ".reset_new" do
+  #   it "reloads" do
+  #     @obj1 = PeriodicRunner.new :name => "test1", :delay_seconds => 33
+  #     @obj2 = PeriodicRunner.:name => "test1"
+  #     @obj2.delay_seconds.should == 33
+  #   end
+  # end
 
 #  context "running" do
 #    before(:each) do
