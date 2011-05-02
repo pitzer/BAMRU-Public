@@ -1,6 +1,6 @@
 = HISTORY
 
-== 0.0.4 - 2011-04-21 (Data Import)
+== 0.0.4 - 2011-05-01 (Data Import)
 - finish password update form
 - added CSV import from File and URL
 - add data Auto-Import via CSV
@@ -28,6 +28,12 @@
 
 = TODO
 
+(Deployment)
+- add dual-deploy script
+- send secure data via SSH - not stored in repository
+- Shared symlink for the database, admin userid/password
+- Setup to deployment systems and dns (bamru.info, backup.bamru.info)
+
 (Event Logging)
 - add an event-log process
 - add logging statements to application code
@@ -43,12 +49,6 @@
 (Log-File Viewer)
 - show log files
 - use Faye for live file updates
-
-(Deployment)
-- add dual-deploy script
-- send secure data via SSH - not stored in repository
-- Shared symlink for the database, admin userid/password
-- Setup to deployment systems and dns (bamru.info, backup.bamru.info)
 
 (Docco)
 - create wiki pages
