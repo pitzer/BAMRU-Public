@@ -1,48 +1,60 @@
 = HISTORY
 
-== 0.0.3 - 2011-04-21
+== 0.0.4 - 2011-04-21 (Data Import)
+- finish password update form
+- added CSV import from File and URL
+- add data Auto-Import via CSV
+- store data version upon Event update and import
+
+== 0.0.3 - 2011-04-21 (Callout Map)
 - added new Event type: operations
 - added lan/lon fields to the event record
 - added a geo-picker to the admin form
 - added a callout map (request from Cal) (/operations)
 - added Google Calendar sync (/calendar.gcal)
-- added CSV import from File and URL
 
-== 0.0.2 - 2011-02-02
+== 0.0.2 - 2011-02-02 (Admin Pages)
 - basic-auth password protection for admin pages
 - added deploy scripts
 
-== 0.0.1 - 2011-01-18
+== 0.0.1 - 2011-01-18 (Dynamic Generation)
 - all public pages are generated dynamically
 - added admin pages
 - Ical integration with Google Calendar
 - initial set of specs
 
-== 0.0.0 - 2010-12-14
+== 0.0.0 - 2010-12-14 (Initial Prototype)
 - initial creation
 
 = TODO
 
-for 0.0.4 (Data Import)
-- finish password update form
-- add data Auto-Import via CSV
-- store new data version upon update and import
+(Event Logging)
+- add an event-log process
+- add logging statements to application code
 
-for 0.0.5 (Monitoring and Alerting)
-- add monitoring 
+(Monitoring and Alerting)
+- add a monitoring process
 - generate/send emails
 
-for 0.0.6 (Deployment)
+(Process Dashboard)
+- show the status of support processes
+- allow for process restarts
+
+(Log-File Viewer)
+- show log files
+- use Faye for live file updates
+
+(Deployment)
 - add dual-deploy script
 - send secure data via SSH - not stored in repository
 - Shared symlink for the database, admin userid/password
 - Setup to deployment systems and dns (bamru.info, backup.bamru.info)
 
-for 0.0.7 (Docco)
+(Docco)
 - create wiki pages
 - add relevant info to BAMRU wiki (account pwds, DNS info, etc.)
 
-after that...
+(Misc.)
 - Clean up the HTML and CSS
 - Refactor app.rb
 - Add integration tests for admin forms
