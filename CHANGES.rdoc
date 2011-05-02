@@ -28,6 +28,10 @@
 
 = TODO
 
+(Process Dashboard)
+- show the status of support processes
+- allow for process restarts
+
 (Deployment)
 - add dual-deploy script
 - send secure data via SSH - not stored in repository
@@ -35,16 +39,12 @@
 - Setup to deployment systems and dns (bamru.info, backup.bamru.info)
 
 (Event Logging)
-- add an event-log process
+- add a DRb-based event-log process
 - add logging statements to application code
 
 (Monitoring and Alerting)
 - add a monitoring process
 - generate/send emails
-
-(Process Dashboard)
-- show the status of support processes
-- allow for process restarts
 
 (Log-File Viewer)
 - show log files
