@@ -9,17 +9,18 @@ class PeriodicRunner
   end
 
   def self.reset_new(params = {}, &code)
-    PeriodicRunner.new(params, code).remove_state_file
-    PeriodicRunner.new(params, code)
+    PeriodicRunner.new(params).remove_state_file
+    PeriodicRunner.new(params)
   end
 
-  def start(params = {}, &code)
-    set_params(params, code)
-    puts "Starting Background Process"
+  def start
+    raise "process is already running" if running?
+    raise "no code" if @code.nil? || @code.blank?
+    raise "needs delay_seconds param" unless valid_delay?
     @pid = fork do
       loop do
-        @code.call
         sleep @delay_seconds
+        @code.call
       end
     end
     Process.detach(pid)
@@ -27,18 +28,14 @@ class PeriodicRunner
     pid
   end
 
-  def restart(params = {}, &code)
-    set_params(params, code)
-    stop
-    start
-  end
-
   def stop
-    Process.kill("SIGKILL", @pid)
+    return if @pid.nil? || @pid.class != Fixnum
+    Process.kill("SIGKILL", @pid) if running?
   end
 
   def running?
-    `ps #{@pid} | grep #{@pid}`.empty?
+    return false if @pid.blank?
+    ! `ps #{@pid} | grep #{@pid}`.empty?
   end
 
   def seconds_from_last_execution
@@ -49,18 +46,41 @@ class PeriodicRunner
 
   def state_file
     return "" if @name.blank?
-    name = "#{state_dir}/#{@name}.yaml"
+    "#{state_dir}/#{@name}.yaml"
   end
 
   def remove_state_file
     system "rm -f #{state_file}" unless state_file.empty?
   end
+  
+  def save
+    return "" if @name.empty?
+    system "mkdir -p #{state_dir}"
+    File.open(state_file, 'w') {|f| f.puts YAML.dump(params_hash)} unless state_file.empty?
+  end
+
+  def read_params_from_yaml_file
+    return {} unless File.exist?(state_file)
+    x = YAML.load(File.read(state_file))
+    if x.nil?
+      {}
+    else
+      x
+    end
+  end
+
+  def valid_delay?
+    @delay_seconds.is_a?(Fixnum) && @delay_seconds > 0
+  end
 
   private
 
   def set_params(params, code)
-    new_params     = read_params_from_yaml_file.merge(params)
+    @name = params[:name] || ""
+    yam_params     = read_params_from_yaml_file
+    new_params     = yam_params.merge(params)
     @code          = code || new_params[:code]  || nil
+    @pid           = new_params[:pid]           || nil
     @delay_seconds = new_params[:delay_seconds] || 0
     @name          = new_params[:name]          || ""
     save
@@ -69,7 +89,6 @@ class PeriodicRunner
   def params_hash
     {
       :pid           => @pid || nil,
-      :code          => @code,
       :name          => @name,
       :delay_seconds => @delay_seconds
     }
@@ -77,17 +96,6 @@ class PeriodicRunner
 
   def state_dir
     "/tmp/periodic_runner"
-  end
-
-  def read_params_from_yaml_file
-    return {} unless File.exist?(state_file)
-    YAML.load(File.read(state_file))
-  end
-
-  def save
-    return "" if @name.empty?
-    system "mkdir -p #{state_dir}"
-    File.open(state_file, 'w') {|f| f.puts YAML.dump(params_hash)} unless state_file.empty?
   end
 
 end

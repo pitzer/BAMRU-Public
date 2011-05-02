@@ -91,6 +91,10 @@ class Settings
     @auto_sync = "OFF" if public? || peer_url_undefined?
   end
 
+  def toggle_button_text
+    auto_sync == "OFF" ? "Turn On" : "Turn Off"
+  end
+
   def params_hash
     {"password"    => @password,
      "peer_url"    => @peer_url,

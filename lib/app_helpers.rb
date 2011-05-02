@@ -19,13 +19,24 @@ module Sinatra
       end
     end
 
-    def background
-      puts "Starting Background Process"
-      pid = fork do
-        yield
+#    def background
+#      puts "Starting Background Process"
+#      pid = fork do
+#        yield
+#      end
+#      Process.detach(pid)
+#      pid
+#    end
+
+    def background(&block)
+      Process.fork do
+        Process.fork do
+          puts "Launching Background Process"
+          Daemons.call &block
+          puts "Background Process has been Launched"
+        end
+        exit
       end
-      Process.detach(pid)
-      pid
     end
 
     def authorized?
@@ -198,7 +209,7 @@ module Sinatra
       </tr>
       ERB
     end
-    
+
     def event_links(eid)
       x1 = [event_show_link(eid)]
       x2 = [event_copy_link(eid), event_edit_link(eid), event_delete_link(eid)]
@@ -298,7 +309,7 @@ module Sinatra
               ['/admin_events',        'Events'      ],
               ['/admin_create',        'Create Event']
       ]
-      
+
       opt = opt[0..1] if @sitep.backup?
 
       opt.map {|i| admin_link(i.first, i.last)}.join(' | ')
@@ -317,8 +328,8 @@ module Sinatra
     def admin_nav_footer
       opt1 = [
               ['/admin_settings', 'Settings'  ],
-              ['/admin_data',     'Data'      ],
-              ['/admin_alerts',   'Alerts'    ]
+              ['/admin_data',     'Data'      ]
+#              ['/admin_alerts',   'Alerts'    ]
       ]
       r1 = opt1.map {|i| admin_link(i.first, i.last)}.join(' | ')
       "<hr>#{r1}"
