@@ -1,5 +1,9 @@
 = HISTORY
 
+== 0.0.5 - 2011-05-09 (Admin Nav)
+- added web-page link to admin nav
+- added operations link to admin nav
+
 == 0.0.4 - 2011-05-01 (Data Import)
 - finish password update form
 - added CSV import from File and URL

@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "Web Pages" do
 
   include Capybara
+#  include Capybara::DSL
 
   before(:each) do
     Capybara.app = BamruApp

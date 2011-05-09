@@ -315,14 +315,30 @@ module Sinatra
       opt.map {|i| admin_link(i.first, i.last)}.join(' | ')
     end
 
+    def admin_sub_nav(array)
+      hdr = array.first
+      ftr = array[1..-1]
+      first_link = admin_link(hdr.first, hdr.last)
+      last_links = ftr.map {|i| admin_link(i.first, i.last)}.join(', ')
+      "#{first_link} (#{last_links})"
+    end
+
     def admin_cal_nav
       opt = [
               ['/calendar',      'calendar'     ],
-              ['/calendar.gcal', 'calendar.gcal'],
-              ['/calendar.ical', 'calendar.ical'],
-              ['/calendar.csv',  'calendar.csv' ]
+              ['/calendar.gcal', 'gcal'],
+              ['/calendar.ical', 'ical'],
+              ['/calendar.csv',  'csv' ]
       ]
-      opt.map {|i| admin_link(i.first, i.last)}.join(' | ')
+      admin_sub_nav(opt)
+    end
+
+    def admin_ops_nav
+      opt = [
+              ['/operations',      'operations'          ],
+              ['/operations.kml',  'kml'      ]
+      ]
+      admin_sub_nav(opt)
     end
 
     def admin_nav_footer

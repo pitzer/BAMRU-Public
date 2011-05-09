@@ -13,16 +13,14 @@
   <div class="center">
     <div>
       <div style="float: left; width: 50%;">
-        <h2 style="margin-top: 5px;">BAMRU Calendar Admin</h2>
+        <h2 style="margin-top: 5px; margin-bottom: 15px;">BAMRU Calendar Admin</h2>
+        <%= admin_nav %>
       </div>
       <div style="padding-top: 12px;">
-        <%= @sitep.site_role %> Site - <%= current_server %>
+        <%= @sitep.site_role %> Site - <%= link_url current_server %><br/>
+        <%= admin_ops_nav %><br/>
+        <%= admin_cal_nav %>
       </div>
-    </div>
-    <div style="clear: both;"></div>
-    <div>
-      <div style="float: left; width: 50%;"><%= admin_nav %></div>
-      <div><%= admin_cal_nav %></div>
     </div>
     <div style="clear: both;"></div>
     <p/><hr>
