@@ -13,7 +13,8 @@ gem "daemons"
 
 # development, test
 gem "factory_girl"
-gem "ruby-debug", "0.10.0"
+gem "ruby-debug", "0.10.0", :platform => :ruby_18
+gem "ruby-debug19",         :platform => :ruby_19
 gem "capistrano"
 gem "capybara", "~> 0.4.1.2"
 #gem "capybara", "~> 1.0.0.beta1"
