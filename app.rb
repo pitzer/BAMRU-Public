@@ -136,6 +136,14 @@ class BamruApp < Sinatra::Base
     erb :operations
   end
 
+  get '/fcpr' do
+    # display variables
+    @title     = "Foster Calm Patient Report"
+    @hdr_img   = "images/glacier.jpg"
+    @right_nav = quote
+    erb :fcpr
+  end
+
   get "/operations*.kml*" do
     # establish the start and finish range
     @start  = Event.date_parse(select_start_operation)
