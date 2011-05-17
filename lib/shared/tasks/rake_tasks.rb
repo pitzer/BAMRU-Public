@@ -11,7 +11,7 @@ module VtUtil
 
       server {
         listen 80;
-        server_name bamru-public.#{`hostname`.chomp} bamru.info bamru.net;
+        server_name bamru-public.#{`hostname`.chomp} bamru.info;
         charset utf-8;
         root #{ENV['PWD'].chomp}/public;
         passenger_enabled on;
