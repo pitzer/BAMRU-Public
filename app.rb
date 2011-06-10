@@ -253,23 +253,7 @@ class BamruApp < Sinatra::Base
     redirect "/admin_events"
   end
 
-  get '/admin_alerts' do
-    erb :admin_alerts, :layout => :admin_x_layout
-  end
-
-  post('/admin_alerts') do
-    if params[:file].nil?
-      set_flash_error("Error - no CSV file was selected")
-      redirect '/admin_alerts'
-    end
-    File.open(MARSHALL_FILENAME, 'w') {|f| f.write params[:file][:tempfile].read}
-    csv_load = CsvLoader.new(MARSHALL_FILENAME)
-    set_flash_error(csv_load.error_message) if csv_load.has_errors?
-    set_flash_notice(csv_load.success_message)
-    redirect('/admin_events')
-  end
-
-  get '/admin_data' do
+    get '/admin_data' do
     erb :admin_data, :layout => :admin_x_layout
   end
 
