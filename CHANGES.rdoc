@@ -32,9 +32,9 @@
 
 = TODO
 
-(Process Dashboard)
-- show the status of support processes
-- allow for process restarts
+(Cleanup)
+- get rid of the event-driven data sync stuff
+- make sure the tests run cleanly
 
 (Deployment)
 - add dual-deploy script
@@ -43,16 +43,12 @@
 - Setup to deployment systems and dns (bamru.info, backup.bamru.info)
 
 (Event Logging)
-- add a DRb-based event-log process
+- add a standard event-log process
 - add logging statements to application code
 
 (Monitoring and Alerting)
-- add a monitoring process
+- find a 3rd party monitoring solution
 - generate/send emails
-
-(Log-File Viewer)
-- show log files
-- use Faye for live file updates
 
 (Docco)
 - create wiki pages
