@@ -74,10 +74,6 @@ describe "Web Pages" do
         visit '/admin_data'
         page.status_code.should == 401
       end
-      it "does not render /admin_alerts" do
-        visit '/admin_alerts'
-        page.status_code.should == 401
-      end
     end
     context "with admin credentials" do
       before(:each) { page.driver.basic_authorize 'admin', 'admin' }
@@ -87,10 +83,6 @@ describe "Web Pages" do
       end
       it 'renders /admin_events' do
         visit '/admin_events'
-        page.status_code.should == 200
-      end
-      it 'renders /admin_alerts' do
-        visit '/admin_alerts'
         page.status_code.should == 200
       end
       it 'renders /admin_data' do
