@@ -1,5 +1,9 @@
 = HISTORY
 
+== 0.1.0 - 2011-05-09 (Feature Complete)
+- removed auto-sync features that were hard to test
+- the system is now feature-complete
+
 == 0.0.5 - 2011-05-09 (Admin Nav)
 - added web-page link to admin nav
 - added operations link to admin nav
@@ -32,10 +36,6 @@
 
 = TODO
 
-(Cleanup)
-- get rid of the event-driven data sync stuff
-- make sure the tests run cleanly
-
 (Deployment)
 - add dual-deploy script
 - send secure data via SSH - not stored in repository
@@ -49,6 +49,7 @@
 (Monitoring and Alerting)
 - find a 3rd party monitoring solution
 - generate/send emails
+- make sure the monitor triggers the sync process via http post
 
 (Docco)
 - create wiki pages

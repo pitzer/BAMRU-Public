@@ -51,18 +51,4 @@ Things to note:
       <% end %>
     </form>
   </td>
-  <td width=300 valign=top>
-    <b>Auto-Import via Peer URL (currently <%= @sitep.auto_sync%>)</b>
-    <% if @sitep.public? %>
-      <br/>Only works for Backup sites. (<a href="/admin_settings">change settings</a>)
-    <% else %>
-      <form action="/admin_data_auto_sync" method='post' enctype='multipart/form-data'>
-        <%=@sitep.peer_csv_link%> (<a href="/admin_settings">change</a>)<br/>
-        <% if @sitep.peer_url_defined? %>
-          Overwrite Existing Data every 15 minutes<br/>
-          <input type="submit" value="<%= @sitep.toggle_button_text %>"/><br/>
-        <% end %>
-      </form>
-    <% end %>
-  </td>
 </table>

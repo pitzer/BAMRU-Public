@@ -317,25 +317,6 @@ class BamruApp < Sinatra::Base
     redirect('/admin_events')
   end
 
-  post('/admin_data_auto_sync') do
-    if @sitep.auto_sync == "ON"
-      @sitep.auto_sync = "OFF"
-      @sitep.save
-      puts "STARTING BACKGROUND TURNOFF"
-      background { AutoSync.turn_off }
-      puts "STOPPING BACKGROUND TURNOFF"
-      set_flash_notice("Auto-Import has been turned OFF")
-    else
-      @sitep.auto_sync = "ON"
-      @sitep.save
-      puts "STARTING BACKGROUND TURNON"
-      background { AutoSync.turn_on }
-      puts "STOPPING BACKGROUND TURNON"
-      set_flash_notice("Auto-Import has been turned ON")
-    end
-    redirect('/admin_data')
-  end
-
   get '/admin_settings' do
     erb :admin_settings, :layout => :admin_x_layout
   end

@@ -2,6 +2,8 @@
 .idea/*
 .idea/*/*
 .rvmrc
+.paths*
+.tags*
 log
 log/*
 db/test.*
@@ -12,8 +14,6 @@ coverage/*
 vendor
 vendor/*
 vendor/**/*
-.paths*
-.tags*
 data/settings.yaml
 data/history
 data/history/*
