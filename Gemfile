@@ -12,6 +12,7 @@ gem "fastercsv"
 gem "daemons"
 
 # development, test
+gem "vmc"
 gem "factory_girl"
 gem "ruby-debug", "0.10.0", :platform => :ruby_18
 gem "ruby-debug19",         :platform => :ruby_19
