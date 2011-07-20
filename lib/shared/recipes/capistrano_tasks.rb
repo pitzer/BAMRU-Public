@@ -40,7 +40,8 @@ end
 
 after "deploy:setup", :permissions, :keysend, :deploy, :nginx_conf
 after :deploy, :setup_shared_cache, :update_gems, :setup_primary, :setup_backup
-#after "deploy:symlink", :reset_cron
+after "deploy:symlink", :reset_cron, :link_shared
+after :first_deploy, :setup_shared
 after :nginx_conf, :restart_nginx
 
 desc "Reset Cron"
@@ -73,23 +74,23 @@ task :nginx_conf do
 end
 
 desc "Link the database."
-task :link_db do
+task :link_shared do
   db_path = "#{shared_path}/db"
-  db_file = "#{release_path}/db/development.sqlite3"
+  db_file = "#{release_path}/db/production.sqlite3"
   run "rm -f #{db_file}"
-  run "ln -s #{db_path}/development.sqlite3 #{db_file}"
+  run "ln -s #{db_path}/production.sqlite3 #{db_file}"
   run "touch #{release_path}/tmp/restart.txt"
 end
 
 desc "Setup the database."
-task :setup_db do
+task :setup_shared do
   db_path = "#{shared_path}/db"
-  db_file = "#{current_path}/db/development.sqlite3"
-  run "rm -f #{db_file}"
-  run "cd #{current_path} ; bundle exec rake db:migrate --trace"
-  run "cd #{current_path} ; bundle exec rake db:seed --trace"
+  db_file = "#{current_path}/db/production.sqlite3"
   run "mkdir -p #{db_path}"
-  run "mv #{db_file} #{db_path}"
+  run "rm -f #{db_file}"
+  run "cp #{db_file}/development.sqlite3 #{db_path}/production.sqlite3"
+  run "ln -s #{db_path}/production.sqlite3 #{db_file}"
+  run "touch #{release_path}/tmp/restart.txt"
 end
 
 desc "Restart NGINX."

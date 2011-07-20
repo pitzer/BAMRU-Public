@@ -15,7 +15,7 @@ module VtUtil
         charset utf-8;
         root #{ENV['PWD'].chomp}/public;
         passenger_enabled on;
-        rack_env development;
+        #rack_env development;
       }
 
       EOF
