@@ -10,6 +10,7 @@ gem "rack"
 gem "rack-flash"
 gem "fastercsv"
 gem "daemons"
+gem "whenever"
 
 # development, test
 gem "vmc"
@@ -18,7 +19,6 @@ gem "ruby-debug", "0.10.0", :platform => :ruby_18
 gem "ruby-debug19",         :platform => :ruby_19
 gem "capistrano"
 gem "capybara", "~> 0.4.1.2"
-#gem "capybara", "~> 1.0.0.beta1"
 gem "rspec", "~> 2.6.0.rc6"
 gem "shotgun"
 gem "rcov"

@@ -40,7 +40,13 @@ end
 
 after "deploy:setup", :permissions, :keysend, :deploy, :nginx_conf
 after :deploy, :setup_shared_cache, :update_gems, :setup_primary, :setup_backup
+after "deploy:symlink", :reset_cron
 after :nginx_conf, :restart_nginx
+
+desc "Reset Cron"
+task :reset_cron do
+  run "cd #{release_path} && bundle exec whenever --update_crontab #{application}"
+end
 
 desc "Setup shared cache."
 task :setup_shared_cache do

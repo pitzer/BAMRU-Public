@@ -3,6 +3,7 @@ require 'bundler/setup'
 require 'active_record'
 require 'active_support/core_ext'
 require 'factory_girl'
+require 'schedule'
 require 'time'
 
 BASE_DIR  = File.dirname(File.expand_path(__FILE__)) + "/../"
