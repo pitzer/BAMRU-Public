@@ -32,6 +32,8 @@ desc "RUN THIS FIRST!"
 task :first_deploy do
   check_for_passenger
   current_host = get_host
+  run "mkdir -p /home/aleak/a"
+  run "mkdir -p /home/aleak/a/_conf"
   run "gem install rspec"
   deploy.setup
   run "mkdir -p #{shared_path}/db"
