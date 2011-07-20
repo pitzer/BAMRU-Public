@@ -19,7 +19,7 @@ task :msg do
   puts "Use 'rake -T' to see rake options"
 end
 
-desc "Import CSV data from Peer URL"
+desc "Import CSV data from Primary Peer URL"
 task :data_import do
   require 'config/environment'
   sitep = Settings.new

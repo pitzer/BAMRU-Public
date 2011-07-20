@@ -63,6 +63,14 @@ class Settings
     ! peer_url_undefined?
   end
 
+  def peer_address
+    return "" if peer_url_undefined?
+    require 'socket'
+    require 'uri'
+    uri = URI.parse(peer_url)
+    Socket::getaddrinfo(uri.host, 'www', nil, Socket::SOCK_STREAM)[0][3]
+  end
+
   def peer_csv
     peer_url_defined? ? peer_url + "/calendar.csv" : "NONE"
   end

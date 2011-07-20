@@ -327,6 +327,18 @@ class BamruApp < Sinatra::Base
     File.read(INVAL_REC_FILENAME)
   end
 
+  get '/update_pwd' do
+    @sitep = Settings.new
+    return "Error: incorrect password" unless params[:passwd]
+    return "Error: not a backup site" unless @sitep.backup?
+    return "Error: no peer url" unless @sitep.peer_url_defined?
+    return "Error: unrecognized peer" unless request.env['REMOTE_ADDR'] == @sitep.peer_address
+    @sitep.password = params[:passwd]
+    return "Error: invalid password" unless @sitep.valid?
+    @sitep.save
+    "OK"
+  end
+
   not_found do
     @right_nav = quote
     @hdr_img   = "images/mtn.jpg"
