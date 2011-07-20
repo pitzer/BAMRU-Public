@@ -29,7 +29,8 @@ task :data_import do
   uri = URI.parse(url)
   puts "Reading CSV from #{url}..."
   csv_text = Net::HTTP.get_response(uri.host, uri.path).body
-  Event.delete_all if CsvLoader.load_ready?(csv_text)
+  abort "CsvData not ready to load..." unless CsvLoader.load_ready?(csv_text)
+  Event.delete_all
   puts "Loading CSV data..."
   CsvLoader.new(csv_text)
   puts "Saving CSV history..."
