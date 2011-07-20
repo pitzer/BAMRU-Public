@@ -309,7 +309,7 @@ class BamruApp < Sinatra::Base
     sitep = Settings.new(params)
     if sitep.save
       set_flash_notice("Updated Settings")
-      if sitep.peer_url_defined? && sitep.primary? && @site.password != sitep.password
+      if sitep.peer_url_defined? && sitep.primary? && @sitep.password != sitep.password
         status = system "curl #{@sitep.peer_url}/update_pwd?passwd=#{params['password']}"
         puts "Password Update Error Message\n#{status}"     unless status == "OK"
         set_flash_error("Problem updating backup password") unless status == "OK"
