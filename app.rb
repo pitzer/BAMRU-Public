@@ -309,13 +309,17 @@ class BamruApp < Sinatra::Base
     sitep = Settings.new(params)
     if sitep.save
       set_flash_notice("Updated Settings")
+      if @sitep.peer_url_defined? && @sitep.primary?
+        status = system "curl #{@sitep.peer_url}/update_pwd?passwd=#{params['password']}"
+        set_flash_error("Problem updating backup password") unless status == "OK"
+      end
       redirect '/admin_settings'
-    else
-      set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(sitep.errors)}")
-      @sitep = Settings.new
-      erb :admin_settings, :layout => :admin_x_layout
+      else
+        set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(sitep.errors)}")
+        @sitep = Settings.new
+        erb :admin_settings, :layout => :admin_x_layout#
+      end
     end
-  end
   
   get '/admin_inval_csv' do
     response["Content-Type"] = "text/plain"
