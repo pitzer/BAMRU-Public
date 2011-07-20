@@ -40,7 +40,7 @@ end
 
 after "deploy:setup", :permissions, :keysend, :deploy, :nginx_conf
 after :deploy, :setup_shared_cache, :update_gems, :setup_primary, :setup_backup
-after "deploy:symlink", :reset_cron
+#after "deploy:symlink", :reset_cron
 after :nginx_conf, :restart_nginx
 
 desc "Reset Cron"
@@ -99,14 +99,14 @@ end
 
 desc "Setup Primary site."
 task :setup_primary, :roles => [:primary] do
-  run "cd #{current_path} ; bundle exec rake set_primary_role"
+  run "cd #{current_path} ; bundle exec rake set_primary_role" if defined?(PRIMARY)
   url = defined?(BACKUP) ? "http://#{BACKUP}" : ""
   run "cd #{current_path} ; bundle exec rake set_peer PEER_URL=#{url}"
 end
 
 desc "Setup Backup site."
 task :setup_backup, :roles => [:backup] do
-  run "cd #{current_path} ; bundle exec rake set_backup_role"
+  run "cd #{current_path} ; bundle exec rake set_backup_role" if defined?(BACKUP)
   url = defined?(PRIMARY) ? "http://#{PRIMARY}" : ""
   run "cd #{current_path} ; bundle exec rake set_peer PEER_URL=#{url}"
 end
