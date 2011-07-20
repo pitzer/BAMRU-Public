@@ -88,7 +88,7 @@ task :setup_shared do
   db_file = "#{current_path}/db/production.sqlite3"
   run "mkdir -p #{db_path}"
   run "rm -f #{db_file}"
-  run "cp #{db_file}/development.sqlite3 #{db_path}/production.sqlite3"
+  run "cp #{current_path}/db/database.sqlite3 #{db_path}/production.sqlite3"
   run "ln -s #{db_path}/production.sqlite3 #{db_file}"
   run "touch #{release_path}/tmp/restart.txt"
 end
