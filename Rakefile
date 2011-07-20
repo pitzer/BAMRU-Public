@@ -19,6 +19,24 @@ task :msg do
   puts "Use 'rake -T' to see rake options"
 end
 
+desc "Import CSV data from Peer URL"
+task :data_import do
+  require 'config/environment'
+  sitep = Settings.new
+  abort "Only works with Backup Sites" if sitep.primary?
+  abort "Peer Site is undefined" if sitep.peer_url_undefined?
+  url = sitep.peer_csv
+  uri = URI.parse(url)
+  puts "Reading CSV from #{url}..."
+  csv_text = Net::HTTP.get_response(uri.host, uri.path).body
+  Event.delete_all if CsvLoader.load_ready?(csv_text)
+  puts "Loading CSV data..."
+  CsvLoader.new(csv_text)
+  puts "Saving CSV history..."
+  CsvHistory.save
+  puts "Done."
+end
+
 desc "Run the development server"
 task :run_server do
   system "xterm_title '<thin> #{File.basename(`pwd`).chomp}@#{ENV['SYSNAME']}:9393'"
