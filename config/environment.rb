@@ -3,11 +3,12 @@ require 'bundler/setup'
 require 'active_record'
 require 'active_support/core_ext'
 require 'factory_girl'
-require 'schedule'
 require 'time'
 
 BASE_DIR  = File.dirname(File.expand_path(__FILE__)) + "/../"
 DATA_DIR  = BASE_DIR + "/data"
+
+require BASE_DIR + 'config/schedule'
 
 INVAL_CSV_FILENAME = "/tmp/inval_csv.csv"
 INVAL_REC_FILENAME = "/tmp/inval_rec.csv"
