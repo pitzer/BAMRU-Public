@@ -11,6 +11,7 @@ gem "rack-flash"
 gem "fastercsv"
 gem "daemons"
 gem "whenever"
+gem "thor"
 
 # development, test
 gem "vmc"
