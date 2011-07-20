@@ -17,10 +17,12 @@ Background information:
 <form method="post" action="/admin_settings">
   <table width=100%><tr><td align=center>
     <table cellpadding=1 cellspacing=1>
-      <tr>
-        <td class="ar">Admin Password:</td>
-        <td><input type="Text" size=35 maxlength=128 name="password" value="<%= @sitep.password %>"></td>
-      </tr>
+      <% if @sitep.primary? %>
+        <tr>
+          <td class="ar">Admin Password:</td>
+          <td><input type="Text" size=35 maxlength=128 name="password" value="<%= @sitep.password %>"></td>
+        </tr>
+      <% end %>
       <tr>
       <td class="ar">Peer Site:</td>
       <td><input type="Text" size=35 maxlength=128 name="peer_url" value="<%= @sitep.peer_url %>"></td>
