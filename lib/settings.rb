@@ -8,7 +8,7 @@ class Settings
 
   # ----- Constants and Attributes -----
 
-  DATA_DIR = File.dirname(File.expand_path(__FILE__)) + "/../data"
+  DATA_DIR = File.dirname(File.expand_path(__FILE__)) + "/../data/shared"
   DATA_FILE = DATA_DIR + "/settings.yaml"
 
   attr_accessor :password, :site_role, :peer_url

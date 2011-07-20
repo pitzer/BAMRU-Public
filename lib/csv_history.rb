@@ -2,7 +2,7 @@ require 'digest/sha1'
 
 class CsvHistory
 
-  DIR = File.dirname(File.expand_path(__FILE__)) + "/../data/history"
+  DIR = File.dirname(File.expand_path(__FILE__)) + "/../data/shared/history"
 
   def self.save
     timestamp = Time.now.strftime("%Y-%m-%d_%H-%M-%S")
