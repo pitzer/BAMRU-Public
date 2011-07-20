@@ -86,7 +86,7 @@ task :link_shared do
     run "cp -r #{release_path}/data/shared/* #{shared_path}/data"
   end
   run "rm -f #{release_path}/db/#{db_file}"
-  run "ln -s #{release_path}/db/#{db_file} #{shared_path}/#{db_file}"
+  run "ln -s #{shared_path}/#{db_file} #{release_path}/db/#{db_file}"
   run "mv #{release_path}/data/shared #{release_path}/data/shared_save"
   run "ln -s #{shared_path}/data #{release_path}/data/shared"
   run "touch #{release_path}/tmp/restart.txt"
