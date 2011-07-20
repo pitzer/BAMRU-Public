@@ -310,8 +310,10 @@ class BamruApp < Sinatra::Base
     if sitep.save
       set_flash_notice("Updated Settings")
       if sitep.peer_url_defined? && sitep.primary? && @sitep.password != sitep.password
-        status = system "curl #{@sitep.peer_url}/update_pwd?passwd=#{params['password']}"
-        puts "Password Update Error Message\n#{status}"     unless status == "OK"
+        url = "#{sitep.peer_url}/update_pwd?passwd=#{params['password']}"
+        uri = URI.parse(url)
+        status = Net::HTTP.get_response(uri.host, uri.path).body
+        puts "\nPassword Update Error Message\n#{status}"     unless status == "OK"
         set_flash_error("Problem updating backup password") unless status == "OK"
       end
       redirect '/admin_settings'
