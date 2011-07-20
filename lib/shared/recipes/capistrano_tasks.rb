@@ -1,15 +1,18 @@
 set :scm, :git
 set :git_shallow_clone, 1
 set :deploy_to, "/home/aleak/a/#{APPDIR}"
-#set :repository, "alt55.com:rr/#{APPDIR}.git"
 set :repository,  "https://github.com/andyl/#{APPDIR}.git"
+
+def get_host
+  capture("echo $CAPISTRANO:HOST$").strip
+end
 
 default_run_options[:pty] = true
 set :use_sudo, false
 
-role :web, SERVER
-role :app, SERVER
-role :db,  SERVER, :primary => true
+# by default - tasks will be executed on every server
+role :primary, PRIMARY if defined? PRIMARY
+role :backup,  BACKUP  if defined? BACKUP
 
 desc "Deploy #{application}"
 deploy.task :restart do
@@ -18,18 +21,21 @@ end
 
 desc "Update gem installation."
 task :update_gems do
+  current_host = get_host
+  puts "C"
   system "bundle pack"
-  system "cd vendor ; rsync -a --delete cache #{SERVER}:a/#{APPDIR}/shared"
+  system "cd vendor ; rsync -a --delete cache #{current_host}:a/#{APPDIR}/shared"
   run "cd #{current_path} ; bundle install --quiet --local --path=/home/aleak/.gems"
 end
 
 desc "RUN THIS FIRST!"
 task :first_deploy do
   check_for_passenger
+  current_host = get_host
   run "gem install rspec"
   deploy.setup
-  system "/home/aleak/util/bin/vhost add #{SERVER}"
-  puts "READY TO RUN on #{SERVER}"
+  system "/home/aleak/util/bin/vhost add #{current_host}"
+  puts "READY TO RUN on #{current_host}"
 end
 
 after "deploy:setup", :permissions, :keysend, :deploy, :nginx_conf
@@ -91,10 +97,11 @@ def remote_file_exists?(full_path)
 end
 
 task :check_for_passenger do
+  current_host = get_host
   error_msg = <<-EOF
 
     ABORT: PLEASE INSTALL PASSENGER, THEN TRY AGAIN !!!
-    sys sw install:passenger host=#{SERVER}
+    sys sw install:passenger host=#{current_host}
 
   EOF
   abort error_msg unless remote_file_exists?("/etc/init.d/nginx")

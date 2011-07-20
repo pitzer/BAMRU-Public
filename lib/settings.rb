@@ -21,7 +21,7 @@ class Settings
     new_params   = read_params_from_yaml_file(file).merge(params)
     @password    = new_params["password"]    || "admin"
     @peer_url    = new_params["peer_url"]    || "http://bamru.info"
-    @site_role   = new_params["site_role"]   || "Public"
+    @site_role   = new_params["site_role"]   || "Primary"
     @auto_sync   = new_params["auto_sync"]   || "OFF"
     @alert_email = new_params["alert_email"] || "akleak@gmail.com"
     @notif_email = new_params["notif_email"] || "andy@r210.com"
@@ -33,7 +33,7 @@ class Settings
   end
 
   # ----- Validations -----
-  validates_format_of :site_role, :with => /Public|Backup/
+  validates_format_of :site_role, :with => /Primary|Backup/
   validates_format_of :auto_sync, :with => /ON|OFF/
   validates_length_of :password,  :within => 4..12
 
@@ -47,8 +47,8 @@ class Settings
   
   # ----- Instance Methods -----
 
-  def public?
-    @site_role == "Public"
+  def primary?
+    @site_role == "Primary"
   end
 
   def backup?
@@ -88,7 +88,7 @@ class Settings
   end
 
   def reset_auto_sync
-    @auto_sync = "OFF" if public? || peer_url_undefined?
+    @auto_sync = "OFF" if primary? || peer_url_undefined?
   end
 
   def toggle_button_text

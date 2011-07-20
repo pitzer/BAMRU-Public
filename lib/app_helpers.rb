@@ -265,7 +265,7 @@ module Sinatra
 
     def site_role_options(site_obj)
       <<-STRING
-        <option value="Public" #{site_role(site_obj, "Public")}>Public</option>
+        <option value="Primary" #{site_role(site_obj, "Primary")}>Primary</option>
         <option value="Backup" #{site_role(site_obj, "Backup")}>Backup</option>
       STRING
     end
