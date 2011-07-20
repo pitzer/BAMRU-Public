@@ -1,5 +1,7 @@
-PRIMARY      = "bamru.info"
-BACKUP       = "backup.bamru.info"
+#PRIMARY      = "bamru.info"
+PRIMARY      = "primary"
+#BACKUP       = "backup.bamru.info"
+BACKUP       = "backup"
 
 APPDIR       = "BAMRU-Public"
 
