@@ -73,24 +73,22 @@ task :nginx_conf do
   run "cd #{current_path} && bundle exec rake nginx_conf"
 end
 
-desc "Link the database."
+desc "Link shared assets."
 task :link_shared do
-  db_path = "#{shared_path}/db"
-  db_file = "#{release_path}/db/production.sqlite3"
-  run "rm -f #{db_file}"
-  run "ln -s #{db_path}/production.sqlite3 #{db_file}"
+  db_file = "production.sqlite3"
+  run "rm -f #{release_path}/db/#{db_file}"
+  run "ln -s #{release_path}/db/#{db_file} #{shared_path}/#{db_file}"
+  run "mv #{release_path}/data/shared #{release_path}/data/shared_save"
+  run "ln -s #{shared_path}/data #{release_path}/data/shared"
   run "touch #{release_path}/tmp/restart.txt"
 end
 
-desc "Setup the database."
+desc "Setup shared assets."
 task :setup_shared do
-  db_path = "#{shared_path}/db"
-  db_file = "#{current_path}/db/production.sqlite3"
-  run "mkdir -p #{db_path}"
-  run "rm -f #{db_file}"
-  run "cp #{current_path}/db/database.sqlite3 #{db_path}/production.sqlite3"
-  run "ln -s #{db_path}/production.sqlite3 #{db_file}"
-  run "touch #{release_path}/tmp/restart.txt"
+  run "mkdir -p #{shared_path}/db"
+  run "mkdir -p #{shared_path}/data"
+  run "cp #{current_path}/db/database.sqlite3 #{shared_path}/db/production.sqlite3"
+  run "cp -r #{current_path}/data/shared/* #{shared_path}/data"
 end
 
 desc "Restart NGINX."
