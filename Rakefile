@@ -43,6 +43,31 @@ task :gcal_sync do
   GcalSync.sync
 end
 
+desc "Set Primary Role"
+task :set_primary_role do
+  require 'config/environment'
+  config = Settings.new
+  config.site_role = "Primary"
+  config.save
+end
+
+desc "Set Backup Role"
+task :set_backup_role do
+  require 'config/environment'
+  config = Settings.new
+  config.site_role = "Backup"
+  config.save
+end
+
+desc "Set Peer URL"
+task :set_peer do
+  abort "Need Peer URL (rake set_peer PEER_URL=<url>" unless ENV['PEER_URL']
+  require 'config/environment'
+  config = Settings.new
+  config.peer_url = ENV['PEER_URL']
+  config.save
+end
+
 namespace :db do
 
   task :environment do

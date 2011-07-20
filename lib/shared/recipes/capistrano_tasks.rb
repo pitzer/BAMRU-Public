@@ -39,7 +39,7 @@ task :first_deploy do
 end
 
 after "deploy:setup", :permissions, :keysend, :deploy, :nginx_conf
-after :deploy, :setup_shared_cache, :update_gems
+after :deploy, :setup_shared_cache, :update_gems, :setup_primary, :setup_backup
 after :nginx_conf, :restart_nginx
 
 desc "Setup shared cache."
@@ -90,6 +90,20 @@ end
 desc "Restart NGINX."
 task :restart_nginx do
   sudo "/etc/init.d/nginx restart"
+end
+
+desc "Setup Primary site."
+task :setup_primary, :roles => [:primary] do
+  run "cd #{current_path} ; bundle exec rake set_primary_role"
+  url = defined?(BACKUP) ? "http://#{BACKUP}" : ""
+  run "cd #{current_path} ; bundle exec rake set_peer PEER_URL=#{url}"
+end
+
+desc "Setup Backup site."
+task :setup_backup, :roles => [:backup] do
+  run "cd #{current_path} ; bundle exec rake set_backup_role"
+  url = defined?(PRIMARY) ? "http://#{PRIMARY}" : ""
+  run "cd #{current_path} ; bundle exec rake set_peer PEER_URL=#{url}"
 end
 
 def remote_file_exists?(full_path)
