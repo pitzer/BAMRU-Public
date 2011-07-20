@@ -213,7 +213,7 @@ module Sinatra
     def event_links(eid)
       x1 = [event_show_link(eid)]
       x2 = [event_copy_link(eid), event_edit_link(eid), event_delete_link(eid)]
-      output = @sitep.public? ? x1 + x2 : x1
+      output = @sitep.primary? ? x1 + x2 : x1
       output.join(' | ')
     end
 

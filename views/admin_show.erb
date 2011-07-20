@@ -31,7 +31,7 @@
     </table>
     <p/>
     <form method="get" action="/admin_edit/<%=@action.id%>">
-      <% if @sitep.public? %> <input type=submit value="Edit"> <% end %>
+      <% if @sitep.primary? %> <input type=submit value="Edit"> <% end %>
       <input type=reset
              value="Return to Events"
              onclick="window.location.href='/admin_events';">
