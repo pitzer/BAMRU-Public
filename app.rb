@@ -314,7 +314,7 @@ class BamruApp < Sinatra::Base
         uri = URI.parse(url)
         status = Net::HTTP.get_response(uri.host, uri.path).body
         puts "\nPassword Update Error Message\n#{status}"     unless status == "OK"
-        set_flash_error("Problem updating backup password") unless status == "OK"
+        set_flash_error("Problem updating password on Backup site") unless status == "OK"
       end
       redirect '/admin_settings'
       else
@@ -336,11 +336,11 @@ class BamruApp < Sinatra::Base
 
   get '/update_pwd' do
     @sitep = Settings.new
-    return "Error: incorrect password" unless params[:passwd]
+    return "Error: incorrect password" unless params['passwd']
     return "Error: not a backup site" unless @sitep.backup?
     return "Error: no peer url" unless @sitep.peer_url_defined?
     return "Error: unrecognized peer" unless request.env['REMOTE_ADDR'] == @sitep.peer_address
-    @sitep.password = params[:passwd]
+    @sitep.password = params['passwd']
     return "Error: invalid password" unless @sitep.valid?
     @sitep.save
     "OK"
