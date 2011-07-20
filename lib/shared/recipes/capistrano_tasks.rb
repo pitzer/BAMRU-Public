@@ -34,6 +34,8 @@ task :first_deploy do
   current_host = get_host
   run "gem install rspec"
   deploy.setup
+  run "mkdir -p #{shared_path}/db"
+  run "mkdir -p #{shared_path}/data"
   system "/home/aleak/util/bin/vhost add #{current_host}"
   puts "READY TO RUN on #{current_host}"
 end
@@ -41,7 +43,6 @@ end
 after "deploy:setup", :permissions, :keysend, :deploy, :nginx_conf
 after :deploy, :setup_shared_cache, :update_gems, :setup_primary, :setup_backup
 after "deploy:symlink", :reset_cron, :link_shared
-after :first_deploy, :setup_shared
 after :nginx_conf, :restart_nginx
 
 desc "Reset Cron"
@@ -76,19 +77,19 @@ end
 desc "Link shared assets."
 task :link_shared do
   db_file = "production.sqlite3"
+  unless File.exist? "#{shared_path}/db/#{db_file}"
+    run "mkdir -p #{shared_path}/db"
+    run "cp #{release_path}/db/database.sqlite3 #{shared_path}/db/#{db_file}"
+  end
+  unless File.exist? "#{shared_path}/data/settings.yaml"
+    run "mkdir -p #{shared_path}/data"
+    run "cp -r #{release_path}/data/shared/* #{shared_path}/data"
+  end
   run "rm -f #{release_path}/db/#{db_file}"
   run "ln -s #{release_path}/db/#{db_file} #{shared_path}/#{db_file}"
   run "mv #{release_path}/data/shared #{release_path}/data/shared_save"
   run "ln -s #{shared_path}/data #{release_path}/data/shared"
   run "touch #{release_path}/tmp/restart.txt"
-end
-
-desc "Setup shared assets."
-task :setup_shared do
-  run "mkdir -p #{shared_path}/db"
-  run "mkdir -p #{shared_path}/data"
-  run "cp #{current_path}/db/database.sqlite3 #{shared_path}/db/production.sqlite3"
-  run "cp -r #{current_path}/data/shared/* #{shared_path}/data"
 end
 
 desc "Restart NGINX."
