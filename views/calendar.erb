@@ -35,21 +35,12 @@ See the descriptions of individual events for further information.<br>
 
   <tr bgcolor="#FFFFFF">
     <td width=296 valign="top"><font class=summary><br>
-      &nbsp; <b>Events</b>      <br><br></font></td>
+      &nbsp; <b>Other Events</b>      <br><br></font></td>
     <td width=75 valign="top"></td>
     <td width=35 valign="top"></td>
   </tr>
 
   <%=calendar_table(Event.others.between(@start,@finish))%>
-
-  <tr bgcolor="#FFFFFF">
-    <td width=296 valign="top"><font class=summary><br>
-      &nbsp; <b>Other Meetings</b>      <br><br></font></td>
-    <td width=75 valign="top"></td>
-    <td width=35 valign="top"></td>
-  </tr>
-
-  <%=calendar_table(Event.others.between(@start,@finish)) %>
 
 </table>
 
