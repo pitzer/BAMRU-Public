@@ -84,10 +84,12 @@ desc "Link shared assets."
 task :link_shared do
   db_file = "production.sqlite3"
   unless remote_file_exists?("#{shared_path}/db/#{db_file}")
+    puts " creating DB file ".center(80, '-')
     run "mkdir -p #{shared_path}/db"
     run "cp #{release_path}/db/database.sqlite3 #{shared_path}/db/#{db_file}"
   end
   unless remote_file_exists?("#{shared_path}/data/settings.yaml")
+    puts " creating settings file ".center(80, '-')
     run "mkdir -p #{shared_path}/data"
     run "cp -r #{release_path}/data/shared/* #{shared_path}/data"
   end
