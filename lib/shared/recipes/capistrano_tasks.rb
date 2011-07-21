@@ -87,7 +87,7 @@ task :link_shared do
     run "mkdir -p #{shared_path}/db"
     run "cp #{release_path}/db/database.sqlite3 #{shared_path}/db/#{db_file}"
   end
-  unless remote.file.exists?("#{shared_path}/data/settings.yaml")
+  unless remote_file_exists?("#{shared_path}/data/settings.yaml")
     run "mkdir -p #{shared_path}/data"
     run "cp -r #{release_path}/data/shared/* #{shared_path}/data"
   end
