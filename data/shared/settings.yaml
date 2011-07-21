@@ -6,5 +6,5 @@ errors: !omap []
 notif_email: andy@r210.com
 password: admin
 peer_url: http://bamru.info
-site_role: Public
+site_role: Primary
 validation_context: 
