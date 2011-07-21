@@ -68,6 +68,7 @@ class GcalSync
 
   def self.sync
     delete_all_gcal_events
+    delete_all_gcal_events
     add_all_current_actions_to_gcal
   end
 
@@ -82,11 +83,12 @@ class GcalSync
 
   def self.update_event(action)
     service = authenticate_and_return_service
-    event   = Event.find(service, "BE#{action.id}")
-    event   = event.first        if event.class == Array
-    event   = Event.new(service) if event.nil?
-    save_event_to_gcal(service, event, action)
-  end
+    old_event   = Event.find(service, "BE#{action.id}")
+    old_event   = [event] unless old_event.class == Array
+    old_event.each {|e| e.delete unless event.nil?}
+    new_event   = Event.new(service)
+    save_event_to_gcal(service, new_event, action)
+    end
 
   def self.delete_event(action)
     service = authenticate_and_return_service
