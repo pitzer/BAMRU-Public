@@ -1,5 +1,11 @@
 = HISTORY
 
+== 0.1.1 - 2011-07-20 (Dual-Machine Deploy)
+- add dual-deploy script
+- shared symlink for the database, admin userid/password
+- setup two deployment systems (bamru.info, backup.bamru.info)
+- updated wiki pages
+
 == 0.1.0 - 2011-05-09 (Feature Complete)
 - removed auto-sync features that were hard to test
 - the system is now feature-complete
@@ -36,11 +42,9 @@
 
 = TODO
 
-(Deployment)
-- add dual-deploy script
-- send secure data via SSH - not stored in repository
-- Shared symlink for the database, admin userid/password
-- Setup to deployment systems and dns (bamru.info, backup.bamru.info)
+(Server Configuration)
+- use Chef for automated server configuration
+- add configuration tasks to the Rakefile
 
 (Event Logging)
 - add a standard event-log process
@@ -51,8 +55,8 @@
 - generate/send emails
 - make sure the monitor triggers the sync process via http post
 
-(Docco)
-- create wiki pages
+(Admin)
+- move DNS assets to BAMRU account
 - add relevant info to BAMRU wiki (account pwds, DNS info, etc.)
 
 (Misc.)

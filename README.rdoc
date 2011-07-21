@@ -1,7 +1,6 @@
-= BAMRU Website Prototype
+= BAMRU-Public
 
-This is a prototype application - a rewrite of the BAMRU website
-at http://www.bamru.org.
+This is the BAMRU website at http://www.bamru.org.
 
 The old application was written in the 2004 era.  It was written
 in PHP and used a MySQL database.
@@ -31,7 +30,7 @@ easier to maintain.
 Admin pages are at:
 http://bamru.info/admin
 
-(userid/passwd = admin/admin)
+(see andy for a current userid & password)
 
 == Installing & Running the App
 
@@ -67,8 +66,6 @@ To see a list of deployment commands, run
 
     cap -T
 
-== Administration and Security
+== More Information
 
-The admin page allows approved users to update calendar
-events on the website.  The admin page is password
-protected.  
+See the Wiki at https://github.com/andyl/BAMRU-Public/wiki
