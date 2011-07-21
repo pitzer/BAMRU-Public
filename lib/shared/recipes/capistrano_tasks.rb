@@ -76,15 +76,18 @@ task :nginx_conf do
   run "cd #{current_path} && bundle exec rake nginx_conf"
 end
 
+def remote_file_exists?(full_path)
+  'true' ==  capture("if [ -e #{full_path} ]; then echo 'true'; fi").strip
+end
+
 desc "Link shared assets."
 task :link_shared do
   db_file = "production.sqlite3"
-  unless File.exist? "#{shared_path}/db/#{db_file}"
-    puts '-' * 80
+  unless remote_file_exists?("#{shared_path}/db/#{db_file}")
     run "mkdir -p #{shared_path}/db"
     run "cp #{release_path}/db/database.sqlite3 #{shared_path}/db/#{db_file}"
   end
-  unless File.exist? "#{shared_path}/data/settings.yaml"
+  unless remote.file.exists?("#{shared_path}/data/settings.yaml")
     run "mkdir -p #{shared_path}/data"
     run "cp -r #{release_path}/data/shared/* #{shared_path}/data"
   end
