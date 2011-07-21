@@ -3,11 +3,10 @@
 This is the BAMRU website at http://www.bamru.org.
 
 The old application was written in the 2004 era.  It was written
-in PHP and used a MySQL database.
+in PHP, using a MySQL database.
 
-The goal of the rewrite is to have a simpler, more reliable application
-that is easier to maintain.  Hopefully we'll be more efficient using
-newer tools:
+The goal of the rewrite is to make the app simpler to maintain and
+extend.  Hopefully we'll be more efficient using newer tools:
 - ORM [ActiveRecord]
 - lightweight app framework [Sinatra]
 - source code control [Git]
@@ -18,25 +17,22 @@ newer tools:
 
 == Live Demo - Public Pages
 
-To see a live demo of the prototype app, visit:
+To see a live demo of the app, visit:
 http://bamru.info
-
-All of the demo uses dynamically generated pages
-and a shared layout.  This means the site is
-easier to maintain.
 
 == Live Demo - Admin Pages
 
 Admin pages are at:
 http://bamru.info/admin
 
-(see andy for a current userid & password)
+(see Andy for a current userid & password)
 
 == Installing & Running the App
 
 You can clone the app and run it on your system.
 This is going to work best on Linux (ubuntu). Mac
-and Windows haven't been tested.
+hasn't been tested.  Windows will be painful, at
+best. (must have cygwin, at a minimum)
 
 To install the app, first install ruby, git, rubygems.  Then:
 

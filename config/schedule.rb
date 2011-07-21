@@ -19,7 +19,7 @@
 
 # Learn more: http://github.com/javan/whenever
 #
-dir = File.dirname(File.expand_path(__FILE__)) + '/../'
+dir = File.dirname(File.expand_path(__FILE__))
 
 every 30.minutes do
   command "cd #{dir} && bundle exec rake data_import"
