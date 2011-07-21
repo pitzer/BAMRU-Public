@@ -80,6 +80,7 @@ desc "Link shared assets."
 task :link_shared do
   db_file = "production.sqlite3"
   unless File.exist? "#{shared_path}/db/#{db_file}"
+    puts '-' * 80
     run "mkdir -p #{shared_path}/db"
     run "cp #{release_path}/db/database.sqlite3 #{shared_path}/db/#{db_file}"
   end
