@@ -21,6 +21,10 @@
 #
 dir = File.dirname(File.expand_path(__FILE__))
 
+env :RACK_ENV, 'production'
+
+set :output, {:standard => 'log/cron_normal.log', :error => 'log/cron_error.log'}
+
 every 1.minutes do
   command "cd #{dir} && bundle exec rake data_import"
 end
