@@ -28,7 +28,7 @@ desc "Import CSV data from Peer URL"
 task :data_import do
   require 'config/environment'
   sitep = Settings.new
-  puts "Starting Data Import @ #{Time.now} from Peer URL #{sitep.peer_url}"
+  puts "Starting Data Import @ #{Time.now}"
   end_task "Only works with Backup Sites" if sitep.primary?
   end_task "Peer Site is undefined" if sitep.peer_url_undefined?
   url = sitep.peer_csv
