@@ -21,6 +21,6 @@
 #
 dir = File.dirname(File.expand_path(__FILE__))
 
-every 2.minutes do
+every 1.minutes do
   command "cd #{dir} && bundle exec rake data_import"
 end
