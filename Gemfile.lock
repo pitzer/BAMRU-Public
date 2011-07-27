@@ -106,6 +106,8 @@ GEM
     sinatra (1.2.6)
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
+    sinatra-cache-assets (0.0.3)
+      sinatra (>= 1.0)
     spoon (0.0.1)
     sqlite3-ruby (1.2.5)
     terminal-table (1.4.2)
@@ -153,6 +155,7 @@ DEPENDENCIES
   ruby-debug19
   shotgun
   sinatra
+  sinatra-cache-assets
   sqlite3-ruby (= 1.2.5)
   thin
   thor

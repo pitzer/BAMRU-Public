@@ -4,6 +4,8 @@
 .rvmrc
 .paths*
 .tags*
+.bundle
+.bundle/*
 log
 log/*
 db/test.*

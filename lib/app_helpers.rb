@@ -78,9 +78,13 @@ module Sinatra
       Event.kind(kind).count
     end
 
-    def last_modification(file_spec = nil)
+    def last_modification_date(file_spec = nil)
       file_spec ||= %w(app* views/*)
-      Dir[*file_spec].map {|f| File.ctime(f)}.max.strftime("%a %b %d - %H:%M")
+      Dir[*file_spec].map {|f| File.ctime(f)}.max
+    end
+
+    def last_modification(file_spec = nil)
+      last_modification_date.strftime("%a %b %d - %H:%M")
     end
 
     def last_restart
@@ -98,6 +102,12 @@ module Sinatra
 
     def newest_record
       record_display Event.order('start').last
+    end
+
+    def last_db_update_date
+      rec = Event.order('updated_at').last
+      return if rec.nil?
+      rec.updated_at
     end
 
     def last_update

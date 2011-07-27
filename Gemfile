@@ -4,6 +4,7 @@ source "http://rubygems.org"
 gem 'activerecord'
 gem 'activesupport'
 gem 'sinatra'
+gem 'sinatra-cache-assets'
 gem "gcal4ruby"
 gem "sqlite3-ruby", "1.2.5", :require => "sqlite3"
 gem "rack"

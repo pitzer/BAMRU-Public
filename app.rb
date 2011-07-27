@@ -7,9 +7,12 @@ require base_dir + '/config/environment'
 require 'uri'
 require 'net/http'
 require 'daemons'
+require 'sinatra/cache_assets'
 
 class BamruApp < Sinatra::Base
   helpers Sinatra::AppHelpers
+
+  use Sinatra::CacheAssets, :max_age => 36000
 
   configure do
     enable :sessions         # to store login state and calendar search settings
@@ -26,6 +29,8 @@ class BamruApp < Sinatra::Base
   end
 
   get '/bamruinfo' do
+    expires 36000, :public, :must_revalidate
+    last_modified last_modification_date
     @title     = "Information about BAMRU"
     @hdr_img   = "images/approach.jpg"
     @right_nav = right_nav(:bamruinfo)
@@ -34,6 +39,8 @@ class BamruApp < Sinatra::Base
   end
 
   get '/join' do
+    expires 36000, :public, :must_revalidate
+    last_modified last_modification_date
     @title     = "Joining BAMRU"
     @hdr_img   = "images/helo.jpg"
     @right_nav = right_nav(:join)
@@ -42,6 +49,8 @@ class BamruApp < Sinatra::Base
   end
 
   get '/sgallery' do
+    expires 36000, :public, :must_revalidate
+    last_modified last_modification_date
     @title     = "BAMRU Photo Gallery"
     @hdr_img   = "images/hills.jpg"
     @right_nav = right_nav(:sgallery)
@@ -51,6 +60,8 @@ class BamruApp < Sinatra::Base
   end
 
   get '/meeting_locations' do
+    expires 36000, :public, :must_revalidate
+    last_modified last_modification_date
     @title     = "BAMRU Meeting Location"
     @hdr_img   = "images/mtn_2.jpg"
     @right_nav = right_nav(:meeting_locations)
@@ -59,6 +70,8 @@ class BamruApp < Sinatra::Base
   end
 
   get '/sarlinks' do
+    expires 36000, :public, :must_revalidate
+    last_modified last_modification_date
     @title     = "Links to SAR-related sites"
     @hdr_img   = "images/glacier.jpg"
     @right_nav = right_nav(:sarlinks)
@@ -67,6 +80,8 @@ class BamruApp < Sinatra::Base
   end
 
   get '/donate' do
+    expires 36000, :public, :must_revalidate
+    last_modified last_modification_date
     @title     = "Donate to BAMRU"
     @hdr_img   = "images/glacier.jpg"
     @right_nav = right_nav(:donate)
@@ -75,6 +90,8 @@ class BamruApp < Sinatra::Base
   end
 
   get '/contact' do
+    expires 36000, :public, :must_revalidate
+    last_modified last_modification_date
     @title     = "BAMRU Contacts"
     @hdr_img   = "images/HawthornLZ.jpg"
     @right_nav = right_nav(:contact)
@@ -83,6 +100,8 @@ class BamruApp < Sinatra::Base
   end
 
   get '/calendar' do
+    expires 60, :public, :must_revalidate
+    last_modified last_db_update_date
     # establish the start and finish range
     @start  = Event.date_parse(select_start_date)
     @finish = Event.date_parse(select_finish_date)
@@ -100,18 +119,24 @@ class BamruApp < Sinatra::Base
   end
 
   get '/calendar.ical' do
+    expires 60, :public, :must_revalidate
+    last_modified last_db_update_date
     response["Content-Type"] = "text/plain"
     @actions = Event.all
     erb :calendar_ical, :layout => false
   end
 
   get '/calendar.csv' do
+    expires 300, :public, :must_revalidate
+    last_modified last_db_update_date
     response["Content-Type"] = "text/plain"
     @actions = Event.all
     erb :calendar_csv, :layout => false
   end
 
   get '/calendar.gcal' do
+    expires 300, :public, :must_revalidate
+    last_modified last_db_update_date
     @title     = "BAMRU's Google Calendar"
     @hdr_img   = "images/glacier.jpg"
     @right_nav = quote
@@ -119,6 +144,8 @@ class BamruApp < Sinatra::Base
   end
 
   get '/operations' do
+    expires 300, :public, :must_revalidate
+    last_modified last_db_update_date
     # establish the start and finish range
     @start  = Event.date_parse(select_start_operation)
     @finish = Event.date_parse(select_finish_operation)
@@ -136,15 +163,9 @@ class BamruApp < Sinatra::Base
     erb :operations
   end
 
-  get '/fcpr' do
-    # display variables
-    @title     = "Foster Calm Patient Report"
-    @hdr_img   = "images/glacier.jpg"
-    @right_nav = quote
-    erb :fcpr
-  end
-
   get "/operations*.kml*" do
+    expires 300, :public, :must_revalidate
+    last_modified last_db_update_date
     # establish the start and finish range
     @start  = Event.date_parse(select_start_operation)
     @finish = Event.date_parse(select_finish_operation)
