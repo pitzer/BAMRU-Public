@@ -12,7 +12,7 @@ require 'sinatra/cache_assets'
 class BamruApp < Sinatra::Base
   helpers Sinatra::AppHelpers
 
-  use Sinatra::CacheAssets, :max_age => 36000
+  use Sinatra::CacheAssets, :max_age => 180000
 
   configure do
     enable :sessions         # to store login state and calendar search settings
@@ -29,7 +29,7 @@ class BamruApp < Sinatra::Base
   end
 
   get '/bamruinfo' do
-    expires 36000, :public, :must_revalidate
+    expires 180000, :public, :must_revalidate
     last_modified last_modification_date
     @title     = "Information about BAMRU"
     @hdr_img   = "images/approach.jpg"
@@ -39,7 +39,7 @@ class BamruApp < Sinatra::Base
   end
 
   get '/join' do
-    expires 36000, :public, :must_revalidate
+    expires 180000, :public, :must_revalidate
     last_modified last_modification_date
     @title     = "Joining BAMRU"
     @hdr_img   = "images/helo.jpg"
@@ -49,7 +49,7 @@ class BamruApp < Sinatra::Base
   end
 
   get '/sgallery' do
-    expires 36000, :public, :must_revalidate
+    expires 180000, :public, :must_revalidate
     last_modified last_modification_date
     @title     = "BAMRU Photo Gallery"
     @hdr_img   = "images/hills.jpg"
@@ -60,7 +60,7 @@ class BamruApp < Sinatra::Base
   end
 
   get '/meeting_locations' do
-    expires 36000, :public, :must_revalidate
+    expires 180000, :public, :must_revalidate
     last_modified last_modification_date
     @title     = "BAMRU Meeting Location"
     @hdr_img   = "images/mtn_2.jpg"
@@ -70,7 +70,7 @@ class BamruApp < Sinatra::Base
   end
 
   get '/sarlinks' do
-    expires 36000, :public, :must_revalidate
+    expires 180000, :public, :must_revalidate
     last_modified last_modification_date
     @title     = "Links to SAR-related sites"
     @hdr_img   = "images/glacier.jpg"
@@ -80,7 +80,7 @@ class BamruApp < Sinatra::Base
   end
 
   get '/donate' do
-    expires 36000, :public, :must_revalidate
+    expires 180000, :public, :must_revalidate
     last_modified last_modification_date
     @title     = "Donate to BAMRU"
     @hdr_img   = "images/glacier.jpg"
@@ -90,7 +90,7 @@ class BamruApp < Sinatra::Base
   end
 
   get '/contact' do
-    expires 36000, :public, :must_revalidate
+    expires 180000, :public, :must_revalidate
     last_modified last_modification_date
     @title     = "BAMRU Contacts"
     @hdr_img   = "images/HawthornLZ.jpg"
