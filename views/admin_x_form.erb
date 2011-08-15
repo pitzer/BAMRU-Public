@@ -17,14 +17,39 @@
 </script>
 
 <script type="text/javascript">
-        $(function() {
-            $("#start, #finish").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                dateFormat: "yy-mm-dd"
-            });
-        });
+  $(function() {
+    $("#start, #finish").datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: "yy-mm-dd"
+    });
+  });
+</script>
 
+<script type="text/javascript">
+
+  function hideLocationRow(){
+    $("#location_row").hide();
+  };
+
+  function showLocationRow() {
+    $("#location_row").show();
+  };
+
+  function setLocationRow() {
+    if ($("#kind_select option:selected").text() == "Operation") {
+      showLocationRow();
+    } else {
+      hideLocationRow();
+    }
+  };
+
+  $(function() {
+    setLocationRow();
+    $("#kind_select").change(function() {
+      setLocationRow();
+    });
+  });
 </script>
 
 <form method="post" action="<%=@post_action%>">
@@ -32,7 +57,7 @@
     <table cellpadding=1 cellspacing=1>
       <tr>
         <td class="ar">Kind:</td>
-        <td><select name="kind">
+        <td><select id="kind_select" name="kind">
           <%= select_helper(@action) %>
         </select></td>
         <td></td>
@@ -60,7 +85,7 @@
         </td>
         <td>End is optional - only use it for multi-day events.</td>
       </tr>
-      <tr>
+      <tr id="location_row">
         <td class="ar">Lat:</td>
         <td>
           <input id="lat" type="Text" size=10 maxlength=10 name="lat" value="<%=@action.lat%>">

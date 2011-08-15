@@ -5,11 +5,12 @@ require 'time'
 require 'rspec'
 require 'capybara'
 require 'capybara/dsl'
+require 'capybara/rspec'
+require 'launchy'
 
 RSpec.configure do |config|
   config.mock_with :rspec
-  config.include Capybara
-#  config.include Capybara::DSL
+  config.include Capybara::DSL
   config.before(:each) { Event.delete_all_with_validation }
 end
 
@@ -49,3 +50,16 @@ def inval_test_data
   output << csv_record("malformed") + "\n"
   output
 end
+
+def should_be_hidden(text, selector)
+  hidden_script = "$('#{selector}:contains(#{text})').is(':hidden');"
+  dom_script    = "$('#{selector}:contains(#{text})').length == 0;"
+  is_hidden     = page.evaluate_script(hidden_script)
+  is_not_in_dom = page.evaluate_script(dom_script)
+  (is_hidden || is_not_in_dom).should be_true
+end
+
+def should_not_be_hidden(text, selector)
+  ! should_be_hidden(text, selector)
+end
+

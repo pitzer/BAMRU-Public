@@ -6,6 +6,7 @@ class Event < ActiveRecord::Base
   before_validation :convert_tbd_to_tba
   before_validation :cleanup_non_county
   before_validation :save_signature_into_digest_field
+  before_validation :cleanup_lat_lon_fields
   before_save       :remove_quotes
   before_save       :truncate_coordinates
   after_destroy     :set_first_in_year_after_delete
@@ -149,6 +150,11 @@ class Event < ActiveRecord::Base
     self.location.gsub!(%q["],%q['])    unless self.location.nil?
     self.leaders.gsub!(%q["],%q['])     unless self.leaders.nil?
     self.description.gsub!(%q["],%q[']) unless self.description.nil?
+  end
+
+  def cleanup_lat_lon_fields
+    self.lat = nil unless self.kind == 'operation'
+    self.lon = nil unless self.kind == 'operation'
   end
 
   # Truncates coordinates to five digits

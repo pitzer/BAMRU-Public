@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe "Web Pages" do
 
-  include Capybara
-#  include Capybara::DSL
+  include Capybara::DSL
 
   before(:each) do
     Capybara.app = BamruApp
@@ -12,7 +11,7 @@ describe "Web Pages" do
   context "public pages" do
     it "redirects the home page" do
       visit '/'
-      page.status_code.should == 404
+      page.status_code.should == 200
     end
     it "renders /calendar" do
       visit '/calendar'
@@ -57,6 +56,7 @@ describe "Web Pages" do
   end
 
   context "admin pages" do
+    before(:each) { ENV['ADMIN_LOGGED_IN'] = 'false' }
     context "without admin credentials" do
       it "does not render /admin_home" do
         visit '/admin_home'
@@ -76,7 +76,7 @@ describe "Web Pages" do
       end
     end
     context "with admin credentials" do
-      before(:each) { page.driver.basic_authorize 'admin', 'admin' }
+      before(:each) { ENV['ADMIN_LOGGED_IN'] = 'true' }
       it 'renders /admin_home' do
         visit '/admin_home'
         page.status_code.should == 200

@@ -18,7 +18,9 @@ class BamruApp < Sinatra::Base
     enable :sessions         # to store login state and calendar search settings
     use Rack::Flash          # for error and success messages
     set :erb, :trim => '-'   # strip whitespace when using <% -%>
-    set :views, File.expand_path(File.dirname(__FILE__)) + '/views'
+    set :views,  File.expand_path(File.dirname(__FILE__)) + '/views'
+    set :public, File.expand_path(File.dirname(__FILE__)) + '/public'
+    set :static, true
   end
 
   # ----- PUBLIC PAGES -----
