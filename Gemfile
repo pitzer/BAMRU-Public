@@ -1,6 +1,7 @@
 source "http://rubygems.org"
 
 # production
+gem 'rake'
 gem 'activerecord'
 gem 'activesupport'
 gem 'sinatra'
