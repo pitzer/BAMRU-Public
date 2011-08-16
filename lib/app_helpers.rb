@@ -338,7 +338,6 @@ module Sinatra
       opt = [
               ['/calendar',      'calendar'     ],
               ['/calendar.gcal', 'gcal'],
-              ['/calendar.ical', 'ical'],
               ['/calendar.csv',  'csv' ]
       ]
       admin_sub_nav(opt)
