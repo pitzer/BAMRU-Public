@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
 # production
-gem 'rake'
+gem 'rake', "~> 0.8.7"
 gem 'activerecord'
 gem 'activesupport'
 gem 'sinatra'
