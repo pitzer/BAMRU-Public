@@ -25,9 +25,9 @@ env :RACK_ENV, 'production'
 
 set :output, {:standard => 'log/cron_normal.log', :error => 'log/cron_error.log'}
 
-every 20.minutes do
-  command "cd #{dir} && bundle exec rake data_import"
-end
+#every 20.minutes do
+#  command "cd #{dir} && bundle exec rake data_import"
+#end
 
 every 12.hours do
   command "cd #{dir} && mv log/cron_normal.log log/cron_normal_backup.log"
