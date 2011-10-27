@@ -91,6 +91,18 @@ class BamruApp < Sinatra::Base
     erb :donate
   end
 
+  get '/caltopo' do
+    expires 180000, :public, :must_revalidate
+    last_modified last_modification_date
+    @title     = "CalTopo"
+    @hdr_img   = "images/glacier.jpg"
+    @right_nav = right_nav(:donate)
+    @right_txt = quote
+    erb :caltopo
+  end
+
+
+
   get '/contact' do
     expires 180000, :public, :must_revalidate
     last_modified last_modification_date
