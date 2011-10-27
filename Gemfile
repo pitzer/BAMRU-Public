@@ -22,7 +22,7 @@ group :development, :test do
   gem "ruby-debug", "0.10.0", :platform => :ruby_18
   gem "ruby-debug19",         :platform => :ruby_19
   gem "capistrano"
-  gem "capybara", "~> 1.0.1"
+  gem "capybara", "~> 1.1.1"
   gem "rspec", "~> 2.6.0"
   gem 'launchy'
   gem "capybara-webkit"  # depends on: "apt-get get libqt4-dev"
