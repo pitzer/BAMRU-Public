@@ -101,6 +101,16 @@ class BamruApp < Sinatra::Base
     erb :caltopo
   end
 
+  get '/backlog' do
+    expires 180000, :public, :must_revalidate
+    last_modified last_modification_date
+    @title     = "Equipment Backlog"
+    @hdr_img   = "images/glacier.jpg"
+    @right_nav = right_nav(:donate)
+    @right_txt = quote
+    erb :backlog
+  end
+
 
 
   get '/contact' do
