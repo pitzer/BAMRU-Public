@@ -3,7 +3,7 @@ require 'gcal4ruby'
 class GcalSync
   
   USERNAME = "bamru.calendar@gmail.com"
-  PASSWORD = "bamcalendar"
+  PASSWORD = "calendar4bamru"
 
   include GCal4Ruby
 
