@@ -8,8 +8,6 @@ require 'time'
 BASE_DIR  = File.dirname(File.expand_path(__FILE__)) + "/../"
 DATA_DIR  = BASE_DIR + "/data"
 
-#require BASE_DIR + 'config/schedule'
-
 INVAL_CSV_FILENAME = "/tmp/inval_csv.csv"
 INVAL_REC_FILENAME = "/tmp/inval_rec.csv"
 
@@ -30,3 +28,10 @@ Dir[BASE_DIR + "lib/*.rb"].each {|f| load f}
 
 # load factory definitions
 require BASE_DIR + "db/factories"
+
+BORG_ENVIRONMENT_FILE = "/home/aleak/.borg_environment.yaml"
+yaml_env = YAML.load_file(BORG_ENVIRONMENT_FILE)
+
+GCAL_USER = yaml_env[:gcal_user]
+GCAL_PASS = yaml_env[:gcal_pass]
+

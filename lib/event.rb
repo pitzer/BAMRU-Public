@@ -106,8 +106,7 @@ class Event < ActiveRecord::Base
     else
       (finish.nil? || finish.blank?) ?
               start.to_time :
-              #finish.to_time
-              (finish + 12.hours).to_time
+              (finish + 1.day).to_time
     end
   end
 

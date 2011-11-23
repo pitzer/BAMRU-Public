@@ -1,10 +1,8 @@
 require 'gcal4ruby'
+require 'yaml'
 
 class GcalSync
   
-  USERNAME = "bamru.calendar@gmail.com"
-  PASSWORD = "calendar4bamru"
-
   include GCal4Ruby
 
   # ----- Utility Methods -----
@@ -15,7 +13,7 @@ class GcalSync
 
   def self.authenticate_and_return_service
     service = Service.new
-    service.authenticate(USERNAME, PASSWORD)
+    service.authenticate(GCAL_USER, GCAL_PASS)
     service
   end
 
