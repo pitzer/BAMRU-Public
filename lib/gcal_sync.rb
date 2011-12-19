@@ -11,7 +11,7 @@ class GcalSync
     ::Event.between(::Event.default_start, ::Event.default_end)
   end
 
-  def self.authenticate_and_return_service
+  def self.authenticate_and_return_gcal_service
     service = Service.new
     service.authenticate(GCAL_USER, GCAL_PASS)
     service
@@ -30,7 +30,7 @@ class GcalSync
   end
 
   def self.count_gcal_events
-    service = authenticate_and_return_service
+    service = authenticate_and_return_gcal_service
     cal     = service.calendars.first
     cal.events.length
   end
@@ -39,7 +39,7 @@ class GcalSync
   # - called by command-line tool to completely resync the calendars
 
   def self.delete_all_gcal_events
-    service = authenticate_and_return_service
+    service = authenticate_and_return_gcal_service
     cal     = service.calendars.first
     cal.events.each do |event|
       puts "Deleting #{event.title}"
@@ -53,7 +53,7 @@ class GcalSync
   end
 
   def self.add_all_current_actions_to_gcal
-    service = authenticate_and_return_service
+    service = authenticate_and_return_gcal_service
     get_current_actions_from_database.each do |action|
       if action.kind != "operation"
         puts "Adding #{action.title}"
@@ -74,13 +74,13 @@ class GcalSync
   # - called by WebApp during CRUD operations
 
   def self.create_event(action)
-    service = authenticate_and_return_service
+    service = authenticate_and_return_gcal_service
     event   = Event.new(service)
     save_event_to_gcal(service, event, action)
   end
 
   def self.update_event(action)
-    service = authenticate_and_return_service
+    service = authenticate_and_return_gcal_service
     old_event   = Event.find(service, "BE#{action.id}")
     old_event   = [event] unless old_event.class == Array
     old_event.each {|e| e.delete unless event.nil?}
@@ -89,7 +89,7 @@ class GcalSync
     end
 
   def self.delete_event(action)
-    service = authenticate_and_return_service
+    service = authenticate_and_return_gcal_service
     event   = Event.find(service, "BE#{action.id}").first
     event.delete unless event.nil?
   end
