@@ -9,7 +9,7 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 require 'rspec/core/rake_task'
-require 'lib/shared/tasks/rake_tasks'
+require File.expand_path(File.dirname(__FILE__)) + '/lib/shared/tasks/rake_tasks'
 
 def break() puts '*' * 60; end
 

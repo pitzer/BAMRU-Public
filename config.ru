@@ -4,6 +4,6 @@ require 'rubygems'
 Gem.clear_paths
 require 'sinatra'
 
-require 'app'
+require File.dirname(File.expand_path(__FILE__)) + '/app'
 
 run BamruApp

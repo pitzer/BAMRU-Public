@@ -127,8 +127,8 @@ class Event < ActiveRecord::Base
     cav = "17930 Lake Chabot Road, Castro Valley, CA 94546"
     return location unless kind == "meeting"
     case location.strip.chomp
-      when "Redwood City"  : rwc
-      when "Castro Valley" : cav
+      when "Redwood City"  then rwc
+      when "Castro Valley" then cav
       else location
     end
   end

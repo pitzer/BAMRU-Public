@@ -12,8 +12,8 @@ INVAL_CSV_FILENAME = "/tmp/inval_csv.csv"
 INVAL_REC_FILENAME = "/tmp/inval_rec.csv"
 
 database_file = case ENV['RACK_ENV']
-  when "production" : "production.sqlite3"
-  when "test"       : "test.sqlite3"
+  when "production" then "production.sqlite3"
+  when "test"       then "test.sqlite3"
   else "database.sqlite3"
 end
 

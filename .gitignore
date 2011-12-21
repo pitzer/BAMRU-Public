@@ -19,3 +19,5 @@ vendor/**/*
 data/settings.yaml
 data/history
 data/history/*
+data/shared/history
+data/shared/history/*
