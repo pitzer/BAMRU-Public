@@ -25,7 +25,7 @@ task :update_gems do
   puts "C"
   system "bundle pack"
   system "cd vendor ; rsync -a --delete cache #{current_host}:a/#{APPDIR}/shared"
-  run "cd #{current_path} ; bundle install --quiet --local --path=/home/aleak/.gems"
+  run "cd #{release_path} ; bundle install --quiet --local --path=/home/aleak/.gems"
 end
 
 desc "RUN THIS FIRST!"
@@ -49,9 +49,6 @@ after :nginx_conf, :restart_nginx
 
 desc "Reset Cron"
 task :reset_cron do
-  run "whoami"
-  run "pwd"
-  run "gem list"
   run "cd #{release_path} && bundle exec whenever --update-crontab #{application}"
 end
 
