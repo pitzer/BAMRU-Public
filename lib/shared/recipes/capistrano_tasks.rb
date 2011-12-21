@@ -49,6 +49,9 @@ after :nginx_conf, :restart_nginx
 
 desc "Reset Cron"
 task :reset_cron do
+  run "whoami"
+  run "pwd"
+  run "gem list"
   run "cd #{release_path} && bundle exec whenever --update-crontab #{application}"
 end
 
