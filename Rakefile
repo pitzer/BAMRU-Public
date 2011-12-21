@@ -9,7 +9,7 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 # require 'rspec/core/rake_task'
-require File.expand_path(File.dirname(__FILE__)) + '/lib/shared/tasks/rake_tasks'
+# require File.expand_path(File.dirname(__FILE__)) + '/lib/shared/tasks/rake_tasks'
 
 def break() puts '*' * 60; end
 
@@ -78,7 +78,7 @@ end
 
 desc "Set Backup Role"
 task :set_backup_role do
-  require 'config/environment'
+  require File.dirname(File.expand_path(__FILE__)) + '/config/environment'
   config = Settings.new
   config.site_role = "Backup"
   config.save
