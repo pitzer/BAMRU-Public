@@ -21,7 +21,7 @@ group :development, :test do
   gem "vmc"
   gem "factory_girl"
   gem "ruby-debug", "0.10.0", :platform => :ruby_18
-  gem "ruby-debug19",         :platform => :ruby_19
+  gem "ruby-debug19",         :platform => :ruby_19 if ENV['SYSNAME'] == 'ekel'
   gem "capistrano"
   gem "capybara", "~> 1.1.1"
   gem "rspec", "~> 2.6.0"
