@@ -70,7 +70,7 @@ end
 
 desc "Set Primary Role"
 task :set_primary_role do
-  require 'config/environment'
+  require File.dirname(File.expand_path(__FILE__)) + '/config/environment'
   config = Settings.new
   config.site_role = "Primary"
   config.save

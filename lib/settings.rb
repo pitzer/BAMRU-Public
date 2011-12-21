@@ -28,7 +28,8 @@ class Settings
   end
 
   def save(file = DATA_FILE)
-    File.open(file, 'w') {|f| f.puts YAML.dump(self)} if valid?
+    string = YAML.dump(self)
+    File.open(file, 'w') {|f| f.puts string} if valid?
     valid?
   end
 
