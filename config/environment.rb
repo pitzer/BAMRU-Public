@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 require 'active_record'
 require 'active_support/core_ext'
-require 'factory_girl'
+# require 'factory_girl'
 require 'time'
 
 BASE_DIR  = File.dirname(File.expand_path(__FILE__)) + "/../"
@@ -27,7 +27,7 @@ ActiveRecord::Base.establish_connection(
 Dir[BASE_DIR + "lib/*.rb"].each {|f| load f}
 
 # load factory definitions
-require BASE_DIR + "db/factories"
+# require BASE_DIR + "db/factories"
 
 BORG_ENVIRONMENT_FILE = "/home/aleak/.borg_environment.yaml"
 yaml_env = YAML.load_file(BORG_ENVIRONMENT_FILE)
