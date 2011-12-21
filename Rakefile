@@ -26,7 +26,7 @@ end
 
 desc "Import CSV data from Peer URL"
 task :data_import do
-  require 'config/environment'
+  require File.dirname(File.expand_path(__FILE__)) + '/config/environment'
   sitep = Settings.new
   puts "Starting Data Import @ #{Time.now}"
   end_task "Only works with Backup Sites" if sitep.primary?
@@ -56,7 +56,7 @@ desc "Run console with live environment"
 task :console do
   require 'irb'
   require 'irb/completion'
-  require 'config/environment'
+  require File.dirname(File.expand_path(__FILE__)) + '/config/environment'
   ARGV.clear
   IRB.start
 end
@@ -64,7 +64,7 @@ task :con => :console
 
 desc "Sync Calendar Data with Google Calendar"
 task :gcal_sync do
-  require 'config/environment'
+  require File.dirname(File.expand_path(__FILE__)) + '/config/environment'
   GcalSync.sync
 end
 
@@ -87,7 +87,7 @@ end
 desc "Set Peer URL"
 task :set_peer do
   abort "Need Peer URL (rake set_peer PEER_URL=<url>" unless ENV['PEER_URL']
-  require 'config/environment'
+  require File.dirname(File.expand_path(__FILE__)) + '/config/environment'
   config = Settings.new
   config.peer_url = ENV['PEER_URL']
   config.save
@@ -96,7 +96,7 @@ end
 namespace :db do
 
   task :environment do
-    require 'config/environment'
+    require File.dirname(File.expand_path(__FILE__)) + '/config/environment'
   end
 
   desc "Remove existing databases"
