@@ -52,7 +52,7 @@ class Event < ActiveRecord::Base
     date.class == String ? Time.parse(date) : date
   end
 
-  def self.default_start() 1.day.ago;          end
+  def self.default_start() 6.weeks.ago;        end
   def self.default_end()   1.year.from_now;    end
   def self.default_start_operation() 24.months.ago;    end
   def self.default_end_operation()   1.month.from_now; end
