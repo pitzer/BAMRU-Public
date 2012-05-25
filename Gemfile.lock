@@ -46,6 +46,8 @@ GEM
       activesupport (>= 3.0.0)
     fastercsv (1.5.5)
     ffi (1.0.11)
+    foreman (0.46.0)
+      thor (>= 0.13.6)
     gcal4ruby (0.5.5)
       gdata4ruby (>= 0.1.5)
     gdata4ruby (0.1.5)
@@ -158,6 +160,7 @@ DEPENDENCIES
   drx
   factory_girl
   fastercsv
+  foreman
   gcal4ruby
   hirb
   interactive_editor
