@@ -40,7 +40,6 @@ PATH: .
 PATH: ./bin
 PATH: /usr/bin
 PATH: /bin
-PATH: /usr/lib/lightdm/lightdm
 PATH: /usr/local/sbin
 PATH: /usr/local/bin
 PATH: /usr/sbin
