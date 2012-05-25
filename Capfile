@@ -4,8 +4,8 @@ require 'bundler/setup'
 # ====== Deployment Stages =====
 set :stages,        %w(staging production)
 set :default_stage, "staging"
-set :user,          "vagrant"
-set :proxy,         "public"
+set :user,          "aleak"
+set :proxy,         "pv1"
 
 # ===== App Config =====
 set :application, "BAMRU-Public"
