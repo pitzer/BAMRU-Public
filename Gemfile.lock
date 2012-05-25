@@ -51,6 +51,7 @@ GEM
     gcal4ruby (0.5.5)
       gdata4ruby (>= 0.1.5)
     gdata4ruby (0.1.5)
+    ghost (0.3.0)
     highline (1.6.12)
     hirb (0.6.2)
     i18n (0.6.0)
@@ -162,6 +163,7 @@ DEPENDENCIES
   fastercsv
   foreman
   gcal4ruby
+  ghost
   hirb
   interactive_editor
   launchy

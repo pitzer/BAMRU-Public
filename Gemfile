@@ -14,6 +14,7 @@ gem "daemons"
 gem "whenever"
 gem "thor"
 gem "foreman"
+gem "ghost"
 
 group :development, :test do
   gem "vmc"
