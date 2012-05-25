@@ -29,17 +29,21 @@ require base_dir + "/config/deploy/shared/packages/foreman"
 require base_dir + "/config/deploy/shared/packages/sqlite"
 
 # ===== Package Definitions =====
+
 after 'deploy:setup',  'keys:upload'
 
 namespace :keys do
 
   desc "upload keys"
-  task :upload, :roles => :db do
-    keyfile = File.expand_path("~/.borg_environment.yaml")
-    tgtfile = "/home/#{user}/.borg_environment.yaml"
-    upload keyfile, tgtfile
+  task :upload do
+    file = ".borg_environment.yaml"
+    keyfile = File.expand_path("~/#{file}")
+    keytext = File.read(keyfile)
+    tgtfile = "/home/#{user}/#{file}"
+    put keytext, tgtfile 
     run "chown -R #{user} #{tgtfile}"
-    run "chgrp -R #{user} #{tgt_file}"
+    run "chgrp -R #{user} #{tgtfile}"
   end
 
 end
+
