@@ -13,6 +13,7 @@ gem "fastercsv"
 gem "daemons"
 gem "whenever"
 gem "thor"
+gem "foreman"
 
 group :development, :test do
   gem "vmc"

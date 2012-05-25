@@ -19,7 +19,6 @@ require 'capistrano/ext/multistage'
 
 # ===== Common Code for All Stages =====
 load 'deploy'
-load 'deploy/assets'
 base_dir = File.expand_path(File.dirname(__FILE__))
 Dir.glob("config/deploy/shared/base/*.rb").each {|f| require base_dir + '/' + f}
 Dir.glob("config/deploy/shared/recipes/*.rb").each {|f| require base_dir + '/' + f}
