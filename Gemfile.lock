@@ -119,7 +119,7 @@ GEM
     sinatra-cache-assets (0.0.3)
       sinatra (>= 1.0)
     spoon (0.0.1)
-    sqlite3-ruby (1.2.5)
+    sqlite3 (1.3.6)
     terminal-table (1.4.5)
     thin (1.3.1)
       daemons (>= 1.0.9)
@@ -184,7 +184,7 @@ DEPENDENCIES
   shotgun
   sinatra
   sinatra-cache-assets
-  sqlite3-ruby (= 1.2.5)
+  sqlite3
   thin
   thor
   vagrant
