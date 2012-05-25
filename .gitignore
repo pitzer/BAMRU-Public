@@ -12,9 +12,6 @@ doc
 doc/*
 coverage
 coverage/*
-vendor
-vendor/*
-vendor/**/*
 data/settings.yaml
 data/history
 data/history/*

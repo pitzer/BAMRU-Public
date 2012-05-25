@@ -1,0 +1,341 @@
+# Using YAMLs Block Literals to preserve new lines
+# http://en.wikipedia.org/wiki/YAML#Newlines_preserved
+# In short, |  means keep new lines, trim whitespace left and right
+# The |- does the above, but trims the new line at the end of all text
+
+#---------------------------------------------------------------------
+# CATEGORY: Status Messages
+#---------------------------------------------------------------------
+:status_listing: |-
+  This environment represents multiple VMs. The VMs will be listed
+  below with a short status. For more detailed information about a
+  VM, run `vagrant status NAME`.
+:status_no_environment: |-
+  No vagrant environment detected. Run `vagrant init` to setup a Vagrantfile
+  in the current directory to get started with Vagrant.
+:status_not_created: |-
+  The environment has not yet been created. Run `vagrant up` to create the
+  environment.
+:status_created: |-
+  The environment has been created. The status of the current environment's
+  virtual machine is: "<%= vm_state %>"
+
+  <%= additional_message %>
+:status_created_running: |-
+  To stop this VM, you can run `vagrant halt` to shut it down forcefully,
+  or you can run `vagrant suspend` to simply suspend the virtual machine.
+  In either case, to restart it again, simply run a `vagrant up`.
+:status_created_saved: |-
+  To resume this VM, simply run `vagrant up`.
+:status_created_powered_off: |-
+  To restart this VM, simply run `vagrant up`.
+:status_global: |-
+  Below is a list of virtual machines which are currently created and were
+  created by a Vagrant environment. The path listed was the "last known path"
+  of the environment (it may have moved).
+
+  <%= entries.join("\n\n") %>
+:status_global_entry: |-
+  Name:       <%= vm.vm.name %>
+  Path:       <%= data["path"] %>
+  Created at: <%= Time.at(data["created_at"]) %>
+
+#---------------------------------------------------------------------
+# CATEGORY: Warning Messages
+#---------------------------------------------------------------------
+:vm_additions_not_detected: |-
+  WARNING!
+  No guest additions were detected on the base box for this VM! Guest
+  additions are required for forwarded ports, shared folders, host only
+  networking, and more. If SSH fails on this machine, please install
+  the guest additions and repackage the box to continue.
+:vm_additions_version_mismatch: |-
+  WARNING!
+  The guest additions on this VM do not match the install version of
+  VirtualBox! This often causes things such as forwared ports, shared
+  folders, and more to not work properly. If any of those things fail on
+  this machine, please update the guest additions and repackage the
+  box.
+
+  Guest Additions Version: <%= guest_additions_version %>
+  VirtualBox Version: <%= virtualbox_version %>
+
+#---------------------------------------------------------------------
+# CATEGORY: Error Messages
+#---------------------------------------------------------------------
+:box_already_exists: |-
+  This box appears to already exist! Please call `vagrant box remove <%= box_name %>`
+  and then try to add it again.
+:box_add_already_exists: |-
+  A box with the name '<%= box_name %>' already exists, please use another name or use `vagrant box remove <%= box_name %>`
+:box_download_unknown_type: |-
+  Unknown URI type for box download.
+:box_download_http_socket_error: |-
+  An error occurred while trying to download the specified box. This most
+  often happens if there is no internet connection or the address is
+  invalid.
+
+  Box URL: <%= box_url %>
+:box_file_exists: |-
+  The specified output file for packaging already exists. Please move
+  the file or modify the output filename parameter then try to package
+  again.
+
+  Specified output file: <%= output_file %>
+:box_remove_doesnt_exist: |-
+  The box you're attempting to remove does not exist!
+:box_repackage_doesnt_exist: |-
+  The box you're attempting to repackage does not exist. Please check the
+  name you specified and try again. As a reminder, the repackage
+  command is for repackaging boxes which have been added through `vagrant box add`
+  but the box has been lost.
+:box_specified_doesnt_exist: |-
+  Specified box `<%= box_name %>` does not exist!
+
+  The box must be added through the `vagrant box add` command. Please view
+  the documentation associated with the command for more information.
+:box_verification_failed: |-
+  The specified box is invalid. This can commonly be attributed to incorrectly
+  typing in the path to the box or invalid packaging of the box.
+:box_not_specified: |-
+  No base box was specified! A base box is required as a staring point
+  for every vagrant virtual machine. Please specify one in your Vagrantfile
+  using `config.vm.box`
+:chef_base_invalid_provisioner: |-
+  Vagrant::Provisioners::Chef is not a valid provisioner! Use ChefSolo or ChefServer instead.
+:chef_server_url_required: |-
+  Chef server provisioning requires that the `config.chef.chef_server_url` be set to the
+  URL of your chef server. Examples include "http://12.12.12.12:4000" and
+  "http://myserver.com:4000" (the port of course can be different, but 4000 is the default)
+:chef_server_validation_key_required: |-
+  Chef server provisioning requires that the `config.chef.validation_key_path` configuration
+  be set to a path on your local machine of the validation key used to register the
+  VM with the chef server.
+:chef_server_validation_key_doesnt_exist: |-
+  The validation key set for `config.chef.validation_key_path` does not exist! This
+  file needs to exist so it can be uploaded to the virtual machine. It is
+  currently set to "<%= Vagrant.config.chef.validation_key_path %>"
+:chef_not_detected: |-
+  The `<%= binary %>` binary appears to not be in the PATH of the guest. This
+  could be because the PATH is not properly setup or perhaps chef is not
+  installed on this guest. Chef provisioning can not continue without
+  chef properly installed.
+:command_box_invalid: |-
+  Please specify a valid action to take on the boxes, either
+  `add` or `remove`. Examples:
+
+  vagrant box add name uri
+  vagrant box remove name
+  vagrant box list
+:dotfile_error: |-
+  The dotfile which Vagrant uses to store the UUID of the project's
+  virtual machine already exists and is not a file! The dotfile is
+  currently configured to be `<%= env.dotfile_path %>`
+
+  To change this value, please see `config.vagrant.dotfile_name`
+
+  Are you trying to use Vagrant from your home directory? This is the
+  leading cause of this error message. To resolve this, simply use a
+  different directory. Or, if you really want to run Vagrant from your
+  home directory, modify the `config.vagrant.dotfile_name` configuration
+  key.
+:downloader_file_doesnt_exist: |-
+  The given box does not exist on the file system:
+
+  <%= source_url %>
+:environment_not_created: |-
+  The task you're trying to run requires that the vagrant environment
+  already be created, but unfortunately this vagrant still appears to
+  have no box! You can setup the environment by setting up your
+  <%= Vagrant::Environment::ROOTFILE_NAME %> and running `vagrant up`
+:nfs_host_required: |-
+  A host class is required for NFS shared folders. By default, these
+  are auto-detected, but can be overriden with `config.vagrant.host`.
+  There is currently not host class loaded.
+:nfs_not_supported: |-
+  The host class is reporting that NFS is not supported by this host,
+  or `nfsd` may not be installed. Please verify that `nfsd` is installed
+  on your machine, and retry.
+:nfs_no_host_network: |-
+  NFS shared folders requires that host only networking is enabled.
+  Please enable host only networking via `config.vm.network`.
+:network_not_found: |-
+  The specified host network could not be found: <%= name %>.
+  If the name specification is removed, Vagrant will create a new
+  host only network for you. Alternatively, please create the
+  specified network manually.
+:network_collides: |-
+  The specified host network collides with a non-hostonly network!
+  This will cause your specified IP to be inaccessible. Please change
+  the IP or name of your host only network to not match that of
+  a bridged or non-hostonly network.
+:package_include_file_doesnt_exist: |-
+  File specified to include: '<%= filename %>' does not exist!
+:package_multivm: |-
+  Because this Vagrant environment represents multiple VMs, a
+  specific VM must be specified. This can be done by calling
+  `vagrant package NAME` where NAME is a valid VM represented by
+  your Vagrantfile.
+:package_output_exists: |-
+  The specified file to save the package as already exists. Please
+  remove this file or specify a different filename for outputting.
+:package_requires_directory: |-
+  A directory was not specified to package. This is an internal
+  issue. Please send the relevant stack trace (if any) and information
+  about this issue to the Vagrant team.
+:package_requires_export: |-
+  Package must be used in conjunction with export.
+:provisioner_invalid_class: |-
+  Provisioners must be an instance of Vagrant::Provisioners::Base
+:provisioner_unknown_type: |-
+  Unknown provisioner type: <%= provisioner %>
+:rootfile_already_exists: |-
+  It looks like this directory is already setup for vagrant! (A <%= Vagrant::Environment::ROOTFILE_NAME %>
+   already exists.)
+:rootfile_not_found: |-
+  A `<%= Vagrant::Environment::ROOTFILE_NAME %>` was not found! This file is required for vagrant to run
+  since it describes the expected environment that vagrant is supposed
+  to manage. Please create a `<%= Vagrant::Environment::ROOTFILE_NAME %>` and place it in your project
+  root.
+:ssh_bad_permissions: |-
+  The private key to connect to this box via SSH has invalid permissions
+  set on it. The permissions of the private key should be set to 0600, otherwise SSH will
+  ignore the key. Vagrant tried to do this automatically for you but failed. Please set the
+  permissions on the following file to 0600 and then try running this command again:
+
+  <%= key_path %>
+:ssh_bad_exit_status: |-
+  The following SSH command responded with a non-zero exit status.
+  Vagrant assumes that this means the command failed!
+
+  <%= command %>
+:ssh_unavailable_windows: |-
+  `vagrant ssh` isn't available on the Windows platform. The
+  vagrant.ppk file is available at
+
+     <%= key_path %>.ppk
+
+  for use with Putty. To do this create a new Putty session for
+  `vagrant@localhost` on port `<%= ssh_port %>`, in the Connection>SSH>Auth
+  configuration section navigate to the vagrant.ppk file,
+  select it, save the session for later use, and connect.
+
+  For a more detailed guide please consult:
+
+     http://vagrantup.com/docs/getting-started/windows.html
+:ssh_multivm: |-
+  Because this Vagrant environment represents multiple VMs, a
+  specific VM must be specified. This can be done by calling
+  `vagrant ssh NAME` where NAME is a valid VM represented by
+  your Vagrantfile.
+
+  Alternatively, if you mark one of your VMs as 'primary,'
+  then Vagrant will default to that VM. This can be done by
+  specifying `:primary => true` when defining the VM. Example:
+
+  config.vm.define(:foo, :primary => true) do |config|
+    ...
+  end
+:ssh_config_multivm: |-
+  Because this Vagrant environment represents multiple VMs, a
+  specific VM must be specified. This can be done by calling
+  `vagrant ssh-config NAME` where NAME is a valid VM represented by
+  your Vagrantfile.
+:system_invalid_class: |-
+  The specified system does not inherit from `Vagrant::Systems::Base`. The
+  specified system class must inherit from this class.
+
+  The specified system class was: <%= system %>
+:system_unknown_type: |-
+  The specified system type is unknown: <%= system %>. Please change this
+  to a proper value.
+:system_unspecified: |-
+  A VM system type must be specified! This is done via the `config.vm.system`
+  configuration value. Please read the documentation online for more information.
+:unison_not_found: |-
+  The `unison` binary was not found on the guest machine. This is required
+  for folder syncing via unison. Please install unison on your system to
+  use folder syncing. You may also disable folder syncing, install unison,
+  re-enable syncing, then call a `vagrant reload` to enable syncing.
+:unknown_vm: |-
+  The specified VM could not be found: <%= vm %>
+:virtualbox_import_failure: |-
+  The VM import failed! Try running `VBoxManage import` on the box file
+  manually for more verbose error output.
+:virtualbox_invalid_version: |-
+  Vagrant has detected that you have VirtualBox version <%= version %> installed!
+  Vagrant requires that you use at least VirtualBox version 3.2. Please install
+  a more recent version of VirtualBox to continue.
+:virtualbox_not_detected: |-
+  Vagrant could not detect VirtualBox! Make sure VirtualBox is properly installed.
+  If VirtualBox is installed, it may be an incorrect version. Vagrant currently
+  requires VirtualBox 3.2.x. Please install the proper version to continue.
+:virtualbox_invalid_ose: |-
+  Vagrant has detected you're using an OSE ("Open Source Edition") of VirtualBox.
+  Vagrant currently doesn't support any of the OSE editions due to slight API
+  differences. Please download the regular package from virtualbox.org and install
+  to continue.
+:vm_failed_to_boot: |-
+  Failed to connect to VM! Failed to boot?
+:vm_base_not_found: |-
+  The specified base VM "<%= name %>" was not found.
+:vm_not_running_for_suspend: |-
+  The vagrant virtual environment you are trying to suspend must be running to be suspended.
+:vm_not_suspended: |-
+  The vagrant virtual environment you are trying to resume is not in a suspended state.
+:vm_port_auto_empty: |-
+  Vagrant found a port collision for the specified port and virtual machine.
+  While this port was marked to be auto-corrected, the ports in the
+  auto-correction range are all also used.
+
+  VM: <%= vm_name %>
+  Forwarded port: <%= name %> (<%= options[:guestport] %> => <%= options[:hostport] %>)
+:vm_port_below_threshold: |-
+  The host port of all forwarded ports must be above 1024. VirtualBox
+  does not allow host ports to be below 1024. (Guest ports below 1024
+  are fine. For example: SSH on port 22 on the guest can be forwarded
+  to port 2222, but not 222).
+:vm_port_collision: |-
+  Vagrant cannot forward the specified ports on this VM, since they
+  would collide with another VirtualBox virtual machine's forwarded
+  ports! The "<%= name %>" forwarded port (<%= hostport %>) is already in use on the host
+  machine.
+
+  To fix this, modify your current projects Vagrantfile to use another
+  port. Example, where '1234' would be replaced by a unique host port:
+
+  config.vm.forward_port("<%= name %>", <%= guestport %>, 1234)
+:vm_power_off_to_move_hd: |-
+  The virtual machine must be powered off to move its disk.
+:vm_power_off_to_package: |-
+  The vagrant virtual environment you are trying to package must be powered off.
+:vm_mount_fail: |-
+  Failed to mount shared folders. vboxsf was not available.
+:vm_ssh_auth_failed: |-
+  SSH authentication failed! While this could be due to a variety of reasons,
+  the two most common are: private key path is incorrect or you're using a box
+  which was built for Vagrant 0.1.x.
+
+  Vagrant 0.2.x dropped support for password-based authentication. If you're
+  tring to `vagrant up` a box which does not support Vagrant's private/public
+  keypair, then this error will be raised. To resolve this, read the guide
+  on converting base boxes from password-based to keypairs here:
+
+  http://vagrantup.com/docs/converting_password_to_key_ssh.html
+
+  If the box was built for 0.2.x and contains a custom public key, perhaps
+  the path to the private key is incorrect. Check your `config.ssh.private_key_path`.
+
+#---------------------------------------------------------------------
+# CATEGORY: Error Messages for Linux System
+#---------------------------------------------------------------------
+:network_not_debian: |-
+  Host only networking is only supported for Debian/Ubuntu by the built-in
+  "Linux" system. If you're using some other distro and want to implement
+  host only networking, please subclass the `Vagrant::Systems::Linux` class
+  and implement the `prepare_host_only_network` and `enable_host_only_network`
+  methods.
+
+  Otherwise, please report your distro and how to modify network interfaces
+  to the Vagrant mailing list or IRC and we'll probably be glad to add it
+  to the internal systems.

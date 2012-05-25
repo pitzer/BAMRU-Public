@@ -1,0 +1,9 @@
+Host <%= host_key %>
+  HostName localhost
+  User <%= ssh_user %>
+  Port <%= ssh_port %>
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile <%= private_key_path %>
+  IdentitiesOnly yes

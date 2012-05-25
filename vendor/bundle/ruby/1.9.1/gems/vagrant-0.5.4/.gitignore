@@ -1,0 +1,10 @@
+pkg/*
+Vagrantfile
+.vagrant
+.bundle
+cookbooks/*
+_site/*
+!templates/*
+*.org
+.yardoc/
+doc/
