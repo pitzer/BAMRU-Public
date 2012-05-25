@@ -1,12 +1,12 @@
 source "http://rubygems.org"
 
 gem 'rake', "~> 0.9.2.2"
+gem 'net-ssh', "2.4.0"
 gem 'activerecord'
 gem 'activesupport'
 gem 'sinatra'
 gem 'sinatra-cache-assets'
 gem "gcal4ruby"
-# gem "sqlite3-ruby", "1.2.5", :require => "sqlite3"
 gem "sqlite3"
 gem "rack"
 gem "rack-flash3"
