@@ -16,6 +16,7 @@ gem "thor"
 gem "foreman"
 gem "colored"
 gem "ghost"
+gem "passenger"
 
 group :development, :test do
   gem "vmc"
