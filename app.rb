@@ -110,8 +110,6 @@ class BamruApp < Sinatra::Base
     erb :backlog
   end
 
-
-
   get '/contact' do
     expires 180000, :public, :must_revalidate
     last_modified last_modification_date
@@ -200,6 +198,12 @@ class BamruApp < Sinatra::Base
     response["Content-Type"] = "text/plain"
     @operations = Event.operations.between(@start, @finish)
     erb :operations_kml, :layout => false
+  end
+
+  # ----- LANDING PAGES -----
+
+  get '/truck2012' do
+    erb :truck2012
   end
 
   # ----- ADMIN PAGES -----

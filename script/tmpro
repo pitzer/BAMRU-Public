@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # should be called from tmux_console
 
-export APP="public"
+export APP="borg"
 
 create_new_session()
 {
