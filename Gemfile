@@ -26,12 +26,15 @@ group :development, :test do
   gem "capistrano_colors"
   gem "capybara", "~> 1.1.1"
   gem "rspec", "~> 2.6.0"
-  gem 'launchy'
+  gem "launchy"
   gem "capybara-webkit"  # depends on: "apt-get install libqt4-dev"
   gem "shotgun"
   gem "thin"
 
   gem "vagrant"
+
+  gem "guard-coffeescript"
+  gem "therubyracer"
 
   gem "drx"
   gem "hirb"

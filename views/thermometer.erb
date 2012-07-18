@@ -1,0 +1,55 @@
+<style>
+    #t-header {
+        text-align: center;
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+    #thermometer {
+        background:url(images/thermometer.gif);
+        width: 94px;
+        height: 323px;
+        float: left;
+    }
+    #labels {
+        float: right;
+        height: 323px;
+        text-align: left;
+    }
+    #rojo {
+        background-color : red;
+        width            : 25px;
+        position         : relative;
+        left             : 16px;
+    }
+    #base {
+        clear: both;
+    }
+</style>
+
+<div id="t-header">
+  <b>BAMRU Truck Fund</b>
+<table>
+<tr><td align=right>Goal:</td>  <td id="goal">$75,000</td></tr>
+<tr><td align=right>Raised:</td><td id="raised">$23,500</td></tr>
+</table>
+<span id="towards"></span> towards our goal!
+</div>
+
+<div>
+  <div id="thermometer">
+    <div id="rojo"></div>
+    <noscript>
+      <style> #rojo, #thermometer { display: none; }</style>
+    </noscript>
+  </div>
+
+  <div id="labels">
+    <div id="goal_lbl">< goal</div>
+    <div id="raised_lbl">< raised</div>
+  </div>
+  <div id="base"></div>
+  <p></p>
+</div>
+
+<script src="javascripts/jquery-1.4.4.min.js"></script>
+<script src="javascripts/thermo.js"></script>

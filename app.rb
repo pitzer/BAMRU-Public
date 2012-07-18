@@ -203,6 +203,12 @@ class BamruApp < Sinatra::Base
   # ----- LANDING PAGES -----
 
   get '/truck2012' do
+    #expires 180000, :public, :must_revalidate
+    #last_modified last_modification_date
+    @title     = "BAMRU Truck Campaign"
+    @hdr_img   = "images/approach.jpg"
+    @right_nav = erb(:thermometer, :layout => false)
+    @left_txt  = quote
     erb :truck2012
   end
 
