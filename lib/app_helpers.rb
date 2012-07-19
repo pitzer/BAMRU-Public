@@ -314,6 +314,10 @@ module Sinatra
       target == current_page ? label : link
     end
 
+    def link_to(label, target)
+      "<a href='#{target}'>#{label}</a>"
+    end
+
     def admin_nav
       opt = [
               ['/admin_home',          'Admin Home'  ],

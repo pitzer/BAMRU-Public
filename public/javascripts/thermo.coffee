@@ -17,9 +17,6 @@ adjustPx       = if mercury < 90 then 18 else 1
 mercuryTop     = 268.47 - (mercury * 2.47)
 mercuryGap     = mercuryTop - (25+adjustPx)
 
-console.log mercuryHeight
-console.log mercuryTop
-
 document.getElementById("towards").innerHTML = displayMercury + "%"
 document.getElementById("rojo").style.height = "#{mercuryHeight}px"
 document.getElementById("rojo").style.top    = "#{mercuryTop}px"

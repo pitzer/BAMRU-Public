@@ -30,10 +30,6 @@
 
   mercuryGap = mercuryTop - (25 + adjustPx);
 
-  console.log(mercuryHeight);
-
-  console.log(mercuryTop);
-
   document.getElementById("towards").innerHTML = displayMercury + "%";
 
   document.getElementById("rojo").style.height = "" + mercuryHeight + "px";
