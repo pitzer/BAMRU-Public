@@ -1,6 +1,4 @@
-server 'fj1', :app, :web, :primary => true
-server 'kana', :app, :web
-server 'fils', :app, :web
+server 'bamru.org', :app, :web, :primary => true
 
 desc "This is a production only task"
 task :zzz do
