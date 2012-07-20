@@ -5,6 +5,7 @@
 .tags*
 .bundle
 .bundle/*
+.rbenv-vars-private
 log
 log/*
 db/test.*
