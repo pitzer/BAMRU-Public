@@ -19,7 +19,7 @@ share_dir = File.expand_path("config/deploy/shared", File.dirname(__FILE__))
 require "#{share_dir}/tasks"
 
 # ===== Package Definitions =====
-require base_dir + "/config/deploy/shared/packages/passenger"
-require base_dir + "/config/deploy/shared/packages/foreman"
-require base_dir + "/config/deploy/shared/packages/sqlite"
+require share_dir + "/packages/passenger"
+require share_dir + "/packages/foreman"
+require share_dir + "/packages/sqlite"
 
