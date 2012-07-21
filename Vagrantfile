@@ -1,6 +1,7 @@
 # vi: set ft=ruby :
 
-BOX_NAME = :vagrant
+require 'rubygems'
+BOX_NAME ||= :vagrant
 
 # get bootstrap file
 system "curl -s https://raw.github.com/andyl/base_util/master/bin/bootstrap_base > /tmp/bootstrap_base" 

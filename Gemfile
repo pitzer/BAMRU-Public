@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
 gem 'rake', "~> 0.9.2.2"
-gem 'net-ssh', "2.5.2"
+gem 'net-ssh', "2.2.2"
 gem 'activerecord'
 gem 'activesupport'
 gem 'sinatra'
@@ -20,6 +20,7 @@ gem "ghost"
 gem "passenger"
 
 group :development, :test do
+  gem "debugger"
   gem "vmc"
   gem "factory_girl"
   gem "capistrano"
@@ -31,7 +32,9 @@ group :development, :test do
   gem "shotgun"
   gem "thin"
 
-  gem "vagrant"
+  gem "vagrant", "1.0.3"
+  gem "virtualbox"
+  gem "vagrant-snap"
 
   gem "guard-coffeescript"
   gem "therubyracer"
