@@ -1,11 +1,12 @@
 require 'rubygems'
 require 'bundler/setup'
+require File.expand_path('./lib/env_settings', File.dirname(__FILE__))
 
 # ===== App Config =====
 set :app_name,    "borg"
 set :application, "BAMRU-Public"
 set :repository,  "https://github.com/andyl/#{application}.git"
-set :vhost_names, %w(borg borgtest)
+set :vhost_names, %w(bamru.info borg borgtest)
 set :web_port,    9500
 
 # ====== Deployment Stages =====
