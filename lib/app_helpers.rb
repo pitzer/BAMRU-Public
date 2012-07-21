@@ -11,6 +11,7 @@ module Sinatra
     BIG_MAP      = File.read(BASE_DIR + "/data/big_map.erb")
     PHOTO_LEFT   = File.read(DATA_DIR + "/photo_caption_left.html")
     PHOTO_RIGHT  = File.read(DATA_DIR + "/photo_caption_right.html")
+    DONATE_LEFT  = File.read(DATA_DIR + "/donate_left.html")
 
     def protected!
       unless authorized?
