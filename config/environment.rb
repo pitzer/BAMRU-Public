@@ -29,9 +29,9 @@ Dir[BASE_DIR + "lib/*.rb"].each {|f| load f}
 # load factory definitions
 # require BASE_DIR + "db/factories"
 
-BORG_ENVIRONMENT_FILE = File.expand_path("~/.borg_environment.yaml")
-yaml_env = YAML.load_file(BORG_ENVIRONMENT_FILE)
-
-GCAL_USER = yaml_env[:gcal_user]
-GCAL_PASS = yaml_env[:gcal_pass]
+#BORG_ENVIRONMENT_FILE = File.expand_path("~/.borg_environment.yaml")
+#yaml_env = YAML.load_file(BORG_ENVIRONMENT_FILE)
+#
+#GCAL_USER = yaml_env[:gcal_user]
+#GCAL_PASS = yaml_env[:gcal_pass]
 
