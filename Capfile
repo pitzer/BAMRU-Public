@@ -6,7 +6,7 @@ require File.expand_path('./lib/env_settings', File.dirname(__FILE__))
 set :app_name,    "borg"
 set :application, "BAMRU-Public"
 set :repository,  "https://github.com/andyl/#{application}.git"
-set :vhost_names, %w(bamru.info borg borgtest)
+set :vhost_names, %w(bamru.info www.bamru.info bamru.org www.bamru.org borg)
 set :web_port,    9500
 
 # ====== Deployment Stages =====
