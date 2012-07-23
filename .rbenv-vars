@@ -1,4 +1,7 @@
 APP_NAME=borg
 
-# RACK_ENV=production
+# default environment
+# automatically changed during deployment
+RAILS_ENV=development
+RACK_ENV=$RAILS_ENV
 
