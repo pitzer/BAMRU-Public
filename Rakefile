@@ -1,5 +1,7 @@
 require 'rubygems'
 require 'bundler'
+require File.expand_path('lib/env_settings', File.dirname(__FILE__))
+
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e

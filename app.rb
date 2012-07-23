@@ -88,6 +88,7 @@ class BamruApp < Sinatra::Base
     @hdr_img   = "images/glacier.jpg"
     @right_nav = right_nav(:donate)
     @right_txt = quote
+    @left_txt  = DONATE_LEFT
     erb :donate
   end
 
