@@ -1,2 +1,4 @@
 APP_NAME=borg
 
+RACK_ENV=production
+
