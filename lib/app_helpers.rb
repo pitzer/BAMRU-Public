@@ -357,9 +357,7 @@ module Sinatra
 
     def admin_nav_footer
       opt1 = [
-              ['/admin_settings', 'Settings'  ],
               ['/admin_data',     'Data'      ]
-#              ['/admin_alerts',   'Alerts'    ]
       ]
       r1 = opt1.map {|i| admin_link(i.first, i.last)}.join(' | ')
       "<hr>#{r1}"

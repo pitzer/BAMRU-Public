@@ -2,11 +2,12 @@ base_dir = File.dirname(File.expand_path(__FILE__))
 require 'rubygems'
 require 'yaml'
 require 'rack-flash'
-require base_dir + '/config/environment'
 require 'uri'
 require 'net/http'
 require 'daemons'
 require 'sinatra/cache_assets'
+require base_dir + '/lib/env_settings'
+require base_dir + '/config/environment'
 
 class BamruApp < Sinatra::Base
   helpers Sinatra::AppHelpers
@@ -17,9 +18,9 @@ class BamruApp < Sinatra::Base
     enable :sessions         # to store login state and calendar search settings
     use Rack::Flash          # for error and success messages
     set :erb, :trim => '-'   # strip whitespace when using <% -%>
-    set :views,  File.expand_path(File.dirname(__FILE__)) + '/views'
-    set :public, File.expand_path(File.dirname(__FILE__)) + '/public'
     set :static, true
+    set :views,         File.expand_path(File.dirname(__FILE__)) + '/views'
+    set :public_folder, File.expand_path(File.dirname(__FILE__)) + '/public'
   end
 
   # ----- PUBLIC PAGES -----
@@ -360,30 +361,6 @@ class BamruApp < Sinatra::Base
     redirect('/admin_events')
   end
 
-  get '/admin_settings' do
-    erb :admin_settings, :layout => :admin_x_layout
-  end
-
-  post '/admin_settings' do
-    sitep = Settings.new(params)
-    if sitep.save
-      set_flash_notice("Updated Settings")
-      if sitep.peer_url_defined? && sitep.primary? && @sitep.password != sitep.password
-        url = "#{sitep.peer_url}/update_pwd?passwd=#{params['password']}"
-        uri = URI.parse(url)
-        #status = Net::HTTP.get_response(uri.host, uri.path).body
-        status = Net::HTTP.get_response(URI.parse(url)).body
-        puts "\nPassword Update Error Message\n#{status}"     unless status == "OK"
-        set_flash_error("Problem updating password on Backup site") unless status == "OK"
-      end
-      redirect '/admin_settings'
-      else
-        set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(sitep.errors)}")
-        @sitep = Settings.new
-        erb :admin_settings, :layout => :admin_x_layout#
-      end
-    end
-  
   get '/admin_inval_csv' do
     response["Content-Type"] = "text/plain"
     File.read(INVAL_CSV_FILENAME)
