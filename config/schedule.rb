@@ -7,11 +7,5 @@ env :RACK_ENV, 'production'
 set :output, {:standard => 'log/cron_normal.log', :error => 'log/cron_error.log'}
 
 every 1.day do
-  command "cd #{dir} && mv log/cron_normal.log log/cron_normal_backup.log"
-  command "cd #{dir} && mv log/cron_error.log log/cron_error_backup.log"
+  command "cd #{dir}/log && find . -type f -name '*.log' | xargs -I file mv file file.bak"
 end
-
-every 1.day do
-  command "cd #{dir} && bundle exec rake gcal_sync RACK_ENV=production"
-end
-
