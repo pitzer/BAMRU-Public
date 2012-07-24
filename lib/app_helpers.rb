@@ -32,9 +32,7 @@ module Sinatra
     def background(&block)
       Process.fork do
         Process.fork do
-          puts "Launching Background Process"
           Daemons.call &block
-          puts "Background Process has been Launched"
         end
         exit
       end

@@ -1,6 +1,10 @@
+base_dir = File.expand_path(File.dirname(__FILE__))
+
 require 'rubygems'
 require 'bundler'
-require File.expand_path('lib/env_settings', File.dirname(__FILE__))
+require File.expand_path('config/environment',  base_dir)
+require File.expand_path('lib/env_settings',    base_dir)
+require File.expand_path('lib/gcal_sync',       base_dir)
 
 begin
   Bundler.setup(:default, :development)
@@ -10,8 +14,6 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 require 'rake'
-# require 'rspec/core/rake_task'
-# require File.expand_path(File.dirname(__FILE__)) + '/lib/shared/tasks/rake_tasks'
 
 def break() puts '*' * 60; end
 
@@ -26,31 +28,11 @@ def end_task(msg)
   exit
 end
 
-desc "Import CSV data from Peer URL"
-task :data_import do
-  require File.dirname(File.expand_path(__FILE__)) + '/config/environment'
-  sitep = Settings.new
-  puts "Starting Data Import @ #{Time.now}"
-  end_task "Only works with Backup Sites" if sitep.primary?
-  end_task "Peer Site is undefined" if sitep.peer_url_undefined?
-  url = sitep.peer_csv
-  uri = URI.parse(url)
-  puts "Reading CSV from #{url}..."
-  csv_text = Net::HTTP.get_response(uri.host, uri.path).body
-  end_task "CsvData not ready to load..." unless CsvLoader.load_ready?(csv_text)
-  Event.delete_all
-  puts "Loading CSV data..."
-  CsvLoader.new(csv_text)
-  puts "Saving CSV history..."
-  CsvHistory.save
-  puts "Done."
-end
-
 desc "Run the development server"
 task :run_server do
   system "xterm_title '<thin> #{File.basename(`pwd`).chomp}@#{ENV['SYSNAME']}:9393'"
   system "touch tmp/restart.txt"
-  system "shotgun config.ru -s thin -o 0.0.0.0"
+  system "shotgun config.ru -s webrick -o 0.0.0.0"
 end
 task :run => :run_server
 
@@ -64,35 +46,45 @@ task :console do
 end
 task :con => :console
 
-desc "Sync Calendar Data with Google Calendar"
-task :gcal_sync do
-  require File.dirname(File.expand_path(__FILE__)) + '/config/environment'
-  GcalSync.sync
-end
+namespace :gcal do
 
-desc "Set Primary Role"
-task :set_primary_role do
-  require File.dirname(File.expand_path(__FILE__)) + '/config/environment'
-  config = Settings.new
-  config.site_role = "Primary"
-  config.save
-end
+  def exit_with(msg)
+    puts "Error: #{msg}"
+    exit
+  end
 
-desc "Set Backup Role"
-task :set_backup_role do
-  require File.dirname(File.expand_path(__FILE__)) + '/config/environment'
-  config = Settings.new
-  config.site_role = "Backup"
-  config.save
-end
+  def find_event_id
+    exit_with("No EVENT_ID") unless event_id = ENV["EVENT_ID"]
+    event_id
+  end
 
-desc "Set Peer URL"
-task :set_peer do
-  abort "Need Peer URL (rake set_peer PEER_URL=<url>" unless ENV['PEER_URL']
-  require File.dirname(File.expand_path(__FILE__)) + '/config/environment'
-  config = Settings.new
-  config.peer_url = ENV['PEER_URL']
-  config.save
+  def find_event
+    event_id = find_event_id
+    exit_with("No records (id=#{event_id})") unless event = Event.find_by_id(event_id)
+    event
+  end
+
+  desc "Sync Calendar Data with Google Calendar"
+  task :sync do
+    require File.dirname(File.expand_path(__FILE__)) + '/config/environment'
+    GcalSync.sync
+  end
+
+  desc "Create a Gcal Event"
+  task :create do
+    GcalSync.create_event(find_event)
+  end
+
+  desc "Update a Gcal Event"
+  task :update do
+    GcalSync.update_event(find_event)
+  end
+
+  desc "Delete a Gcal Event"
+  task :delete do
+    GcalSync.delete_event(find_event_id)
+  end
+
 end
 
 namespace :db do
@@ -149,63 +141,3 @@ namespace :db do
 
 end
 
-# desc "Run all specs"
-# task :spec do
-#   cmd = "rspec -O spec/spec.opts spec/**/*_spec.rb"
-#   puts "Running All Specs"
-#   puts cmd
-#   system cmd
-# end
-# 
-# namespace :spec do
-#   desc "Show spec documentation"
-#   task :doc do
-#     cmd = "rspec -O spec/spec.opts --format documentation spec/**/*_spec.rb"
-#     puts "Generating Spec documentation"
-#     puts cmd
-#     system cmd
-#   end
-# 
-#   desc "Generate HTML documentation"
-#   task :html do
-#     outfile = '/tmp/spec.html'
-#     cmd = "rspec -O spec/spec.opts --format html spec/**/*_spec.rb > #{outfile}"
-#     puts "Generating HTML documentation"
-#     puts cmd
-#     system cmd
-#     puts "HTML documentation written to #{outfile}"
-#   end
-# 
-#   task :rcov_cleanup do
-#     system "rm -rf coverage"
-#   end
-# 
-#   desc ""
-#   RSpec::Core::RakeTask.new(:run_rcov) do |t|
-#     t.rcov = true
-#     t.rcov_opts = %q[--exclude "/home" --exclude "spec"]
-#     t.verbose = true
-#   end
-# 
-#   desc "Generate coverage report"
-#   task :rcov => [:rcov_cleanup, :run_rcov] do
-#     puts "Rcov generated - view at 'coverage/index.html'"
-#   end
-# 
-# end
-# 
-# task :rdoc_cleanup do
-#   system "rm -rf doc"
-# end
-# 
-# desc "Generate Rdoc"
-# task :rdoc => :rdoc_cleanup do
-#   system "rdoc lib/*.rb README.rdoc -N --main README.rdoc"
-#   puts "Rdoc generated - view at 'doc/index.html'"
-# end
-# 
-# desc "Remove all Rcov and Rdoc data"
-# task :cleanup => ['spec:rcov_cleanup', :rdoc_cleanup] do
-#   puts "Done"
-# end
-# task :clean => :cleanup
