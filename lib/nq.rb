@@ -20,7 +20,7 @@ class Nq
   end
   
   def self.alert_mail(message = nil)
-    alert_env = message.nil? ? "" : " ALERT_MSG='#{message}'"
+    alert_env = message.nil? ? "" : " ALERT_MSG=#{message}"
     invoke_rake_task("alert_mail#{alert_env}")
   end
 

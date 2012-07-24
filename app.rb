@@ -22,7 +22,8 @@ class BamruApp < Sinatra::Base
     set :views,         File.expand_path(File.dirname(__FILE__)) + '/views'
     set :public_folder, File.expand_path(File.dirname(__FILE__)) + '/public'
     set :session_secret, "34kjafoai3rafjal3iralhhtei8asdf8asfl3f3wla8"
-    set :raise_errors, false
+    set :raise_errors,    false
+    set :show_exceptions, false
   end
 
   # ----- PUBLIC PAGES -----
@@ -382,21 +383,24 @@ class BamruApp < Sinatra::Base
     "not working"
   end
 
+  error do
+    @right_nav = quote
+    @hdr_img   = "images/mtn.jpg"
+    status 200
+    @error_name  = env['sinatra.error'].name
+    @error_mesg  = env['sinatra.error'].message
+    @target_page = env['REQUEST_PATH']
+    puts '*' * 80, "ERROR", Time.now, @error_name, @error_mesg, @target_page, '*' * 80
+    message = "target_page:#{@target_page}"
+    Nq.alert_mail(message)
+    erb :error
+  end
+
   not_found do
     @right_nav = quote
     @hdr_img   = "images/mtn.jpg"
     status 200
     erb :not_found
-  end
-
-  error [403, 405..510] do
-    @right_nav = quote
-    @hdr_img   = "images/mtn.jpg"
-    status 200
-    @error_name = env['sinatra.error'].name
-    @error_mesg = env['sinatra.error'].message
-    Nq.send_alert("#{@error_name} / #{@error_mesg}")
-    erb :error
   end
 
 end

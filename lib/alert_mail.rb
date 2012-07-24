@@ -9,7 +9,7 @@ class AlertMail
     alert_message = gmail.generate_message do
       to      EXCEPTION_ALERT_EMAILS
       from    "BAMRU.org"
-      subject "Exception (#{Time.now.strftime("%H:%M")})"
+      subject "BAMRU.org Exception (#{Time.now.strftime("%H:%M")})"
       body    msg
     end
 

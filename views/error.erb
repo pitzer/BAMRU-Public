@@ -1,9 +1,32 @@
 <div style='margin: 20px;'>
   <h2>There was an error.</h2>
   <p></p>
-  <b>Error Name:</b> <%= @error_name %>
-  <p></p>
-  <b>Error Message:</b> <%= @error_message %>
+  <table>
+    <tr>
+      <td align=right>
+        <b>Error Name:</b>
+      </td>
+      <td>
+        <%= @error_name %>
+      </td>
+    </tr>
+    <tr>
+      <td align=right>
+        <b>Error Message:</b>
+      </td>
+      <td>
+        <%= @error_mesg %>
+      </td>
+    </tr>
+    <tr>
+      <td align=right>
+        <b>Target Page:</b>
+      </td>
+      <td>
+        <%= @target_page %>
+      </td>
+    </tr>
+  </table>
   <p></p>
   Please contact Andy if the problem persists.
 </div>
