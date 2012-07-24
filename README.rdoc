@@ -93,3 +93,9 @@ server logs, system monitors, etc.
 This app interacts with 3rd party services (Gmail, Gcal).
 Account Credentials for these services not stored in
 the source code repository.  See Andy to get this info.
+
+== Scheduled Tasks
+
+The set of scheduled (cron) tasks associated with this app
+is defined in `config/schedule.rb`.
+

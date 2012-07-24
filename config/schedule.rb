@@ -1,11 +1,16 @@
 # cron jobs - using javan/whenever
 
-dir = File.dirname(File.expand_path(__FILE__))
+base_dir = File.expand_path("../../", __FILE__)
 
 env :RACK_ENV, 'production'
 
-set :output, {:standard => 'log/cron_normal.log', :error => 'log/cron_error.log'}
+set :output, {:standard => "#{base_dir}/log/cron_normal.log", :error => "#{base_dir}/log/cron_error.log"}
 
-every 1.day do
-  command "cd #{dir}/log && find . -type f -name '*.log' | xargs -I file mv file file.bak"
+every 1.day, :at => '4:30 am' do
+  command "cd #{base_dir}/log && find . -type f -name '*.log' | xargs -I file mv file file.bak"
 end
+
+every 1.day, :at => '4:45 am' do
+  command "cd #{base_dir} && rake backup:db"
+end
+
