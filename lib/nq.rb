@@ -1,14 +1,11 @@
 class Nq
 
-  # ----- Batch Sync Functions -----
+  # ----- Calendar Sync -----
   # - called by command-line tool to completely resync the calendars
 
   def self.sync
     invoke_rake_task("gcal:sync")
   end
-
-  # ----- Event-Driven Sync Functions -----
-  # - called by WebApp during CRUD operations
 
   def self.create_event(id)
     invoke_rake_task("gcal:create EVENT_ID=#{id}")
@@ -20,6 +17,11 @@ class Nq
 
   def self.delete_event(id)
     invoke_rake_task("gcal:delete EVENT_ID=#{id}")
+  end
+  
+  def self.alert_mail(message = nil)
+    alert_env = message.nil? ? "" : " ALERT_MSG='#{message}'"
+    invoke_rake_task("alert_mail#{alert_env}")
   end
 
   private

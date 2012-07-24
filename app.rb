@@ -382,6 +382,13 @@ class BamruApp < Sinatra::Base
     "OK"
   end
 
+  # ----- Error handling -----
+
+  get '/errorgen' do
+    xx = nil.quote
+    "this is an error page"
+  end
+
   not_found do
     @right_nav = quote
     @hdr_img   = "images/mtn.jpg"
@@ -389,11 +396,13 @@ class BamruApp < Sinatra::Base
     erb :not_found
   end
 
-  error do
+  error [403, 405..510] do
     @right_nav = quote
     @hdr_img   = "images/mtn.jpg"
     status 200
-    # send an email alert
+    @error_name = env['sinatra.error'].name
+    @error_mesg = env['sinatra.error'].message
+    Nq.send_alert("#{@error_name} / #{@error_mesg}")
     erb :error
   end
 

@@ -19,6 +19,7 @@ gem "colored"
 gem "ghost"
 gem "passenger"
 gem "ruby-gmail"
+gem "mime"
 
 group :development, :test do
   gem "vmc"

@@ -8,14 +8,15 @@ class AlertMail
 
     alert_message = gmail.generate_message do
       to      EXCEPTION_ALERT_EMAILS
-      subject "BAMRU.org Exception"
+      from    "BAMRU.org"
+      subject "Exception (#{Time.now.strftime("%H:%M")})"
       body    msg
     end
 
     alert_message.deliver!
 
     gmail.logout
-    
+
   end
 
 end
