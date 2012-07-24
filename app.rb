@@ -374,11 +374,8 @@ class BamruApp < Sinatra::Base
 
   # ----- Error handling -----
 
-  get '/genery' do
-    "working"
-  end
-
-  get '/genern' do
+  # for testing
+  get '/generror' do
     xx = nil.quote
     "not working"
   end
@@ -389,7 +386,7 @@ class BamruApp < Sinatra::Base
     status 200
     @error_name  = env['sinatra.error'].name
     @error_mesg  = env['sinatra.error'].message
-    puts '*' * 80, "ERROR", Time.now, @error_name, @error_mesg, @target_page, '*' * 80
+    puts '*' * 80, "ERROR", Time.now, @error_name, @error_mesg, '*' * 80
     message = "error_name:#{@error_name}"
     Nq.alert_mail(message)
     erb :error
