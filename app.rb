@@ -22,6 +22,7 @@ class BamruApp < Sinatra::Base
     set :views,         File.expand_path(File.dirname(__FILE__)) + '/views'
     set :public_folder, File.expand_path(File.dirname(__FILE__)) + '/public'
     set :session_secret, "34kjafoai3rafjal3iralhhtei8asdf8asfl3f3wla8"
+    set :raise_errors, false
   end
 
   # ----- PUBLIC PAGES -----
@@ -312,7 +313,7 @@ class BamruApp < Sinatra::Base
     redirect "/admin_events"
   end
 
-    get '/admin_data' do
+  get '/admin_data' do
     erb :admin_data, :layout => :admin_x_layout
   end
 
@@ -370,23 +371,15 @@ class BamruApp < Sinatra::Base
     File.read(INVAL_REC_FILENAME)
   end
 
-  get '/update_pwd' do
-    @sitep = Settings.new
-    return "Error: incorrect password" unless params[:passwd]
-    return "Error: not a backup site" unless @sitep.backup?
-    return "Error: no peer url" unless @sitep.peer_url_defined?
-    return "Error: unrecognized peer" unless request.env['REMOTE_ADDR'] == @sitep.peer_address
-    @sitep.password = params[:passwd]
-    return "Error: invalid password" unless @sitep.valid?
-    @sitep.save
-    "OK"
-  end
-
   # ----- Error handling -----
 
-  get '/errorgen' do
+  get '/genery' do
+    "working"
+  end
+
+  get '/genern' do
     xx = nil.quote
-    "this is an error page"
+    "not working"
   end
 
   not_found do
