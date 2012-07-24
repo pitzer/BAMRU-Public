@@ -32,7 +32,7 @@ desc "Run the development server"
 task :run_server do
   system "xterm_title '<thin> #{File.basename(`pwd`).chomp}@#{ENV['SYSNAME']}:9393'"
   system "touch tmp/restart.txt"
-  system "shotgun config.ru -s webrick -o 0.0.0.0"
+  system "shotgun config.ru -s thin -o 0.0.0.0"
 end
 task :run => :run_server
 
@@ -45,6 +45,12 @@ task :console do
   IRB.start
 end
 task :con => :console
+
+desc "Send an alert message"
+task :alert_mail do
+  msg = ENV['ALERT_MSG']
+  msg.nil? ? AlertMail.send : AlertMail.send(msg)
+end
 
 namespace :gcal do
 
