@@ -5,3 +5,8 @@ APP_NAME=borg
 RAILS_ENV=development
 RACK_ENV=$RAILS_ENV
 
+# send alert mails to these addresses
+# emails sent upon 500 error
+# (separate addresses by spaces - no quotes)
+EXCEPTION_ALERT_EMAILS=andy@r210.com
+

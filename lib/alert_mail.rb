@@ -1,28 +1,21 @@
-require 'mail'
+require 'gmail'
 
 class AlertMail
 
-  def self.send
+  def self.send(msg = "BAMRU.org 500 error")
 
-    mail = Mail.new do
-      from    'mikel@test.lindsaar.net'
-      to      'you@test.lindsaar.net'
-      subject 'This is a test email'
-      body    File.read('body.txt')
+    gmail = Gmail.new(GMAIL_USER, GMAIL_PASS)
+
+    alert_message = gmail.generate_message do
+      to      EXCEPTION_ALERT_EMAILS
+      subject "BAMRU.org Exception"
+      body    msg
     end
 
-    mail.to_s #=> "From: mikel@test.lindsaar.net\r\nTo: you@...
+    alert_message.deliver!
 
-    mail = Mail.new do
-      from     'me@test.lindsaar.net'
-      to       'you@test.lindsaar.net'
-      subject  'Here is the image you wanted'
-      body     File.read('body.txt')
-      add_file :filename => 'somefile.png', :content => File.read('/somefile.png')
-    end
-
-    mail.deliver!
-
+    gmail.logout
+    
   end
 
 end

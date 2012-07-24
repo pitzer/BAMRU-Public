@@ -18,7 +18,7 @@ gem "foreman"
 gem "colored"
 gem "ghost"
 gem "passenger"
-gem "mail"
+gem "ruby-gmail"
 
 group :development, :test do
   gem "vmc"
