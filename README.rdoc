@@ -15,18 +15,6 @@ extend.  Hopefully we'll be more efficient using newer tools:
 - deploy tool [Capistrano]
 - library manager [Bundler]
 
-== Live Demo - Public Pages
-
-To see a live demo of the app, visit:
-http://bamru.info
-
-== Live Demo - Admin Pages
-
-Admin pages are at:
-http://bamru.info/admin
-
-(see Andy for a current userid & password)
-
 == Installing & Running the App
 
 You can clone the app and run it on your system.
@@ -58,10 +46,50 @@ To see a list of test/edit commands, run
 
 All of the deployment scripts are in the Capfile.
 
+Note that we use a 'multistage' strategy with Capistrano.
+Defined stages are:
+- vagrant
+- devstage
+- pubstage
+- production
+
+Environment definitions for the various stages are saved
+in the 'config/deploy' directory.
+
 To see a list of deployment commands, run
 
     cap -T
 
-== More Information
+== Provisioning a Staging Server
 
-See the Wiki at https://github.com/andyl/BAMRU-Public/wiki
+We use Vagrant to provision a basic staging server.
+
+    vagrant up
+
+This will provision the staging server from scratch,
+with all the tools needed to run a production system.
+Support software includes:
+- nginx
+- passenger
+
+Once the staging server is provisioned, deploy the code
+using:
+
+    > cap vagrant deploy:setup
+    > cap vagrant deploy
+
+== Management Console
+
+You can bring up a management console for a production
+system using the command:
+
+    > cap production console
+
+This will bring up a Tmux session with pages that stream
+server logs, system monitors, etc.
+
+== Account Credentials
+
+This app interacts with 3rd party services (Gmail, Gcal).
+Account Credentials for these services not stored in
+the source code repository.  See Andy to get this info.
