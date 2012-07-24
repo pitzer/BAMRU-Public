@@ -97,5 +97,5 @@ the source code repository.  See Andy to get this info.
 == Scheduled Tasks
 
 The set of scheduled (cron) tasks associated with this app
-is defined in `config/schedule.rb`.
-
+is defined in `config/schedule.rb`.  Scheduled tasks are
+defined for log-file rotation and database backups.
