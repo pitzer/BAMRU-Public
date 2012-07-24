@@ -1,5 +1,11 @@
 = HISTORY
 
+== 0.2.0 - 2012-07-24 (Incremental Sync)
+- added calendar incremental sync
+- added background job queue (script/nq)
+- removed dual-machine setup
+- using Puppet for server config
+
 == 0.1.1 - 2011-07-20 (Dual-Machine Deploy)
 - add dual-deploy script
 - shared symlink for the database, admin userid/password
@@ -42,29 +48,10 @@
 
 = TODO
 
-(Server Configuration)
-- use Chef for automated server configuration
-- add configuration tasks to the Rakefile
-
-(Event Logging)
-- add a standard event-log process
-- add logging statements to application code
-
 (Monitoring and Alerting)
-- find a 3rd party monitoring solution
-- generate/send emails
-- make sure the monitor triggers the sync process via http post
+- generate/send alert emails on 500 errors
+- add bamru.org to pingcom
 
 (Admin)
+- add a new backup process
 - move DNS assets to BAMRU account
-- add relevant info to BAMRU wiki (account pwds, DNS info, etc.)
-
-(Misc.)
-- Clean up the HTML and CSS
-- Refactor app.rb
-- Add integration tests for admin forms
-- Add unit tests for helpers
-- Add view tests
-- Manually input 2003-2005 calendar events
-- Fix the date ranges for the jQuery date picker - fewer years
-- Document the machine config script
