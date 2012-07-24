@@ -389,9 +389,8 @@ class BamruApp < Sinatra::Base
     status 200
     @error_name  = env['sinatra.error'].name
     @error_mesg  = env['sinatra.error'].message
-    @target_page = env['REQUEST_PATH']
     puts '*' * 80, "ERROR", Time.now, @error_name, @error_mesg, @target_page, '*' * 80
-    message = "target_page:#{@target_page}"
+    message = "error_name:#{@error_name}"
     Nq.alert_mail(message)
     erb :error
   end
