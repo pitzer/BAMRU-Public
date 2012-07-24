@@ -318,7 +318,6 @@ class BamruApp < Sinatra::Base
     erb :admin_data, :layout => :admin_x_layout
   end
 
-  # duplication with admin_data_url - needs refactoring
   post('/admin_data_file') do
     if params[:file].nil?
       set_flash_error("Error - no CSV file was selected")
@@ -335,30 +334,7 @@ class BamruApp < Sinatra::Base
     end
     set_flash_error(csv_load.warning_message) if csv_load.warnings?
     set_flash_notice(csv_load.success_message)
-    background { CsvHistory.save }
-    redirect('/admin_events')
-  end
-
-  # duplication with admin_data_url - needs refactoring
-  post('/admin_data_url') do
-    if params[:peer_url].nil?
-      set_flash_error("Error - no peer CSV was selected")
-      redirect '/admin_data'
-    end
-    url = params[:peer_url]
-    uri = URI.parse(url)
-    csv_text = Net::HTTP.get_response(uri.host, uri.path).body
-    if params["mode"] == "overwrite"
-      Event.delete_all if CsvLoader.load_ready?(csv_text)
-    end
-    csv_load = CsvLoader.new(csv_text)
-    if csv_load.errors?
-      set_flash_error(csv_load.error_message)
-      background { CsvHistory.save }
-      redirect('/admin_data')
-    end
-    set_flash_error(csv_load.warning_message) if csv_load.warnings?
-    set_flash_notice(csv_load.success_message)
+    Nq.sync
     redirect('/admin_events')
   end
 
