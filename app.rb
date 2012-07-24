@@ -385,7 +385,16 @@ class BamruApp < Sinatra::Base
   not_found do
     @right_nav = quote
     @hdr_img   = "images/mtn.jpg"
+    status 200
     erb :not_found
+  end
+
+  error do
+    @right_nav = quote
+    @hdr_img   = "images/mtn.jpg"
+    status 200
+    # send an email alert
+    erb :error
   end
 
 end
