@@ -18,6 +18,7 @@ gem "foreman"
 gem "colored"
 gem "ghost"
 gem "passenger"
+gem "mail"
 
 group :development, :test do
   gem "vmc"
