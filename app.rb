@@ -1,12 +1,13 @@
 base_dir = File.dirname(File.expand_path(__FILE__))
 require 'rubygems'
 require 'yaml'
-require 'rack-flash'
-require base_dir + '/config/environment'
 require 'uri'
 require 'net/http'
 require 'daemons'
+require 'rack-flash'
 require 'sinatra/cache_assets'
+require base_dir + '/lib/env_settings'
+require base_dir + '/config/environment'
 
 class BamruApp < Sinatra::Base
   helpers Sinatra::AppHelpers
@@ -20,6 +21,7 @@ class BamruApp < Sinatra::Base
     set :static, true
     set :views,         File.expand_path(File.dirname(__FILE__)) + '/views'
     set :public_folder, File.expand_path(File.dirname(__FILE__)) + '/public'
+    set :session_secret, "34kjafoai3rafjal3iralhhtei8asdf8asfl3f3wla8"
   end
 
   # ----- PUBLIC PAGES -----
@@ -245,7 +247,7 @@ class BamruApp < Sinatra::Base
   end
 
   get '/admin_create' do
-    @action      = Event.new
+    @action      = Event.new(:start => Time.now.strftime("%Y-%m-%d"))
     @post_action = "/admin_create"
     @button_text = "Create"
     erb :admin_create, :layout => :admin_x_layout
@@ -256,23 +258,6 @@ class BamruApp < Sinatra::Base
     @post_action = "/admin_create"
     @button_text = "Create"
     erb :admin_create, :layout => :admin_x_layout
-  end
-
-  post '/admin_create' do
-    params.delete "submit"
-    action = Event.new(params)
-    if action.save
-      background { GcalSync.create_event(action) }
-      background { CsvHistory.save }
-      set_flash_notice("Created New Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
-      redirect '/admin_events'
-    else
-      set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
-      @action      = action
-      @post_action = "/admin_create"
-      @button_text = "Create"
-      erb :admin_new, :layout => :admin_x_layout
-    end
   end
 
   get '/admin_show/:id' do
@@ -287,12 +272,27 @@ class BamruApp < Sinatra::Base
     erb :admin_edit, :layout => :admin_x_layout
   end
 
+  post '/admin_create' do
+    params.delete "submit"
+    action = Event.new(params)
+    if action.save
+      Nq.create_event(action.id)
+      set_flash_notice("Created New Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
+      redirect '/admin_events'
+    else
+      set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
+      @action      = action
+      @post_action = "/admin_create"
+      @button_text = "Create"
+      erb :admin_new, :layout => :admin_x_layout
+    end
+  end
+
   post '/admin_update/:id' do
     action = Event.find_by_id(params[:id])
-    params.delete "submit"
+    %w(submit splat captures).each {|x| params.delete x}
     if action.update_attributes(params)
-      background { GcalSync.update_event(action) }
-      background { CsvHistory.save }
+      Nq.update_event(action.id)
       set_flash_notice("Updated Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
       redirect '/admin_events'
     else
@@ -307,9 +307,8 @@ class BamruApp < Sinatra::Base
   get '/admin_delete/:id' do
     action = Event.find_by_id(params[:id])
     set_flash_notice("Deleted Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
+    Nq.delete_event(action.id)
     action.destroy
-    background { GcalSync.delete_event(action) }
-    background { CsvHistory.save }
     redirect "/admin_events"
   end
 
@@ -361,30 +360,6 @@ class BamruApp < Sinatra::Base
     redirect('/admin_events')
   end
 
-  get '/admin_settings' do
-    erb :admin_settings, :layout => :admin_x_layout
-  end
-
-  post '/admin_settings' do
-    sitep = Settings.new(params)
-    if sitep.save
-      set_flash_notice("Updated Settings")
-      if sitep.peer_url_defined? && sitep.primary? && @sitep.password != sitep.password
-        url = "#{sitep.peer_url}/update_pwd?passwd=#{params['password']}"
-        uri = URI.parse(url)
-        #status = Net::HTTP.get_response(uri.host, uri.path).body
-        status = Net::HTTP.get_response(URI.parse(url)).body
-        puts "\nPassword Update Error Message\n#{status}"     unless status == "OK"
-        set_flash_error("Problem updating password on Backup site") unless status == "OK"
-      end
-      redirect '/admin_settings'
-      else
-        set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(sitep.errors)}")
-        @sitep = Settings.new
-        erb :admin_settings, :layout => :admin_x_layout#
-      end
-    end
-  
   get '/admin_inval_csv' do
     response["Content-Type"] = "text/plain"
     File.read(INVAL_CSV_FILENAME)

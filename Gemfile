@@ -20,8 +20,8 @@ gem "ghost"
 gem "passenger"
 
 group :development, :test do
-  gem "debugger"
   gem "vmc"
+  gem "debugger", :require => 'ruby-debug'
   gem "factory_girl"
   gem "capistrano"
   gem "capistrano_colors"

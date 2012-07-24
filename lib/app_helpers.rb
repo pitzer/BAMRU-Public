@@ -32,9 +32,7 @@ module Sinatra
     def background(&block)
       Process.fork do
         Process.fork do
-          puts "Launching Background Process"
           Daemons.call &block
-          puts "Background Process has been Launched"
         end
         exit
       end
@@ -358,9 +356,7 @@ module Sinatra
 
     def admin_nav_footer
       opt1 = [
-              ['/admin_settings', 'Settings'  ],
               ['/admin_data',     'Data'      ]
-#              ['/admin_alerts',   'Alerts'    ]
       ]
       r1 = opt1.map {|i| admin_link(i.first, i.last)}.join(' | ')
       "<hr>#{r1}"

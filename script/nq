@@ -44,7 +44,7 @@ def ts() Time.now.strftime("%y-%m-%d_%H:%M:%S"); end
 
 STDOUT.flush
 
-sleep 2
+sleep 1
 
 while (file = Dir.glob("#{base_dir}/nq_*").sort.first) != nil do
   cmd = File.read(file).chomp
@@ -57,7 +57,7 @@ while (file = Dir.glob("#{base_dir}/nq_*").sort.first) != nil do
   puts (" Finished PID:#{PID} @ #{ts} ").center(width, '-')
   system "rm #{file}"
   STDOUT.flush
-  sleep 4
+  sleep 1
 end
 
 STDOUT.flush

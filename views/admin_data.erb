@@ -37,18 +37,4 @@ Things to note:
       <input class="zform" type="submit" value="Upload"/><br/>
     </form>
   </td>
-  <td width=300 valign=top>
-    <b>Import CSV Data via Peer URL</b>
-    <form action="/admin_data_url" method='post' enctype='multipart/form-data'>
-      <%=@sitep.peer_csv_link%> (<a href="/admin_settings">change</a>)<br/>
-      <% if @sitep.peer_url_defined? %>
-        <input type="hidden" name="peer_url" value="<%=@sitep.peer_csv%>"/>
-        <select name="mode">
-          <option value="merge">Merge with Existing Data</option>
-          <option value="overwrite">Overwrite Existing Data</option>
-        </select><br/>
-        <input class="zform" type="submit" value="Import"/><br/>
-      <% end %>
-    </form>
-  </td>
 </table>

@@ -1,8 +1,10 @@
+
+
 require 'gcal4ruby'
 require 'yaml'
 
 class GcalSync
-  
+
   include GCal4Ruby
 
   # ----- Utility Methods -----
@@ -45,10 +47,6 @@ class GcalSync
       puts "Deleting #{event.title}"
       event.delete
     end
-    cal.events.each do |event|
-      puts "Deleting #{event.title}"
-      event.delete
-    end
     "OK"
   end
 
@@ -56,7 +54,7 @@ class GcalSync
     service = authenticate_and_return_gcal_service
     get_current_actions_from_database.each do |action|
       if action.kind != "operation"
-        puts "Adding #{action.title}"
+        puts "Adding #{action.title} (#{action.id})"
         event = Event.new(service)
         save_event_to_gcal(service, event, action)
       end
@@ -65,8 +63,7 @@ class GcalSync
   end
 
   def self.sync
-    delete_all_gcal_events
-    delete_all_gcal_events
+    2.times { delete_all_gcal_events }
     add_all_current_actions_to_gcal
   end
 
@@ -74,24 +71,23 @@ class GcalSync
   # - called by WebApp during CRUD operations
 
   def self.create_event(action)
+    return if action.kind == "operation"
     service = authenticate_and_return_gcal_service
     event   = Event.new(service)
+    puts "Creating #{action.id}"
     save_event_to_gcal(service, event, action)
   end
 
   def self.update_event(action)
-    service = authenticate_and_return_gcal_service
-    old_event   = Event.find(service, "BE#{action.id}")
-    old_event   = [event] unless old_event.class == Array
-    old_event.each {|e| e.delete unless event.nil?}
-    new_event   = Event.new(service)
-    save_event_to_gcal(service, new_event, action)
-    end
+    return if action.kind == "operation"
+    delete_event(action.id)
+    create_event(action)
+  end
 
-  def self.delete_event(action)
+  def self.delete_event(id)
     service = authenticate_and_return_gcal_service
-    event   = Event.find(service, "BE#{action.id}").first
-    event.delete unless event.nil?
+    events  = Event.find(service, "BE#{id}")
+    events.each {|ev| puts "Deleting #{id}" ; ev.delete }
   end
 
 end
