@@ -95,26 +95,6 @@ class BamruApp < Sinatra::Base
     erb :donate
   end
 
-  get '/caltopo' do
-    expires 180000, :public, :must_revalidate
-    last_modified last_modification_date
-    @title     = "CalTopo"
-    @hdr_img   = "images/glacier.jpg"
-    @right_nav = right_nav(:donate)
-    @right_txt = quote
-    erb :caltopo
-  end
-
-  get '/backlog' do
-    expires 180000, :public, :must_revalidate
-    last_modified last_modification_date
-    @title     = "Equipment Backlog"
-    @hdr_img   = "images/glacier.jpg"
-    @right_nav = right_nav(:donate)
-    @right_txt = quote
-    erb :backlog
-  end
-
   get '/contact' do
     expires 180000, :public, :must_revalidate
     last_modified last_modification_date
@@ -124,6 +104,8 @@ class BamruApp < Sinatra::Base
     @right_txt = quote
     erb :contact
   end
+
+  # ----- CALENDAR PAGES -----
 
   get '/calendar' do
     expires 60, :public, :must_revalidate
@@ -168,6 +150,8 @@ class BamruApp < Sinatra::Base
     @right_nav = quote
     erb :calendar_gcal
   end
+
+  # ----- OPERATIONS PAGES -----
 
   get '/operations' do
     expires 300, :public, :must_revalidate
@@ -222,10 +206,29 @@ class BamruApp < Sinatra::Base
     erb :sponsors
   end
 
+  get '/caltopo' do
+    expires 180000, :public, :must_revalidate
+    last_modified last_modification_date
+    @title     = "CalTopo"
+    @hdr_img   = "images/glacier.jpg"
+    @right_nav = right_nav(:donate)
+    @right_txt = quote
+    erb :caltopo
+  end
+
+  get '/backlog' do
+    expires 180000, :public, :must_revalidate
+    last_modified last_modification_date
+    @title     = "Equipment Backlog"
+    @hdr_img   = "images/glacier.jpg"
+    @right_nav = right_nav(:donate)
+    @right_txt = quote
+    erb :backlog
+  end
+
   # ----- ADMIN PAGES -----
 
   before '/admin*' do
-    @sitep ||= Settings.new
     protected!
   end
 

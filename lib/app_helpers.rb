@@ -20,15 +20,6 @@ module Sinatra
       end
     end
 
-#    def background
-#      puts "Starting Background Process"
-#      pid = fork do
-#        yield
-#      end
-#      Process.detach(pid)
-#      pid
-#    end
-
     def background(&block)
       Process.fork do
         Process.fork do
@@ -44,7 +35,7 @@ module Sinatra
       @auth.provided? &&
               @auth.basic? &&
               @auth.credentials &&
-              @auth.credentials == ['admin', @sitep.password]
+              @auth.credentials == ['admin', 'admin']
     end
 
     def current_server
@@ -131,7 +122,6 @@ module Sinatra
         </div>
       HTML
     end
-
 
     def calendar_table(events, link="")
       alt = false
@@ -223,7 +213,7 @@ module Sinatra
     def event_links(eid)
       x1 = [event_show_link(eid)]
       x2 = [event_copy_link(eid), event_edit_link(eid), event_delete_link(eid)]
-      output = @sitep.primary? ? x1 + x2 : x1
+      output = x1 + x2
       output.join(' | ')
     end
 
@@ -269,17 +259,6 @@ module Sinatra
       output
     end
 
-    def site_role(obj, string)
-      obj.site_role == string ? 'selected="selected"' : ""
-    end
-
-    def site_role_options(site_obj)
-      <<-STRING
-        <option value="Primary" #{site_role(site_obj, "Primary")}>Primary</option>
-        <option value="Backup" #{site_role(site_obj, "Backup")}>Backup</option>
-      STRING
-    end
-
     def select_helper(action = nil)
       vals = %w(meeting training operation other)
       vals.map do |i|
@@ -323,8 +302,6 @@ module Sinatra
               ['/admin_events',        'Events'      ],
               ['/admin_create',        'Create Event']
       ]
-
-      opt = opt[0..1] if @sitep.backup?
 
       opt.map {|i| admin_link(i.first, i.last)}.join(' | ')
     end

@@ -1,5 +1,3 @@
-
-
 require 'gcal4ruby'
 require 'yaml'
 

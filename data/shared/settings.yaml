@@ -1,7 +1,0 @@
---- !ruby/object:Settings
-alert_email: akleak@gmail.com
-auto_sync: 'ON'
-notif_email: andy@r210.com
-password: admin
-peer_url: http://bamru.info
-site_role: Primary
