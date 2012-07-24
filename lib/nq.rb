@@ -31,7 +31,7 @@ class Nq
   def self.invoke_rake_task(command)
     background do
       system "mkdir -p log"
-      cmd = "script/nq rake #{command} >> log/nq.log &"
+      cmd = "script/nq rake #{command} >> log/nq.log 2>> log/nq.log &"
       system cmd
     end
   end
