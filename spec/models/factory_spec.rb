@@ -4,10 +4,10 @@ describe "Factory" do
 
   context "Using the Event Factory" do
     it "should create action objects w/o crashing" do
-      Factory(:event).should_not be_nil
+      FactoryGirl.create(:event).should_not be_nil
     end
     it "should create valid action objects" do
-      Factory(:event).should be_valid
+      FactoryGirl.create(:event).should be_valid
     end
   end
 
@@ -17,7 +17,7 @@ describe "Factory" do
     end
 
     it "should be able to create a single record" do
-      Factory(:event)
+      FactoryGirl.create(:event)
       Event.count.should == 1
     end
 

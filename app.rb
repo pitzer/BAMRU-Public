@@ -363,9 +363,12 @@ class BamruApp < Sinatra::Base
     @right_nav = quote
     @hdr_img   = "images/mtn.jpg"
     status 200
-    @error_name  = env['sinatra.error'].name
-    @error_mesg  = env['sinatra.error'].message
-    puts '*' * 80, "ERROR", Time.now, @error_name, @error_mesg, '*' * 80
+    err = env['sinatra.error']
+    @error_name  = err.respond_to?(:name) ? err.name : "Error"
+    @error_mesg  = err.respond_to?(:name) ? err.message : "An error occurred"
+    unless ENV['RACK_ENV'] == 'test'
+      puts '*' * 80, "ERROR", Time.now, @error_name, @error_mesg, '*' * 80
+    end
     message = "error_name:#{@error_name}"
     Nq.alert_mail(message)
     erb :error

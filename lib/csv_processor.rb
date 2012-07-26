@@ -1,4 +1,5 @@
-require 'fastercsv'
+#require 'fastercsv'
+require 'csv'
 
 class CsvProcessor
 
@@ -6,8 +7,8 @@ class CsvProcessor
 
   def initialize(input = "")
     return if input.empty?
-    @input_header = input.to_a.first.chomp
-    @input_body   = input.to_a[1..-1].map{|x| x.chomp}
+    @input_header = input.split("\n").first.chomp
+    @input_body   = input.split("\n")[1..-1].map{|x| x.chomp}
     @csv_result, @rec_result = {}, {}
   end
 
