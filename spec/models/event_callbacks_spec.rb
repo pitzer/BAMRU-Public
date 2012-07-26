@@ -10,14 +10,14 @@ describe Event, "Callbacks" do
     end
 
     it "zeroes out lat/lon for meetings" do
-      event = Factory.build(:event, :kind => 'meeting', :lat => @lat, :lon => @lon)
+      event = FactoryGirl.build(:event, :kind => 'meeting', :lat => @lat, :lon => @lon)
       event.should be_valid
       event.lat.should be_nil
       event.lon.should be_nil
     end
 
     it "preserves lat/lon for operations" do
-      event = Factory.build(:event, :kind => 'operation', :lat => @lat, :lon => @lon)
+      event = FactoryGirl.build(:event, :kind => 'operation', :lat => @lat, :lon => @lon)
       event.should be_valid
       event.lat.should == @lat
       event.lon.should == @lon

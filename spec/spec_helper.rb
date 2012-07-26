@@ -1,6 +1,7 @@
-ENV["RACK_ENV"] ||= 'test'
+ENV["RACK_ENV"] = 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require File.expand_path("../../app", __FILE__)
+require File.expand_path("../factories", __FILE__)
 require 'time'
 require 'rspec'
 require 'capybara'

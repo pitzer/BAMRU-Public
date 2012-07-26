@@ -24,7 +24,7 @@ describe CsvGenerator do
     end
     context "with input data" do
       before(:each) do
-        Factory(:event)
+        FactoryGirl.create(:event)
         @obj = CsvGenerator.new
       end
       it "generates a valid object" do
@@ -47,7 +47,7 @@ describe CsvGenerator do
     end
     context "with input data" do
       before(:each) do
-        Factory(:event)
+        FactoryGirl.create(:event)
         @obj = CsvGenerator.new
       end
       it "generates a valid output" do
@@ -61,7 +61,7 @@ describe CsvGenerator do
 
   describe "#digest" do
     before(:each) do
-      Factory(:event)
+      FactoryGirl.create(:event)
       @obj = CsvGenerator.new
     end
     it "generates output" do
