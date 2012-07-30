@@ -20,7 +20,7 @@
       system "mkdir -p #{tgt_dir}"
 
       # ----- copy command -----
-      cp_cmd  = Proc.new {|data_path| "cp -r #{data_path} #{tgt_dir}"}
+      cp_cmd  = Proc.new {|data_path| "cp #{data_path} #{tgt_dir}"}
 
       # ----- build a list of targets to copy -----
       target  = params[:target]

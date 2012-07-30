@@ -23,9 +23,8 @@ gem "mime"
 
 group :development, :test do
   gem "vmc"
+  gem "yard"
   gem "debugger", :require => 'ruby-debug'
-  # gem "ruby-debug-base19x", "~> 0.11.30.pre10"
-  # gem "ruby-debug-ide"
   gem "factory_girl"
   gem "capistrano"
   gem "capistrano_colors"

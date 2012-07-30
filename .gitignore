@@ -17,3 +17,7 @@ coverage
 coverage/*
 tmp
 tmp/*
+doc
+doc/*
+.yard*
+.yard*/*
