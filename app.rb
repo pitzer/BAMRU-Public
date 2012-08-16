@@ -226,6 +226,16 @@ class BamruApp < Sinatra::Base
     erb :backlog
   end
 
+  get '/projects' do
+    expires 180000, :public, :must_revalidate
+    last_modified last_modification_date
+    @title     = "Web Projects"
+    @hdr_img   = "images/glacier.jpg"
+    @right_nav = right_nav(:donate)
+    @right_txt = quote
+    erb :web_projects
+  end
+
   # ----- ADMIN PAGES -----
 
   before '/admin*' do
