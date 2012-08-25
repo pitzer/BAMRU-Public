@@ -38,7 +38,7 @@ a.summary:hover    {color: #000;}
 .capsblue       {font-family: Verdana, Arial, Geneva, SunSans-Regular; font-size: 10px; color: #36C; font-weight: bold;} 
 .capswhite      {font-family: Verdana, Arial, Geneva, SunSans-Regular; font-size: 10px; color: #FFF; font-weight: bold;} 
 
-.quote          {font-size: 13px; color: #36C; line-height: 16px; text-decoration: none;}
+.quote          {font-size: 13px; color: #36C; line-height: 16px; text-decoration: none; word-wrap: break-word;}
 .quote_box      {top-margin: 10px; white-space: normal; width: 125px;}
 .guest_box      {top-margin: 10px; white-space: normal; width: 175px;}
 
