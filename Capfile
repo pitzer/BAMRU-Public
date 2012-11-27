@@ -11,7 +11,8 @@ set :web_port,    9500
 
 # ====== Deployment Stages =====
 set :stages,        %w(vagrant devstage pubstage production)
-set :default_stage, "vagrant"
+# set :default_stage, "vagrant"
+set :default_stage, "production"
 require 'capistrano/ext/multistage'
 
 # ===== Common Code for All Stages =====
