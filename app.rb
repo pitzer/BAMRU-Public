@@ -126,6 +126,25 @@ class BamruApp < Sinatra::Base
     erb :calendar
   end
 
+  get '/calendar2' do
+    expires 60, :public, :must_revalidate
+    last_modified last_db_update_date
+    # establish the start and finish range
+    @start  = Event2.date_parse(select_start_date)
+    @finish = Event2.date_parse(select_finish_date)
+    @start, @finish  = @finish, @start if @finish < @start
+    # remember start/finish settings by saving them in the session
+    session[:start]  = @start
+    session[:finish] = @finish
+    # setup the display variables
+    @title     = "BAMRU Calendar"
+    @hdr_img   = "images/mtn.jpg"
+    @right_nav = right_nav(:calendar)
+    @right_txt = erb GUEST_POLICY, :layout => false
+    @left_txt  = quote
+    erb :calendar
+  end
+
   get '/calendar.ical' do
     expires 60, :public, :must_revalidate
     last_modified last_db_update_date
@@ -173,7 +192,43 @@ class BamruApp < Sinatra::Base
     erb :operations
   end
 
+  get '/operations2' do
+    expires 300, :public, :must_revalidate
+    last_modified last_db_update_date
+    # establish the start and finish range
+    @start  = Event2.date_parse(select_start_operation)
+    @finish = Event2.date_parse(select_finish_operation)
+    @start, @finish  = @finish, @start if @finish < @start
+    # remember start/finish settings by saving them in the session
+    session[:start_operation]  = @start
+    session[:finish_operation] = @finish
+    # display variables
+    @title     = "BAMRU Operations"
+    @hdr_img   = "images/glacier.jpg"
+    range      = "range=#{@start.to_label}_#{@finish.to_label}"
+    @filename  = "op2_#{(rand * 10000).round}.kml?#{range}"
+    @right_nav = quote
+    @right_txt = erb BIG_MAP, :layout => false
+    erb :operations
+  end
+
   get "/operations*.kml*" do
+    expires 300, :public, :must_revalidate
+    last_modified last_db_update_date
+    # establish the start and finish range
+    @start  = Event.date_parse(select_start_operation)
+    @finish = Event.date_parse(select_finish_operation)
+    @start, @finish  = @finish, @start if @finish < @start
+    # remember start/finish settings by saving them in the session
+    session[:start_operation]  = @start
+    session[:finish_operation] = @finish
+    # display variables
+    response["Content-Type"] = "text/plain"
+    @operations = Event.operations.between(@start, @finish)
+    erb :operations_kml, :layout => false
+  end
+
+  get "/op2_*.kml*" do
     expires 300, :public, :must_revalidate
     last_modified last_db_update_date
     # establish the start and finish range
@@ -234,6 +289,17 @@ class BamruApp < Sinatra::Base
     @right_nav = right_nav(:donate)
     @right_txt = quote
     erb :web_projects
+  end
+
+  # ----- CSV Resync -----
+
+  get('/csv_resync') do
+    require 'open-uri'
+    csv_url  = params[:url] || "http://bamru.net/public/calendar.csv"
+    csv_text = open(csv_url).read
+    Event2.delete_all
+    csv_load = CsvLoader.new(csv_text)
+    "OK"
   end
 
   # ----- ADMIN PAGES -----
