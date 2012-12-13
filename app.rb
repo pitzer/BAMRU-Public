@@ -127,9 +127,8 @@ class BamruApp < Sinatra::Base
   end
 
   get '/calendar2' do
-    expires 60, :public, :must_revalidate
-    last_modified last_db_update_date
     # establish the start and finish range
+    puts "ACTION CALENDAR 2"
     @start  = Xevent.date_parse(select_start_date)
     @finish = Xevent.date_parse(select_finish_date)
     @start, @finish  = @finish, @start if @finish < @start
@@ -299,7 +298,7 @@ class BamruApp < Sinatra::Base
     csv_text = open("http://bamru.net/public/calendar.csv").read
     array    = CSV.parse(csv_text)
     headers  = array.shift
-    array.each { |event| Xevent.create(Hash[*headers.zip(event)]) }
+    array.each { |event| Xevent.create(Hash[*headers.zip(event).flatten]) }
     "OK"
   end
 
