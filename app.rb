@@ -232,8 +232,8 @@ class BamruApp < Sinatra::Base
     expires 300, :public, :must_revalidate
     last_modified last_db_update_date
     # establish the start and finish range
-    @start  = Event.date_parse(select_start_operation)
-    @finish = Event.date_parse(select_finish_operation)
+    @start  = Xevent.date_parse(select_start_operation)
+    @finish = Xevent.date_parse(select_finish_operation)
     @start, @finish  = @finish, @start if @finish < @start
     # remember start/finish settings by saving them in the session
     session[:start_operation]  = @start
@@ -294,11 +294,12 @@ class BamruApp < Sinatra::Base
   # ----- CSV Resync -----
 
   get('/csv_resync') do
+    require 'csv'
     require 'open-uri'
-    csv_url  = params[:url] || "http://bamru.net/public/calendar.csv"
-    csv_text = open(csv_url).read
-    Xevent.delete_all
-    csv_load = CsvLoader.new(csv_text)
+    csv_text = open("http://bamru.net/public/calendar.csv").read
+    array    = CSV.parse(csv_text)
+    headers  = array.shift
+    array.each { |event| Xevent.create(Hash[*headers.zip(event)]) }
     "OK"
   end
 
