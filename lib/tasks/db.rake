@@ -11,6 +11,12 @@ namespace :db do
     ActiveRecord::Migrator.migrate("db/migrate")
   end
 
+  desc "Roll back one migration"
+  task :rollback do
+    ActiveRecord::Migration.verbose = true
+    ActiveRecord::Migrator.rollback("db/migrate", 1)
+  end
+
   desc "Remove all data from database"
   task :reset do
     puts "Removing all database records"

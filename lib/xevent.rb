@@ -1,4 +1,4 @@
-class Event2 < ActiveRecord::Base
+class Xevent < ActiveRecord::Base
 
   # ----- Callbacks -----
 
