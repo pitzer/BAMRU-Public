@@ -141,7 +141,7 @@ class BamruApp < Sinatra::Base
     @right_nav = right_nav(:calendar)
     @right_txt = erb GUEST_POLICY, :layout => false
     @left_txt  = quote
-    erb :calendar
+    erb :calendar2
   end
 
   get '/calendar.ical' do
