@@ -298,6 +298,7 @@ class BamruApp < Sinatra::Base
     csv_text = open("http://bamru.net/public/calendar.csv").read
     array    = CSV.parse(csv_text)
     headers  = array.shift
+    Xevent.delete_all
     array.each { |event| Xevent.create(Hash[*headers.zip(event).flatten]) }
     "OK"
   end
