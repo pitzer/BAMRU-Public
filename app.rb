@@ -239,7 +239,7 @@ class BamruApp < Sinatra::Base
     session[:finish_operation] = @finish
     # display variables
     response["Content-Type"] = "text/plain"
-    @operations = Event.operations.between(@start, @finish)
+    @operations = Xevent.operations.between(@start, @finish)
     erb :operations_kml, :layout => false
   end
 
