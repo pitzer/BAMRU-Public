@@ -267,8 +267,7 @@ class Xevent < ActiveRecord::Base
   def kml_description
     lbl = leaders.include?(",") ? "Leaders" : "Leader"
     ldr = leaders == "TBA" ? "" : "#{lbl}: #{leaders}<br/>"
-    link = description.gsub("[","").gsub("]", "")
-    mesg = if match = description.match(/\[(.*)\]/)
+    mesg = if (match = description.match(/\[(http.*)\]/))
       link = match[1]
       "Find more information on the <a href='#{link}'>BAMRU Blog</a>"
            else
