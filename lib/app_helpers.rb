@@ -260,7 +260,7 @@ module Sinatra
     end
 
     def select_helper(action = nil)
-      vals = %w(meeting training operation other)
+      vals = %w(meeting training operation community)
       vals.map do |i|
         opt = i == action.kind ? " selected" : "" unless action.nil?
         "<option value='#{i}'#{opt}>#{i.capitalize}</option>"

@@ -17,7 +17,7 @@ class Event < ActiveRecord::Base
   msg = "duplicate record - identical title, location, start"
   validates_uniqueness_of :digest, :message => msg
   validates_presence_of   :kind, :title, :location, :start
-  validates_format_of     :kind, :with => /^(meeting|training|operation|other)$/
+  validates_format_of     :kind, :with => /^(meeting|training|operation|community)$/
 
   validates_numericality_of :lat, :allow_nil => true, :greater_than => 30,   :less_than => 43
   validates_numericality_of :lon, :allow_nil => true, :greater_than => -126, :less_than => -113
