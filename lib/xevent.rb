@@ -34,7 +34,7 @@ class Xevent < ActiveRecord::Base
 
   def self.kind(kind)   where(:kind => kind).order('start');        end
   def self.meetings()   where(:kind => "meeting").order('start');   end
-  def self.others()     where(:kind => "other").order('start');     end
+  def self.others()     where(:kind => "community").order('start'); end
   def self.operations() where(:kind => "operation").order('start'); end
   def self.trainings()  where(:kind => "training").order('start');  end
   def self.after(date)  where('start >= ?', self.date_parse(date)); end
