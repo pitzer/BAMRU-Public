@@ -1,0 +1,60 @@
+<div class="data_box1">
+<h3>Overview</h3>
+
+Use these pages to update the BAMRU calendar.
+Edit with care! Your changes go live onto the BAMRU website!<p/>
+
+<table class="info_table">
+  <tr>
+    <td>
+      Website Home Page: <a href='<%=current_server%>'><%=current_server%></a>
+    </td>
+    <td>
+      Website Admin Page: <a href='<%=current_server%>/admin'><%=current_server%>/admin</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Last Website Change: <b><%=last_modification%></b>
+    </td>
+    <td>
+      Last Server Restart: <b><%=last_restart%></b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      There are <b><%=number_of%></b> events in our database
+    </td>
+    <td>
+      (<%=number_of "meeting"%> meetings, <%=number_of "training"%> trainings, <%=number_of "operation"%> operations, <%=number_of "other"%> others)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Last DB Update: <%=last_update%>
+    </td>
+    <td>
+      Default Display Range: <b><%=Event.default_start.to_label%></b> - <b><%=Event.default_end.to_label%></b>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Oldest Record: <%=oldest_record%>
+    </td>
+    <td>
+      Newest Record: <%=newest_record%>
+    </td>
+  </tr>
+</table>
+
+<h3>Bugs and Change Requests</h3>
+
+Contact the site maintainer, Andy Leak - andy@r210.com - 650-823-0836.
+
+<h3>Website Source Code</h3>
+
+The website source code is publicly available.  Anyone is welcome to
+download/study/reuse/enhance the code.<p/>
+The code is online at <%= link_url "http://github.com/andyl/BAMRU-Public" %>.
+
+</div>
