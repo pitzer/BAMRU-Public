@@ -317,116 +317,116 @@ class BamruApp < Sinatra::Base
     erb :admin_home, :layout => :admin_x_layout
   end
 
-  get '/admin_events' do
-    # select start / finish dates
-    @start  = Event.date_parse(select_start_date)
-    @finish = Event.date_parse(select_finish_date)
-    @start, @finish = @finish, @start if @finish < @start
-    # remember start/finish dates by saving them in the session
-    session[:start] = @start
-    session[:finish] = @finish
-    erb :admin_events, :layout => :admin_x_layout
-  end
-
-  get '/admin_create' do
-    @action      = Event.new(:start => Time.now.strftime("%Y-%m-%d"))
-    @post_action = "/admin_create"
-    @button_text = "Create"
-    erb :admin_create, :layout => :admin_x_layout
-  end
-
-  get '/admin_copy/:id' do
-    @action      = Event.find_by_id(params[:id])
-    @post_action = "/admin_create"
-    @button_text = "Create"
-    erb :admin_create, :layout => :admin_x_layout
-  end
-
-  get '/admin_show/:id' do
-    @action      = Event.find_by_id(params[:id])
-    erb :admin_show, :layout => :admin_x_layout
-  end
-
-  get '/admin_edit/:id' do
-    @action      = Event.find_by_id(params[:id])
-    @post_action = "/admin_update/#{params[:id]}"
-    @button_text = "Update"
-    erb :admin_edit, :layout => :admin_x_layout
-  end
-
-  post '/admin_create' do
-    params.delete "submit"
-    action = Event.new(params)
-    if action.save
-      Nq.create_event(action.id)
-      set_flash_notice("Created New Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
-      redirect '/admin_events'
-    else
-      set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
-      @action      = action
-      @post_action = "/admin_create"
-      @button_text = "Create"
-      erb :admin_new, :layout => :admin_x_layout
-    end
-  end
-
-  post '/admin_update/:id' do
-    action = Event.find_by_id(params[:id])
-    %w(submit splat captures).each {|x| params.delete x}
-    if action.update_attributes(params)
-      Nq.update_event(action.id)
-      set_flash_notice("Updated Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
-      redirect '/admin_events'
-    else
-      set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
-      @action      = action
-      @post_action = "/admin_create"
-      @button_text = "Update"
-      erb :admin_edit, :layout => :admin_x_layout
-    end
-  end
-
-  get '/admin_delete/:id' do
-    action = Event.find_by_id(params[:id])
-    set_flash_notice("Deleted Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
-    Nq.delete_event(action.id)
-    action.destroy
-    redirect "/admin_events"
-  end
-
-  get '/admin_data' do
-    erb :admin_data, :layout => :admin_x_layout
-  end
-
-  post('/admin_data_file') do
-    if params[:file].nil?
-      set_flash_error("Error - no CSV file was selected")
-      redirect '/admin_data'
-    end
-    csv_text = params[:file][:tempfile].read
-    if params["mode"] == "overwrite"
-      Event.delete_all if CsvLoader.load_ready?(csv_text)
-    end
-    csv_load = CsvLoader.new(csv_text)
-    if csv_load.errors?
-      set_flash_error(csv_load.error_message)
-      redirect('/admin_data')
-    end
-    set_flash_error(csv_load.warning_message) if csv_load.warnings?
-    set_flash_notice(csv_load.success_message)
-    Nq.sync
-    redirect('/admin_events')
-  end
-
-  get '/admin_inval_csv' do
-    response["Content-Type"] = "text/plain"
-    File.read(INVAL_CSV_FILENAME)
-  end
-
-  get '/admin_inval_rec' do
-    response["Content-Type"] = "text/plain"
-    File.read(INVAL_REC_FILENAME)
-  end
+  #get '/admin_events' do
+  #  # select start / finish dates
+  #  @start  = Event.date_parse(select_start_date)
+  #  @finish = Event.date_parse(select_finish_date)
+  #  @start, @finish = @finish, @start if @finish < @start
+  #  # remember start/finish dates by saving them in the session
+  #  session[:start] = @start
+  #  session[:finish] = @finish
+  #  erb :admin_events, :layout => :admin_x_layout
+  #end
+  #
+  #get '/admin_create' do
+  #  @action      = Event.new(:start => Time.now.strftime("%Y-%m-%d"))
+  #  @post_action = "/admin_create"
+  #  @button_text = "Create"
+  #  erb :admin_create, :layout => :admin_x_layout
+  #end
+  #
+  #get '/admin_copy/:id' do
+  #  @action      = Event.find_by_id(params[:id])
+  #  @post_action = "/admin_create"
+  #  @button_text = "Create"
+  #  erb :admin_create, :layout => :admin_x_layout
+  #end
+  #
+  #get '/admin_show/:id' do
+  #  @action      = Event.find_by_id(params[:id])
+  #  erb :admin_show, :layout => :admin_x_layout
+  #end
+  #
+  #get '/admin_edit/:id' do
+  #  @action      = Event.find_by_id(params[:id])
+  #  @post_action = "/admin_update/#{params[:id]}"
+  #  @button_text = "Update"
+  #  erb :admin_edit, :layout => :admin_x_layout
+  #end
+  #
+  #post '/admin_create' do
+  #  params.delete "submit"
+  #  action = Event.new(params)
+  #  if action.save
+  #    Nq.create_event(action.id)
+  #    set_flash_notice("Created New Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
+  #    redirect '/admin_events'
+  #  else
+  #    set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
+  #    @action      = action
+  #    @post_action = "/admin_create"
+  #    @button_text = "Create"
+  #    erb :admin_new, :layout => :admin_x_layout
+  #  end
+  #end
+  #
+  #post '/admin_update/:id' do
+  #  action = Event.find_by_id(params[:id])
+  #  %w(submit splat captures).each {|x| params.delete x}
+  #  if action.update_attributes(params)
+  #    Nq.update_event(action.id)
+  #    set_flash_notice("Updated Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
+  #    redirect '/admin_events'
+  #  else
+  #    set_flash_error("<u>Input Error(s) - Please Try Again</u><br/>#{error_text(action.errors)}")
+  #    @action      = action
+  #    @post_action = "/admin_create"
+  #    @button_text = "Update"
+  #    erb :admin_edit, :layout => :admin_x_layout
+  #  end
+  #end
+  #
+  #get '/admin_delete/:id' do
+  #  action = Event.find_by_id(params[:id])
+  #  set_flash_notice("Deleted Event (#{action.kind.capitalize} > #{action.title} > #{action.start})")
+  #  Nq.delete_event(action.id)
+  #  action.destroy
+  #  redirect "/admin_events"
+  #end
+  #
+  #get '/admin_data' do
+  #  erb :admin_data, :layout => :admin_x_layout
+  #end
+  #
+  #post('/admin_data_file') do
+  #  if params[:file].nil?
+  #    set_flash_error("Error - no CSV file was selected")
+  #    redirect '/admin_data'
+  #  end
+  #  csv_text = params[:file][:tempfile].read
+  #  if params["mode"] == "overwrite"
+  #    Event.delete_all if CsvLoader.load_ready?(csv_text)
+  #  end
+  #  csv_load = CsvLoader.new(csv_text)
+  #  if csv_load.errors?
+  #    set_flash_error(csv_load.error_message)
+  #    redirect('/admin_data')
+  #  end
+  #  set_flash_error(csv_load.warning_message) if csv_load.warnings?
+  #  set_flash_notice(csv_load.success_message)
+  #  Nq.sync
+  #  redirect('/admin_events')
+  #end
+  #
+  #get '/admin_inval_csv' do
+  #  response["Content-Type"] = "text/plain"
+  #  File.read(INVAL_CSV_FILENAME)
+  #end
+  #
+  #get '/admin_inval_rec' do
+  #  response["Content-Type"] = "text/plain"
+  #  File.read(INVAL_REC_FILENAME)
+  #end
 
   # ----- Error handling -----
 
