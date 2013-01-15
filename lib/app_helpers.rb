@@ -304,6 +304,7 @@ module Sinatra
       ]
 
       opt.map {|i| admin_link(i.first, i.last)}.join(' | ')
+      ""
     end
 
     def admin_sub_nav(array)
